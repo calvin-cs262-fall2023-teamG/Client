@@ -1,2 +1,5 @@
-# Client
-This one holds your client application code, e.g., the hello-world prototype you will commit/push for project 1.
+--Read Me--
+
+Obviously there should be more to this later.
+
+-Faeren H Madza, ChapterCache
