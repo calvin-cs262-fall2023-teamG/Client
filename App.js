@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Button from './components/Button';
 import React, { useState } from 'react';
@@ -12,10 +13,12 @@ export default function App() {
     setItems([...items, newItem]); // Add the new item to the items array
   };
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>ChapterCache</Text>
       <StatusBar style="auto" />
+
       <View style={styles.footerContainer}>
         <Button label="+" onPress={addItemHandler} />
       </View>
@@ -27,6 +30,7 @@ export default function App() {
           ))}
         </ScrollView>
     </View>
+	
 
   );
 }
@@ -37,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'top',
+
     marginTop: 50,
   },
 
@@ -63,5 +68,10 @@ const styles = StyleSheet.create({
     alignItems: 'right',
     borderColor: 'black',
     backgroundColor: 'white',
+
+	  alignItems: 'right',
+	  borderColor: 'black',
+	  backgroundColor: 'white',
+
   }
 });
