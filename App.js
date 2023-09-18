@@ -9,7 +9,7 @@ export default function App() {
 
   const addItemHandler = () => {
     // This function will be called when the "+" button is pressed
-    const newItem = `Item # ${items.length + 1}`;
+    const newItem = `Book # ${items.length + 1}`;
     setItems([...items, newItem]); // Add the new item to the items array
   };
 
