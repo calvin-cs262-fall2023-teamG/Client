@@ -10,14 +10,15 @@ export default function App() {
 
   const addItemHandler = () => {
     // This function will be called when the "+" button is pressed
-    const newItem = `Book # ${items.length + 1}`;
+    const newItem = `Book #${items.length + 1}`;
     setItems([...items, newItem]); // Add the new item to the items array
   };
 
-
+//Creates elements on screen
   return (
     <View style={styles.container}>
       <Text style={styles.text}>ChapterCache</Text>
+      <TextInput style = {styles.input}/> 
       <StatusBar style="auto" />
 
       <View style={styles.footerContainer}>
@@ -39,6 +40,7 @@ export default function App() {
   );
 }
 
+//Creates styles for elements on screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -79,6 +81,11 @@ const styles = StyleSheet.create({
 
   },
   input: {
-    backgroundColor: "white"
+    backgroundColor: "gray",
+    width:200,
+    height:35,
+    margin:10,
+    textAlign:"center",
+    color:"white"
   }
 });
