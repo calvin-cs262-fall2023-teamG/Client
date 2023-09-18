@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { TextInput } from 'react-native';
 import Button from './components/Button';
 import React, { useState } from 'react';
 
@@ -29,6 +30,9 @@ export default function App() {
             </Text>
           ))}
         </ScrollView>
+        <View style={styles.container}>
+          <TextInput style={styles.input} />
+        </View>
     </View>
 	
 
@@ -73,5 +77,8 @@ const styles = StyleSheet.create({
 	  borderColor: 'black',
 	  backgroundColor: 'white',
 
+  },
+  input: {
+    backgroundColor: "white"
   }
 });
