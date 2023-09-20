@@ -1,1 +1,1 @@
-This is the lates prototype that adds items to list
+This is the client application for the ChapterCache project.
