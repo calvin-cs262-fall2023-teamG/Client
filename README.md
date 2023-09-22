@@ -1,5 +1,1 @@
---Read Me--
-
-Obviously there should be more to this later.
-
--Faeren H Madza, ChapterCache
+This is the client application for the ChapterCache project.
