@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddBook
+export default AddBook;
