@@ -1,10 +1,20 @@
-import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './Navigation';
+import React from 'react';
+import Navigation from './components/Navigation';
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
-  );
-}
+const App = () => {
+  return <Navigation />;
+};
+
+// export default App;
+// =======
+// import { NavigationContainer } from '@react-navigation/native';
+// import StackNavigator from './Navigation';
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <StackNavigator />
+//     </NavigationContainer>
+//   );
+// }
+// >>>>>>> main

@@ -1,1 +1,3 @@
-This is the client application for the ChapterCache project.
+(9/15) - This is the lates prototype that adds items to list
+(9/18) - Latest prototype adds text box input to add button
+
