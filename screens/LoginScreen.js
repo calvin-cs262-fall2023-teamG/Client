@@ -55,8 +55,8 @@ const LoginScreen = ({ navigation }) => {
             <TextInput 
                 style = {styles.InputTextBox} 
                 placeholder= {"Password"}
+                secureTextEntry ={!showPassword}
                 value = {password}
-                secureTextEntry = {showPassword ? false:true}
                 onChangeText={text => setPassword(text)}/>
 
             {/*Shows or hides the password based on what the user chooses*/}
@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style = {styles.errorText}>{errorMessage}</Text>
         )}
         
-        <TouchableOpacity onPress={handleLogin}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
             <View style = {styles.signInButton}>
                 <Text>Sign In</Text> 
             </View>
@@ -86,7 +86,7 @@ const LoginScreen = ({ navigation }) => {
         <View style = {styles.footer}>
             <Text style = {styles.Infofooter}> Don't have an account?</Text>
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('CreateAccount')}>
                     <View>
                         <Text style={styles.CreateAccount}>Create an Account</Text> 
                     </View>

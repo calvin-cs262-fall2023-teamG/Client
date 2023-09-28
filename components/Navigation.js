@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import Main from "../screens/Main";
 import AddBook from "../screens/AddBook";
+import CreateAccount from '../screens/CreateAccount';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +29,10 @@ const Navigation = () => {
                 fontWeight: 'bold'
               }
             }} />
+          <Stack.Screen name="CreateAccount" component={CreateAccount} options={{headerShown: false}} />
           <Stack.Screen name="Main" component={Main} options={{ headerBackVisible: false }} />
           <Stack.Screen name="Add Book" component={AddBook} />
+
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
