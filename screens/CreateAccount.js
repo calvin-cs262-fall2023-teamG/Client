@@ -53,7 +53,7 @@ return (
             <Text style = {styles.loginheader}> ChapterCache</Text>
         </View>
 
-        <Text style = {styles.PageTitle}> Sign in</Text>
+        <Text style = {styles.PageTitle}> Create an Account</Text>
         <Text style = {styles.Info}> Please fill these credentials</Text>
 
         {/* sets the state of username and password*/}
@@ -100,14 +100,6 @@ return (
             {/*Shows or hides the password based on what the user chooses*/}
             <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
                 <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-            </TouchableOpacity>
-        </View>
-
-        <View style={{alignItems: 'flex-end' }}>
-            <TouchableOpacity>
-                <View>
-                    <Text style = {styles.ForgotPassword}>Forgot Password?</Text> 
-                </View>
             </TouchableOpacity>
         </View>
 
