@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -8,11 +10,20 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleLogin = ()=>{
-        if (username === 'admin' && password === 'admin') {
-            navigation.navigate('Main');
-        } else {
-            setErrorMessage("Username or Password Incorrect!");
+    const handleLogin = async()=>{
+        try {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+                const { username: storedUsername, password: storedPassword } = JSON.parse(userData);
+                if ((username === storedUsername && password === storedPassword) || (username === 'admin' && password === "admin")) {
+                    navigation.navigate('Main');
+                } else {
+                    setErrorMessage("Username or Password Incorrect!");
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Error logging in. Please try again.");
         }
     }
     const togglePasswordVisibility = () => {
@@ -20,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     
-  return (
+return (
     
     <View style = {styles.mainbg}>
         {/* These are the designs for the main page */}
@@ -77,7 +88,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style = {styles.errorText}>{errorMessage}</Text>
         )}
         
-        <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
+        <TouchableOpacity onPress={handleLogin}>
             <View style = {styles.signInButton}>
                 <Text>Sign In</Text> 
             </View>
