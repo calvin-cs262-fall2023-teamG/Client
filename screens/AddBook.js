@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
@@ -32,6 +32,7 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
+      <ScrollView>
         <View style={styles.container}>
             <InputBox pHolder='Book Name' icon="book"/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
@@ -83,6 +84,7 @@ const AddBook = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
         </View>
+      </ScrollView>
     )
 }
 

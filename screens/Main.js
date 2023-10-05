@@ -12,7 +12,7 @@ const Main = () => {
     const [book, setBook] = useState();
     const [books, setBooks] = useState([]);
 
-    //Temporarily adding this to make a test cases
+    //The list of books is created like such
     const handleAddBook = () => {
         //Keyboard.dismiss();
         setBooks([...books, book]);
@@ -42,7 +42,7 @@ const Main = () => {
             </View>
         </SafeAreaView>
     );
-    //Line 38 (Button press handler) needs to go to the add book page, sending in a book objec to be edited
+    //Line 41 (Button press handler) needs to go to the add book page, sending in a book objec to be edited
 }
 
 const styles = StyleSheet.create({
