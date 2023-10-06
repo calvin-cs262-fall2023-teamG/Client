@@ -8,7 +8,7 @@ const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
 
 
-const AddBook = ({ navigation }) => {
+const AddBook = ({ navigation, bookObj, bookListObj }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
@@ -72,7 +72,7 @@ const AddBook = ({ navigation }) => {
             </View>
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('Add Book Contact Info')}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Add Book Contact Info', bookObj, bookListObj)}>
                     <View style={styles.okButton}>
                         <Text>Next</Text> 
                     </View>

@@ -8,9 +8,11 @@ const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
 
 
-const ContactInfo = ({ navigation }) => {
+const ContactInfo = ({ navigation, bookObj, bookListObj }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
+    
+     
 
     const pickImageAsync_front = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -39,10 +41,11 @@ const ContactInfo = ({ navigation }) => {
                 <InputBox pHolder='Full Name' icon="user"/>
                 <InputBox pHolder='E-Mail' icon = "envelope"/>
             </View>
-            
+
+                      
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Main', bookObj, bookListObj)}>
                     <View style={styles.okButton}>
                         <Text >Add Book</Text> 
                     </View>

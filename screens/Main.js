@@ -14,11 +14,16 @@ const Main = () => {
     var [books, setBooks] = useState([]);
 
     //The list of books is created like such
-    var handleAddBook = () => {
+    function handleAddBook() {
         //Keyboard.dismiss();
         setBooks([...books, book]);
         setBook(null);
     }
+
+    function toMainPushProp() {
+        navigation.navigate("Add Book", book, books);
+        handleAddBook();
+    } 
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,7 +37,7 @@ const Main = () => {
                         placeholder={"Search Book"}
                          />
                 </View>
-                <TextInput style={styles.InputTextBox}>Search bar</TextInput>
+                {/*<TextInput style={styles.InputTextBox}>Search bar</TextInput>*/}
                 <StatusBar style="auto" />
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     {
@@ -48,7 +53,7 @@ const Main = () => {
             </View>
 
             <View style={styles.footerContainer}>
-                <Button style={styles.buttons} onPress={() => navigation.navigate("Add Book")} label="+" />
+                <Button style={styles.buttons} onPress={toMainPushProp} label="+" />
                 {/* <Button onPress={() => handleAddBook()} label="list" /> */}
             </View>
         </SafeAreaView>
