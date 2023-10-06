@@ -3,12 +3,13 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
+import Book from '../components/Book';
 
 const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
 
 
-const ContactInfo = ({ navigation, bookObj, bookListObj }) => {
+const ContactInfo = ({ navigation, book }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
     
@@ -45,7 +46,7 @@ const ContactInfo = ({ navigation, bookObj, bookListObj }) => {
                       
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('Main', bookObj, bookListObj)}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Main', book )}>
                     <View style={styles.okButton}>
                         <Text >Add Book</Text> 
                     </View>

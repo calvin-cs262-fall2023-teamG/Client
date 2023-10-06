@@ -10,7 +10,7 @@ const Main = () => {
     const navigation = useNavigation();
 
     //Temporary variable list of books for proof of concept
-    var [book, setBook] = useState();
+    var [book , setBook] = useState();
     var [books, setBooks] = useState([]);
 
     //The list of books is created like such
@@ -21,7 +21,7 @@ const Main = () => {
     }
 
     function toMainPushProp() {
-        navigation.navigate("Add Book", book, books);
+        navigation.navigate("Add Book", book );
         handleAddBook();
     } 
 
@@ -54,11 +54,9 @@ const Main = () => {
 
             <View style={styles.footerContainer}>
                 <Button style={styles.buttons} onPress={toMainPushProp} label="+" />
-                {/* <Button onPress={() => handleAddBook()} label="list" /> */}
             </View>
         </SafeAreaView>
     );
-    //Line 41 (Button press handler) needs to go to the add book page, sending in a book object to be edited
 }
 
 const styles = StyleSheet.create({
