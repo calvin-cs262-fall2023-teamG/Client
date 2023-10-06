@@ -32,8 +32,9 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
-      <ScrollView>
+      
         <View style={styles.container}>
+            <ScrollView>
             <InputBox pHolder='Book Name' icon="book"/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
@@ -75,8 +76,9 @@ const AddBook = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </View>
-      </ScrollView>
+      
     )
 }
 
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFF',
         paddingHorizontal: 30,
-        paddingTop: 30,
+        paddingTop: 10,
     },
     imageSection: {
         alignItems: 'center',

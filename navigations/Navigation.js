@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BottomTabNavigator from './TabNavigator'
 import LoginScreen from '../screens/LoginScreen';
-import Main from "../screens/Main";
 import AddBook from "../screens/AddBook";
 import CreateAccount from '../screens/CreateAccount';
 import BookInfo from '../screens/BookInfo';
@@ -28,7 +28,7 @@ const Navigation = () => {
               }
             }} />
           <Stack.Screen name="CreateAccount" component={CreateAccount} options={{headerShown: false}} />
-          <Stack.Screen name="Main" component={Main} options={{ 
+          <Stack.Screen name="Main" component={BottomTabNavigator} options={{ 
             title: 'Chapter Cache', 
             headerBackVisible: false }} />
           <Stack.Screen name="Add Book" component={AddBook} options={{title:'Add a Book'}}/>
