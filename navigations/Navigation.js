@@ -17,6 +17,11 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' screenOptions={{
+        headerBackTitleVisible: false,
+        headerTintColor: '#000000',
+        headerStyle: {
+          backgroundColor: '#81F4D8'
+        }
       }}>
         <Stack.Group>
           <Stack.Screen
@@ -27,8 +32,8 @@ const Navigation = () => {
               headerShown: false,
               headerTitleStyle: {
                 fontSize: 25,
-                fontWeight: 'bold'
-              }
+                fontWeight: 'bold',
+              },
             }} />
           <Stack.Screen name="CreateAccount" component={CreateAccount} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={BottomTabNavigator} options={{
@@ -39,7 +44,7 @@ const Navigation = () => {
                   <Text style={{ paddingHorizontal: 5 }}>Sign Out</Text>
                   <FontAwesome style={{ paddingHorizontal: 5 }}
                     name="sign-out"
-                    size={25}
+                    size={20}
                     onPress={() => {
                       navigation.navigate('Login');
                     }}

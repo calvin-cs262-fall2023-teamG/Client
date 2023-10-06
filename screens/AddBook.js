@@ -128,8 +128,9 @@ const styles = StyleSheet.create({
         width: 182
     },
     addImage: {
-        color: 'blue',
-        alignItems: 'center'
+        color: '#81F4D8',
+        alignItems: 'center',
+        fontWeight: 'bold'
     }
     
 

@@ -5,6 +5,7 @@ import Book from '../components/Book';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
+import InputBox from '../components/InputBox';
 
 const Main = () => {
     const navigation = useNavigation();
@@ -21,18 +22,10 @@ const Main = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View>
-                <View style={styles.InputContainer}>
-                    {/* <Icon name="key" size={20} color="#000" style={styles.icon} /> */}
-                    <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
-                    
-                    <TextInput
-                        style={styles.InputTextBox}
-                        placeholder={"Search Book"}
-                         />
-                </View>
-                <TextInput style={styles.InputTextBox}>Search bar</TextInput>
+        <View style={styles.container}>
+            <View style={styles.searchContainer}>
+            <InputBox pHolder='Search Book' icon="search"/>
+                
                 <StatusBar style="auto" />
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     {
@@ -51,7 +44,7 @@ const Main = () => {
                 <Button style={styles.buttons} onPress={() => navigation.navigate("Add Book")} label="+" />
                 {/* <Button onPress={() => handleAddBook()} label="list" /> */}
             </View>
-        </SafeAreaView>
+        </View>
     );
     //Line 41 (Button press handler) needs to go to the add book page, sending in a book object to be edited
 }
@@ -62,6 +55,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingHorizontal: 15
+    },
+    searchContainer: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 15
     },
 
     text: {
@@ -75,15 +76,11 @@ const styles = StyleSheet.create({
         width : 400,
         marginTop: 20,
         alignItems: 'center',
-        backgroundColor: '#D9FFF6',
         borderRadius: 15,
-        justifyContent: "center" //center vertically
+        justifyContent: "center", //center vertically
+        
     },
-    InputTextBox: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
+   
     bookIcon: {
         marginLeft:5,
     },
@@ -93,6 +90,12 @@ const styles = StyleSheet.create({
         right: 10,
         margin: 20,
         color: '#81F4D8'
+    },
+    search:{
+    
+    },
+    buttons:{
+        color: '#FFF'
     }
 });
 

@@ -11,8 +11,8 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarIcon: ({color, size}) => (<FontAwesome name="home" color={color} size={size} />), }} />
-      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarIcon: ({ color, size }) => (<FontAwesome name="user" color={color} size={size} />), }} />
+      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarIcon: ({color, size, tabBarIcon}) => (<FontAwesome name="home" color='#81F4D8' size={size} />), }} />
+      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarIcon: ({ color, size }) => (<FontAwesome name="user" color='#81F4D8' size={size} />), }} />
     </Tab.Navigator>
   );
 };
