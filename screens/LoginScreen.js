@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = ()=>{
         if (username === 'admin' && password === 'admin') {
-            navigation.navigate('Main');
+            navigation.navigate("Main");
         } else {
             setErrorMessage("Username or Password Incorrect!");
         }

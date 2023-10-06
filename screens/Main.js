@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const Main = () => {
     const navigation = useNavigation();
-
     return (
         <SafeAreaView style={styles.container}>
             <View>
