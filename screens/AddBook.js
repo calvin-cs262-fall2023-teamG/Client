@@ -32,8 +32,9 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
-      <ScrollView>
+      
         <View style={styles.container}>
+            <ScrollView>
             <InputBox pHolder='Book Name' icon="book"/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
@@ -41,31 +42,33 @@ const AddBook = ({ navigation }) => {
             <InputBox pHolder='Price' icon = "tags"/>
 
             <View style = {styles.imageContainer}>
+                <TouchableOpacity onPress={pickImageAsync_front}>
                 {/* Upload front of the book */}
-                <View style = {styles.imageSection}>
-                    <TouchableOpacity onPress={pickImageAsync_front}>
-                    <View>
+                    <View style = {styles.imageSection}>
+                        <View>
                         <Text style = {styles.text}>Front picture</Text>
+                        <Text style = {styles.addImage}> Add image</Text>
                     </View>
-                    </TouchableOpacity>
                     <ImageViewer
                         placeholderImageSource={PlaceholderImage_front}
                         selectedImage={selectedImage_front}
-                    />
+                        />
                 </View>
+                </TouchableOpacity>
 
+                <TouchableOpacity onPress={pickImageAsync_back}>
                 {/* Upload back of the book */}
-                <View style = {styles.imageSection}>
-                    <TouchableOpacity onPress={pickImageAsync_back}>
-                    <View >
-                        <Text style = {styles.text}>Back picture</Text>
-                    </View>
-                    </TouchableOpacity>
+                    <View style = {styles.imageSection}>
+                        <View >
+                            <Text style = {styles.text}>Back picture</Text>
+                            <Text style = {styles.addImage}> Add image</Text>
+                        </View>
                     <ImageViewer
                         placeholderImageSource={PlaceholderImage_back}
                         selectedImage={selectedImage_back}
-                    />
-                </View>
+                        />
+                    </View>
+                </TouchableOpacity>
             </View>
 
             <View style = {styles.buttonContainer}>
@@ -75,8 +78,9 @@ const AddBook = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </View>
-      </ScrollView>
+      
     )
 }
 
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFF',
         paddingHorizontal: 30,
-        paddingTop: 30,
+        paddingTop: 10,
     },
     imageSection: {
         alignItems: 'center',
@@ -123,6 +127,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         width: 182
     },
+    addImage: {
+        color: 'blue',
+        alignItems: 'center'
+    }
     
 
 });

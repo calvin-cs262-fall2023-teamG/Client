@@ -38,7 +38,6 @@ const ContactInfo = ({ navigation }) => {
             <View style={styles.inputs}>
                 <InputBox pHolder='Full Name' icon="user"/>
                 <InputBox pHolder='E-Mail' icon = "envelope"/>
-                <InputBox pHolder='Phone' icon = "phone"/>
             </View>
             
 

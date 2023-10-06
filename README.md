@@ -1,4 +1,11 @@
-(9/15) - This is the lates prototype that adds items to list
-(9/18) - Latest prototype adds text box input to add button
-(10/5) IN PROGRESS - Add Book Feature - STATUS - UI: Working, Implementation: In progress - PROGRESS DETAILS - UI is currently finished (both add book pages added and linked together), second page could use some work to remove some white space and first page could use a touch up where images are added, next step is retrieving the entered data and returning it to the main page in the form of a list item.
-10/6 - Style updates in progress
+- This prototype allow a user to Login to our app either by using 'admin'- 'admin' credentials.
+
+- They can create their own username and password using our 'Create an Account' button. It stores the values in React Native's async storage which allows you to use the login credentials that was just created.
+- There is a '+' button where the user can add information about their book along with pictures of front and back of the book.
+
+
+**Next Iterations:**
+- Make it so that what the seller enters in the 'add book' page gets displayed in the home screen
+- The buyer can search for books using the search bar in the home page
+- Style/UI Updates
+
