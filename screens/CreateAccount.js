@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import {Text, View, ScrollView, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -40,89 +40,93 @@ const CreateAccount = ({ navigation }) => {
 return (
     <View style = {styles.mainbg}>
         {/* These are the designs for the main page */}
-        <View style={styles.shapesContainer}>
-            <View style={styles.shape1} />
-            <View style={styles.shape2} />
-            <View style={styles.shape3} />
-            <View style={styles.shape4} />
-            <View style={styles.shape5} />
-        </View>
-
-        <View style = {styles.headerContainer}>
-            <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
-            <Text style = {styles.loginheader}> ChapterCache</Text>
-        </View>
-
-        <Text style = {styles.PageTitle}> Create an Account</Text>
-        <Text style = {styles.Info}> Please fill these credentials</Text>
-
-        {/* sets the state of username and password*/}
-        <View style = {styles.InputContainer}>
-            <Icon name="envelope" size={18} color="#000" style={styles.icon} />
-            <TextInput 
-                style = {styles.InputTextBox} 
-                placeholder= {"Email"}
-                value = {email}
-                onChangeText={text => setEmail(text)}/>
-        </View>
-
-        <View style = {styles.InputContainer}>
-            <Icon name="user" size={20} color="#000" style={styles.icon} />
-            <TextInput 
-                style = {styles.InputTextBox} 
-                placeholder= {"UserName"}
-                value = {username}
-                onChangeText={text => setUsername(text)}/>
-        </View>
-
-        <View style = {styles.InputContainer}>
-            <Icon name="lock" size={20} color="#000" style={styles.icon} />
-            <TextInput 
-                style = {styles.InputTextBox} 
-                placeholder= {"Password"}
-                secureTextEntry={!showPassword}
-                value = {password}
-                onChangeText={text => setPassword(text)}/>
-            {/*Shows or hides the password based on what the user chooses*/}
-            <TouchableOpacity onPress={togglePasswordVisibility}>
-                <Icon name={showPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-            </TouchableOpacity>
-        </View>
-
-        <View style = {styles.InputContainer}>
-            <Icon name="lock" size={20} color="#000" style={styles.icon} />
-            <TextInput 
-                style = {styles.InputTextBox} 
-                placeholder= {"Confirm Password"}
-                secureTextEntry={!showConfirmPassword}
-                value = {confirmpassword}
-                onChangeText={text => setconfirmPassword(text)}/>
-            {/*Shows or hides the password based on what the user chooses*/}
-            <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
-                <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-            </TouchableOpacity>
-        </View>
-
-        {errorMessage !== '' && (
-            <Text style = {styles.errorText}>{errorMessage}</Text>
-        )}
         
-        <TouchableOpacity onPress={handleCreate}>
-            <View style = {styles.signInButton}>
-                <Text>Create an Account</Text> 
+            <View style={styles.shapesContainer}>
+                <View style={styles.shape1} />
+                <View style={styles.shape2} />
+                <View style={styles.shape3} />
+                <View style={styles.shape4} />
+                <View style={styles.shape5} />
             </View>
-        </TouchableOpacity>
+            <ScrollView>
+            <View style={{paddingHorizontal: 20}}>
+                <View style = {styles.headerContainer}>
+                    <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
+                    <Text style = {styles.loginheader}> ChapterCache</Text>
+                </View>
 
-        <View style = {styles.footer}>
-            <Text style = {styles.Infofooter}>Already have an Account?</Text>
-            <View>
-                <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-                    <View>
-                        <Text style={styles.CreateAccount}>Sign In</Text> 
+                <Text style = {styles.PageTitle}> Create an Account</Text>
+                <Text style = {styles.Info}> Please fill these credentials</Text>
+
+                {/* sets the state of username and password*/}
+                <View style = {styles.InputContainer}>
+                    <Icon name="envelope" size={18} color="#000" style={styles.icon} />
+                    <TextInput 
+                        style = {styles.InputTextBox} 
+                        placeholder= {"Email"}
+                        value = {email}
+                        onChangeText={text => setEmail(text)}/>
+                </View>
+
+                <View style = {styles.InputContainer}>
+                    <Icon name="user" size={20} color="#000" style={styles.icon} />
+                    <TextInput 
+                        style = {styles.InputTextBox} 
+                        placeholder= {"UserName"}
+                        value = {username}
+                        onChangeText={text => setUsername(text)}/>
+                </View>
+
+                <View style = {styles.InputContainer}>
+                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <TextInput 
+                        style = {styles.InputTextBox} 
+                        placeholder= {"Password"}
+                        secureTextEntry={!showPassword}
+                        value = {password}
+                        onChangeText={text => setPassword(text)}/>
+                    {/*Shows or hides the password based on what the user chooses*/}
+                    <TouchableOpacity onPress={togglePasswordVisibility}>
+                        <Icon name={showPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {styles.InputContainer}>
+                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <TextInput 
+                        style = {styles.InputTextBox} 
+                        placeholder= {"Confirm Password"}
+                        secureTextEntry={!showConfirmPassword}
+                        value = {confirmpassword}
+                        onChangeText={text => setconfirmPassword(text)}/>
+                    {/*Shows or hides the password based on what the user chooses*/}
+                    <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
+                        <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+                
+                {errorMessage !== '' && (
+                    <Text style = {styles.errorText}>{errorMessage}</Text>
+                )}
+                
+                <TouchableOpacity onPress={handleCreate}>
+                    <View style = {styles.signInButton}>
+                        <Text>Create an Account</Text> 
                     </View>
                 </TouchableOpacity>
+
+                <View style = {styles.footer}>
+                    <Text style = {styles.Infofooter}>Already have an Account?</Text>
+                    <View>
+                        <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+                            <View>
+                                <Text style={styles.CreateAccount}>Sign In</Text> 
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-        </View>
+            </ScrollView>
     </View>
     );
 
@@ -132,7 +136,6 @@ const styles = StyleSheet.create({
     mainbg:{
         flex:1,
         backgroundColor: '#ffffff',
-        paddingHorizontal: 20,
     },
     shapesContainer: {
         position: 'absolute',
