@@ -37,7 +37,7 @@ const Main = () => {
             </View>
             
             <View style={styles.footerContainer}>
-                <Button onPress={() => navigation.navigate("Add Book")} label="+" /> 
+                <Button style={styles.buttons} onPress={() => navigation.navigate("Add Book")} label="+" /> 
                 <Button onPress={() => handleAddBook()} label="LIST ADDER" />
             </View>
         </SafeAreaView>
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         margin: 20,
+        color: '#81F4D8'
     }
 });
 

@@ -37,7 +37,7 @@ const AddBook = ({ navigation }) => {
             <InputBox pHolder='Book Name' icon="book"/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
-            <InputBox pHolder='Course Name' icon = "book"/>
+            <InputBox pHolder='Course Name' icon = "graduation-cap"/>
             <InputBox pHolder='Price' icon = "tags"/>
 
             <View style = {styles.imageContainer}>
