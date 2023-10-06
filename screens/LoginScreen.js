@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleLogin = async()=>{
+    const handleLogin = async () => {
         try {
             const userData = await AsyncStorage.getItem('userData');
             if (userData) {
@@ -30,90 +30,93 @@ const LoginScreen = ({ navigation }) => {
         setShowPassword(!showPassword);
     }
 
-    
-return (
-    
-    <View style = {styles.mainbg}>
-        {/* These are the designs for the main page */}
-        <View style={styles.shapesContainer}>
-            <View style={styles.shape1} />
-            <View style={styles.shape2} />
-            <View style={styles.shape3} />
-            <View style={styles.shape4} />
-            <View style={styles.shape5} />
-        </View>
 
-            <View style={styles.headerContainer}>
-                <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
-                <Text style={styles.loginheader}> ChapterCache</Text>
-            </View>
+    return (
 
-            <Text style={styles.PageTitle}> Sign in</Text>
-            <Text style={styles.Info}> Please fill these credentials</Text>
-
-            {/* sets the state of username and password*/}
-            <View style={styles.InputContainer}>
-                <Icon name="user" size={20} color="#000" style={styles.icon} />
-                <TextInput
-                    style={styles.InputTextBox}
-                    placeholder={"UserName"}
-                    value={username}
-                    onChangeText={text => setUsername(text)} />
-            </View>
-
-        <View style = {styles.InputContainer}>
-            <Icon name="lock" size={20} color="#000" style={styles.icon} />
-            <TextInput 
-                style = {styles.InputTextBox} 
-                placeholder= {"Password"}
-                secureTextEntry ={!showPassword}
-                value = {password}
-                onChangeText={text => setPassword(text)}/>
-
-                {/*Shows or hides the password based on what the user chooses*/}
-                <TouchableOpacity onPress={togglePasswordVisibility}>
-                    <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
-                </TouchableOpacity>
-            </View>
-
-            <View style={{ alignItems: 'flex-end' }}>
-                <TouchableOpacity>
-                    <View>
-                        <Text style={styles.ForgotPassword}>Forgot Password?</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-
-            {errorMessage !== '' && (
-                <Text style={styles.errorText}>{errorMessage}</Text>
-            )}
-
-            <TouchableOpacity onPress={handleLogin}>
-                <View style={styles.signInButton}>
-                    <Text>Sign In</Text>
+        <View style={styles.mainbg}>
+            {/* These are the designs for the main page */}
+            <ScrollView>
+                <View style={styles.shapesContainer}>
+                    <View style={styles.shape1} />
+                    <View style={styles.shape2} />
+                    <View style={styles.shape3} />
+                    <View style={styles.shape4} />
+                    <View style={styles.shape5} />
                 </View>
-            </TouchableOpacity>
 
-        <View style = {styles.footer}>
-            <Text style = {styles.Infofooter}> Don't have an account?</Text>
-            <View>
-                <TouchableOpacity onPress={()=>navigation.navigate('CreateAccount')}>
-                    <View>
-                        <Text style={styles.CreateAccount}>Create an Account</Text> 
+                <View style={{ paddingHorizontal: 20 }}>
+                    <View style={styles.headerContainer}>
+                        <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
+                        <Text style={styles.loginheader}> ChapterCache</Text>
                     </View>
-                </TouchableOpacity>
-            </View>
+
+                    <Text style={styles.PageTitle}> Sign in</Text>
+                    <Text style={styles.Info}> Please fill these credentials</Text>
+
+                    {/* sets the state of username and password*/}
+                    <View style={styles.InputContainer}>
+                        <Icon name="user" size={20} color="#000" style={styles.icon} />
+                        <TextInput
+                            style={styles.InputTextBox}
+                            placeholder={"UserName"}
+                            value={username}
+                            onChangeText={text => setUsername(text)} />
+                    </View>
+
+                    <View style={styles.InputContainer}>
+                        <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                        <TextInput
+                            style={styles.InputTextBox}
+                            placeholder={"Password"}
+                            secureTextEntry={!showPassword}
+                            value={password}
+                            onChangeText={text => setPassword(text)} />
+
+                        {/*Shows or hides the password based on what the user chooses*/}
+                        <TouchableOpacity onPress={togglePasswordVisibility}>
+                            <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ alignItems: 'flex-end' }}>
+                        <TouchableOpacity>
+                            <View>
+                                <Text style={styles.ForgotPassword}>Forgot Password?</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    {errorMessage !== '' && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                    )}
+
+                    <TouchableOpacity onPress={handleLogin}>
+                        <View style={styles.signInButton}>
+                            <Text>Sign In</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.footer}>
+                        <Text style={styles.Infofooter}> Don't have an account?</Text>
+                        <View>
+                            <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
+                                <View>
+                                    <Text style={styles.CreateAccount}>Create an Account</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
-      
-    </View>
-  );
+
+    );
 };
 
 const styles = StyleSheet.create({
     mainbg: {
         flex: 1,
         backgroundColor: '#ffffff',
-        paddingHorizontal: 20,
     },
     shapesContainer: {
         position: 'absolute',

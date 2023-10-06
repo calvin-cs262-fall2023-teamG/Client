@@ -8,7 +8,7 @@ const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
 
 
-const AddBook = ({ navigation }) => {
+const ContactInfo = ({ navigation }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
@@ -32,53 +32,25 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
-      
-        <View style={styles.container}>
-            <ScrollView>
-            <InputBox pHolder='Book Name' icon="book"/>
-            <InputBox pHolder='ISBN' icon = "hashtag"/>
-            <InputBox pHolder='Author' icon = "user"/>
-            <InputBox pHolder='Course Name' icon = "graduation-cap"/>
-            <InputBox pHolder='Price' icon = "tags"/>
+      <ScrollView style={styles.container}>
+        <View>
 
-            <View style = {styles.imageContainer}>
-                {/* Upload front of the book */}
-                <View style = {styles.imageSection}>
-                    <TouchableOpacity onPress={pickImageAsync_front}>
-                    <View>
-                        <Text style = {styles.text}>Front picture</Text>
-                    </View>
-                    </TouchableOpacity>
-                    <ImageViewer
-                        placeholderImageSource={PlaceholderImage_front}
-                        selectedImage={selectedImage_front}
-                    />
-                </View>
-
-                {/* Upload back of the book */}
-                <View style = {styles.imageSection}>
-                    <TouchableOpacity onPress={pickImageAsync_back}>
-                    <View >
-                        <Text style = {styles.text}>Back picture</Text>
-                    </View>
-                    </TouchableOpacity>
-                    <ImageViewer
-                        placeholderImageSource={PlaceholderImage_back}
-                        selectedImage={selectedImage_back}
-                    />
-                </View>
+            <View style={styles.inputs}>
+                <InputBox pHolder='Full Name' icon="user"/>
+                <InputBox pHolder='E-Mail' icon = "envelope"/>
+                <InputBox pHolder='Phone' icon = "phone"/>
             </View>
+            
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('Add Book Contact Info')}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
                     <View style={styles.okButton}>
-                        <Text>Next</Text> 
+                        <Text >Add Book</Text> 
                     </View>
                 </TouchableOpacity>
             </View>
-            </ScrollView>
         </View>
-      
+      </ScrollView>
     )
 }
 
@@ -87,26 +59,25 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFF',
         paddingHorizontal: 30,
-        paddingTop: 10,
+        paddingTop: 30,
     },
-    imageSection: {
-        alignItems: 'center',
+    inputs:{
+        justifyContent: 'center',
+        alignContent: 'center',
+        flex: 1,
+        marginTop: 200
     },
     
     text: {
         fontSize: 20,
         marginBottom: 5,
     },
-    imageContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        marginBottom: 0,
-    },
+    
     buttonContainer: {
         flexDirection: 'row',
-        alignSelf: 'center',
-        marginBottom: 100
+        justifyContent: 'center',
+        marginTop: 225,
+        alignItems: 'center'
     },
     contact: {
         height: 50,
@@ -129,4 +100,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default AddBook;
+export default ContactInfo;
