@@ -42,7 +42,7 @@ const Main = () => {
             </View>
         </SafeAreaView>
     );
-    //Line 41 (Button press handler) needs to go to the add book page, sending in a book objec to be edited
+    //Line 41 (Button press handler) needs to go to the add book page, sending in a book object to be edited
 }
 
 const styles = StyleSheet.create({
