@@ -6,6 +6,7 @@ import LoginScreen from '../screens/LoginScreen';
 import AddBook from "../screens/AddBook";
 import CreateAccount from '../screens/CreateAccount';
 import BookInfo from '../screens/BookInfo';
+import ContactInfo from '../screens/ContactInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const Navigation = () => {
             title: 'Chapter Cache', 
             headerBackVisible: false }} />
           <Stack.Screen name="Add Book" component={AddBook} options={{title:'Add a Book'}}/>
+          <Stack.Screen name="Add Book Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
           <Stack.Screen name="Book Info" component={BookInfo} options={{title:'Book Info'}}/>
 
 
