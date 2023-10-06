@@ -1,32 +1,43 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './TabNavigator'
-import Ionicons from 'react-native-vector-icons';
-import ProfileStack from '../screens/MyProfile';
-
-// Screens
 import LoginScreen from '../screens/LoginScreen';
-import Main from '../screens/Main';
-import AddBook from '../screens/AddBook';
-import MyProfile from '../screens/MyProfile';
+import AddBook from "../screens/AddBook";
+import CreateAccount from '../screens/CreateAccount';
+import BookInfo from '../screens/BookInfo';
 
 const Stack = createNativeStackNavigator();
 
-const screenOptionStyle = {
-  headerTitle: "Chapter Cache",
-  headerTitleAlign: "center",
-  headerStyle: { backgroundColor: "#F06E1D" },
-  headerTintColor: "white",
-};
-
 const Navigation = () => {
   return (
-    <Stack.Navigator initialRouteName='Login' screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerBackVisible: false }} />
-      <Stack.Screen name="Add Book" component={AddBook} />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Login' screenOptions={{
+      }}>
+        <Stack.Group>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              title: 'ChapterCache',
+              headerShown: false,
+              headerTitleStyle: {
+                fontSize: 25,
+                fontWeight: 'bold'
+              }
+            }} />
+          <Stack.Screen name="CreateAccount" component={CreateAccount} options={{headerShown: false}} />
+          <Stack.Screen name="Main" component={BottomTabNavigator} options={{ 
+            title: 'Chapter Cache', 
+            headerBackVisible: false }} />
+          <Stack.Screen name="Add Book" component={AddBook} options={{title:'Add a Book'}}/>
+          <Stack.Screen name="Book Info" component={BookInfo} options={{title:'Book Info'}}/>
+
+
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 export default Navigation;
