@@ -9,12 +9,12 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 const Main = () => {
     const navigation = useNavigation();
 
-    //Temporary constant list of books for proof of concept
-    const [book, setBook] = useState();
-    const [books, setBooks] = useState([]);
+    //Temporary variable list of books for proof of concept
+    var [book, setBook] = useState();
+    var [books, setBooks] = useState([]);
 
     //The list of books is created like such
-    const handleAddBook = () => {
+    var handleAddBook = () => {
         //Keyboard.dismiss();
         setBooks([...books, book]);
         setBook(null);
