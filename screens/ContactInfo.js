@@ -12,8 +12,6 @@ const PlaceholderImage_back = require('../assets/book_icon_back.png');
 const ContactInfo = ({ navigation, book }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
-    
-     
 
     const pickImageAsync_front = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({

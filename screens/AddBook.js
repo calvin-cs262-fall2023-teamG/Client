@@ -9,17 +9,16 @@ const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
 
 
-const AddBook = ({ navigation, book }) => {
+const AddBook = ({ navigation }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
+    //Temporary variable list of books for proof of concept
+    const [book , setBook] = useState();
+    const [books, setBooks] = useState([]);
+
     function setTitleAndContinue() {
-        if (book instanceof Book) {
-            book.myTitle = "placeholder Accepted Addbook Title";
-            navigation.navigate('Add Book Contact Info', book );
-        } else {
-            navigation.navigate('Add Book Contact Info', book );
-        }
+        navigation.navigate('Add Book Contact Info', book );
     }
 
     const pickImageAsync_front = async () => {
@@ -45,7 +44,7 @@ const AddBook = ({ navigation, book }) => {
       
         <View style={styles.container}>
             <ScrollView>
-            <InputBox pHolder='Book Name' icon="book"/>
+            <InputBox pHolder='Book Name' icon="book" value={book} onChangeText={text => setBook(text)}/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
             <InputBox pHolder='Course Name' icon = "graduation-cap"/>

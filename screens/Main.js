@@ -10,8 +10,8 @@ const Main = () => {
     const navigation = useNavigation();
 
     //Temporary variable list of books for proof of concept
-    var [book , setBook] = useState();
-    var [books, setBooks] = useState([]);
+    const [book, setBook] = useState();
+    const [books, setBooks] = useState([]);
 
     //The list of books is created like such
     function handleAddBook() {
@@ -20,8 +20,9 @@ const Main = () => {
         setBook(null);
     }
 
-    function toMainPushProp() {
-        navigation.navigate("Add Book", book );
+    const toMainPushProp = async () => {
+        navigation.navigate("Add Book");
+        const currentBookObject = await book;
         handleAddBook();
     } 
 
