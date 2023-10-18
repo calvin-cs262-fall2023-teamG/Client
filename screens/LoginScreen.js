@@ -30,6 +30,10 @@ const LoginScreen = ({ navigation }) => {
         setShowPassword(!showPassword);
     }
 
+    const handleResetPassword = async () => {
+        navigation.navigate("ForgotPassword")
+    }
+
 
     return (
 
@@ -79,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
                     </View>
 
                     <View style={{ alignItems: 'flex-end' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={handleResetPassword}>
                             <View>
                                 <Text style={styles.ForgotPassword}>Forgot Password?</Text>
                             </View>
