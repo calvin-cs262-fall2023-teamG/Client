@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
+import Book from '../components/Book';
 
 const PlaceholderImage_front = require('../assets/book_icon.png');
 const PlaceholderImage_back = require('../assets/book_icon_back.png');
@@ -11,6 +12,14 @@ const PlaceholderImage_back = require('../assets/book_icon_back.png');
 const AddBook = ({ navigation }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
+
+    //Temporary variable list of books for proof of concept
+    const [book , setBook] = useState();
+    const [books, setBooks] = useState([]);
+
+    function setTitleAndContinue() {
+        navigation.navigate('Add Book Contact Info', book );
+    }
 
     const pickImageAsync_front = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -35,7 +44,7 @@ const AddBook = ({ navigation }) => {
       
         <View style={styles.container}>
             <ScrollView>
-            <InputBox pHolder='Book Name' icon="book"/>
+            <InputBox pHolder='Book Name' icon="book" value={book} onChangeText={text => setBook(text)}/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
             <InputBox pHolder='Course Name' icon = "graduation-cap"/>
@@ -72,7 +81,7 @@ const AddBook = ({ navigation }) => {
             </View>
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('Add Book Contact Info')}>
+                <TouchableOpacity onPress={setTitleAndContinue}>
                     <View style={styles.okButton}>
                         <Text>Next</Text> 
                     </View>
