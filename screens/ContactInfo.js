@@ -35,6 +35,14 @@ const ContactInfo = ({ navigation }) => {
       <ScrollView style={styles.container}>
         <View>
 
+        <View style={styles.shapesContainer}>
+                    <View style={styles.shape1} />
+                    <View style={styles.shape2} />
+                    <View style={styles.shape3} />
+                    <View style={styles.shape4} />
+                    <View style={styles.shape5} />
+                </View>
+
             <View style={styles.inputs}>
                 <InputBox pHolder='Full Name' icon="user"/>
                 <InputBox pHolder='E-Mail' icon = "envelope"/>
@@ -60,6 +68,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 30,
     },
+    
+    shapesContainer: {
+        position: 'absolute',
+        flexWrap: 'wrap',
+    },
     inputs:{
         justifyContent: 'center',
         alignContent: 'center',
@@ -75,7 +88,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 225,
+        marginTop: 5,
         alignItems: 'center'
     },
     contact: {
@@ -94,6 +107,52 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingHorizontal: 20,
         width: 182
+    },
+    shape1: {
+        position: 'absolute',
+        top: -80,
+        left: -80,
+        width: 190,
+        height: 190,
+        borderRadius: 90,
+        backgroundColor: '#8CFFD6',
+        opacity: 0.5,
+    },
+    shape2: {
+        position: 'absolute',
+        width: 200,
+        height: 200,
+        top: 600,
+        left: -29,
+        borderRadius: 100,
+        backgroundColor: '#A1FFB6',
+    },
+    shape3: {
+        position: 'absolute',
+        width: 200,
+        height: 250,
+        top: 550,
+        left: -120,
+        borderRadius: 100,
+        backgroundColor: '#8CFFD6',
+    },
+    shape4: {
+        position: 'absolute',
+        width: 260,
+        height: 150,
+        left: 200,
+        borderRadius: 70,
+        backgroundColor: '#8CFFD6',
+        transform: [{ rotate: '50deg' }],
+    },
+    shape5: {
+        position: 'absolute',
+        width: 280,
+        height: 150,
+        left: 280,
+        borderRadius: 40,
+        backgroundColor: '#B4F7C3',
+        transform: [{ rotate: '70deg' }],
     },
     
 

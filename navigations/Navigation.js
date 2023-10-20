@@ -41,8 +41,8 @@ const Navigation = () => {
               const navigation = useNavigation();
               return (
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ paddingHorizontal: 5 }}>Sign Out</Text>
-                  <FontAwesome style={{ paddingHorizontal: 5 }}
+                  <Text style={{ paddingHorizontal: 5, color: '#888181'}}>Sign Out</Text>
+                  <FontAwesome style={{ paddingHorizontal: 5, color: '#888181'}}
                     name="sign-out"
                     size={20}
                     onPress={() => {

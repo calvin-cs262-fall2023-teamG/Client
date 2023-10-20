@@ -7,7 +7,7 @@ export default function AddBookInput({pHolder, icon, entyptoIcon, width}) {
 
   return (
     <View style={styles.wrapper}>
-        <Icon name={icon} size={20} color="#000" style={styles.icon} />
+        <Icon name={icon} size={20} color='#888181' style={styles.icon} />
         
         <TextInput style={styles.input} placeholder={pHolder}/>
     </View>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
     backgroundColor : '#D9FFF6',
-    marginBottom: 15,
+    marginBottom: '5%',
     borderRadius: 15,
     justifyContent: "center" //center vertically
 },

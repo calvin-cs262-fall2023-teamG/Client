@@ -24,7 +24,7 @@ const Main = () => {
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
-            <InputBox pHolder='Search Book' icon="search"/>
+            <InputBox pHolder='Search Book' icon="search" iconColor='#888181'/>
                 
                 <StatusBar style="auto" />
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     
     },
     buttons:{
-        color: '#FFF'
+        color: '#888181',
     }
 });
 

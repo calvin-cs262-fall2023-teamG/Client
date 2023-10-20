@@ -20,7 +20,7 @@ export default function Button({ label, onPress }) {
 const styles = StyleSheet.create({
 	text: {
 	  fontSize: 25,
-	  color: '#000',
+	  color: '#000000',
     textAlign: 'center',
   },
   roundButton1: {

@@ -51,7 +51,7 @@ return (
             <ScrollView>
             <View style={{paddingHorizontal: 20}}>
                 <View style = {styles.headerContainer}>
-                    <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
+                    <Icon name="book" size={50} color="#000"/>
                     <Text style = {styles.loginheader}> ChapterCache</Text>
                 </View>
 
@@ -60,7 +60,7 @@ return (
 
                 {/* sets the state of username and password*/}
                 <View style = {styles.InputContainer}>
-                    <Icon name="envelope" size={18} color="#000" style={styles.icon} />
+                    <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
                     <TextInput 
                         style = {styles.InputTextBox} 
                         placeholder= {"Email"}
@@ -69,7 +69,7 @@ return (
                 </View>
 
                 <View style = {styles.InputContainer}>
-                    <Icon name="user" size={20} color="#000" style={styles.icon} />
+                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
                         style = {styles.InputTextBox} 
                         placeholder= {"UserName"}
@@ -78,7 +78,7 @@ return (
                 </View>
 
                 <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
                         style = {styles.InputTextBox} 
                         placeholder= {"Password"}
@@ -92,7 +92,7 @@ return (
                 </View>
 
                 <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
                         style = {styles.InputTextBox} 
                         placeholder= {"Confirm Password"}
@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     headerContainer:{
         flexDirection: 'row',
         paddingTop: 20,
-        alignItems: "center"
+        alignItems: "center",
+        paddingTop: 40
     },
 
     bookIcon: {
