@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     maxWidth: 320,
   },
   item: {
-    backgroundColor: '#81F4D8',
+    backgroundColor: '#D9FFF6',
     padding: 15,
     borderRadius: 30,
     flexDirection: 'row',
