@@ -10,9 +10,10 @@ import AddBook from "../screens/AddBook";
 import CreateAccount from '../screens/CreateAccount';
 import BookInfo from '../screens/BookInfo';
 import ContactInfo from '../screens/ContactInfo';
+import ForgotPassword from '../screens/ForgotPassword';
 
 const Stack = createNativeStackNavigator();
-
+ 
 const Navigation = () => {
   return (
     <NavigationContainer>
@@ -30,6 +31,7 @@ const Navigation = () => {
                 fontWeight: 'bold'
               }
             }} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false}} />
           <Stack.Screen name="CreateAccount" component={CreateAccount} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={BottomTabNavigator} options={{
             title: 'Chapter Cache', headerBackVisible: false, headerRight: () => {
