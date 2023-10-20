@@ -12,10 +12,23 @@ const CreateAccount = ({ navigation }) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState('');
-
+    
     const handleCreate = async ()=>{
-        if (password !== confirmpassword) {
-            setErrorMessage("Passwords do not match!");
+        const domainToCheck = 'calvin.edu';
+        const emailParts = email.split('@');
+
+        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){
+            setErrorMessage("Please enter your Calvin email");
+
+        } else if (username.length <= 3) {
+            setErrorMessage("Your username must be at least 4 characters")
+
+        } else if (password.length <= 7) {  
+            setErrorMessage("Your password must be at least 8 characters")
+
+        } else if (password !== confirmpassword) {
+            setErrorMessage("Passwords do not match!");  
+
         } else {
             try {
                 // Save user data to AsyncStorage
