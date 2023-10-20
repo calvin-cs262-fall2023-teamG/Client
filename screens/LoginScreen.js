@@ -82,7 +82,7 @@ const LoginScreen = ({ navigation }) => {
 
                     {/* sets the state of username and password*/}
                     <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#000" style={styles.icon} />
+                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
                         <TextInput
                             style={styles.InputTextBox}
                             placeholder={"UserName"}
@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
                     </View>
 
                     <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                         <TextInput
                             style={styles.InputTextBox}
                             placeholder={"Password"}
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 
     headerContainer: {
         flexDirection: 'row',
-        paddingTop: 20,
+        paddingTop: 40,
         alignItems: "center"
     },
 
