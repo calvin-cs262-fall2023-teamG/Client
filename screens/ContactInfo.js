@@ -42,7 +42,7 @@ const ContactInfo = ({ navigation, book }) => {
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            navigation.navigate('Main, book')
+            navigation.navigate('Main', book)
         }
     };
 
