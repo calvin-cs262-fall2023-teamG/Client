@@ -58,15 +58,15 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={styles.mainbg}>
             {/* These are the designs for the main page */}
-            <ScrollView>
-                <View style={styles.shapesContainer}>
-                    <View style={styles.shape1} />
-                    <View style={styles.shape2} />
-                    <View style={styles.shape3} />
-                    <View style={styles.shape4} />
-                    <View style={styles.shape5} />
-                </View>
 
+            <View style={styles.shapesContainer}>
+                <View style={styles.shape1} />
+                <View style={styles.shape2} />
+                <View style={styles.shape3} />
+                <View style={styles.shape4} />
+                <View style={styles.shape5} />
+            </View>
+            <ScrollView>
                 <View style={{ paddingHorizontal: 20 }}>
                     <View style={styles.headerContainer}>
                         <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
