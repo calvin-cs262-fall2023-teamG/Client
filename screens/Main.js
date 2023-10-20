@@ -5,8 +5,8 @@ import Book from '../components/Book';
 import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import InputBox from '../components/InputBox';
+import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
 const booksData = books_data
 
@@ -47,12 +47,18 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <View style={styles.searchContainer}>
-
-             <InputBox pHolder='Search Book' icon="search" iconColor='#888181'/>
+            <View>
+                <View style={styles.InputContainer}>
+                    <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
+                    <TextInput
+                        style={styles.InputTextBox}
+                        placeholder={"Search for a book"}
+                        onChangeText={handleSearch}
+                    />
+                </View>
 
                 <StatusBar style="auto" />
-                <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom:70 }}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 70, paddingHorizontal: 0 }}>
                     {
                         books.map((item, index) => {
                             return (
@@ -62,7 +68,7 @@ const Main = () => {
                                     <Book bookInfo={item} />
                                     <View style={styles.details}>
                                         <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
-                                            <Text>More details</Text>
+                                            <Text style={{ textDecorationLine: "underline" }}>More details</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -79,7 +85,7 @@ const Main = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </SafeAreaView >
     );
 }
 
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 15
+        paddingHorizontal: 10
     },
     searchContainer: {
         flex: 1,
@@ -109,13 +115,14 @@ const styles = StyleSheet.create({
         width: 400,
         marginTop: 20,
         alignItems: 'center',
-        borderRadius: 15,
-        justifyContent: "center", //center vertically
-        
+        backgroundColor: '#D9FFF6',
+        borderRadius: 20,
+       // justifyContent: "center" //center vertically
     },
-   
+
     bookIcon: {
-        marginLeft: 5,
+        marginLeft: 10,
+        marginRight: 10,
     },
     footerContainer: {
         position: 'absolute',
@@ -146,7 +153,7 @@ const styles = StyleSheet.create({
     },
     item: {
         backgroundColor: '#81F4D8',
-        padding: 15,
+        padding: 10,
         borderRadius: 30,
         flexDirection: 'row',
         marginTop: 15,
@@ -154,18 +161,17 @@ const styles = StyleSheet.create({
     },
     details: {
         position: "absolute",
-        bottom: 10,
-
+        bottom: 0,
         right: 10,
-        margin: 20,
+        margin: 10,
         color: '#81F4D8'
     },
-    search:{
-    
+    search: {
+
     },
-    buttons:{
+    buttons: {
         color: '#888181',
-    }
+    },
 
     itemLeft: {
         flexDirection: 'row',
@@ -173,13 +179,13 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     square: {
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 40,
         backgroundColor: 'red',
         alignItems: "center",
         opacity: 0.4,
         borderRadius: 5,
-        marginRight: 15,
+        marginRight: 10,
     },
 
 });
