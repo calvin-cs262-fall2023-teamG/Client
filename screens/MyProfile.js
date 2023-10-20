@@ -92,8 +92,8 @@ const MyProfile = () => {
                         onChangeText={(text) => setNewEmail(text)}
                         placeholder="New Email"
                     />
-                    <Button title="Update Email" onPress={handleUpdateEmail} color="black" />
-                    <Button title="Cancel" onPress={() => setEmailModalVisible(false)} color="black" />
+                    <Button title="Update Email" onPress={handleUpdateEmail} color="#81F4D8" />
+                    <Button title="Cancel" onPress={() => setEmailModalVisible(false)} color="#81F4D8" />
                 </View>
             </Modal>
 
@@ -106,8 +106,8 @@ const MyProfile = () => {
                         onChangeText={(text) => setNewUsername(text)}
                         placeholder="New Username"
                     />
-                    <Button title="Update Username" onPress={handleUpdateUsername} color="black" paddingHorizontal={15} />
-                    <Button title="Cancel" onPress={() => setUsernameModalVisible(false)} color="black" />
+                    <Button title="Update Username" onPress={handleUpdateUsername} color="#81F4D8" paddingHorizontal={15} marginTop = {5} />
+                    <Button title="Cancel" onPress={() => setUsernameModalVisible(false)} color="#81F4D8"  marginTop = {15} />
                 </View>
             </Modal>
 
@@ -120,8 +120,8 @@ const MyProfile = () => {
                         onChangeText={(text) => setNewPassword(text)}
                         placeholder="New Password"
                     />
-                    <Button title="Update Password" onPress={handleUpdatePassword} color="black" />
-                    <Button title="Cancel" onPress={() => setPasswordModalVisible(false)} color="black" />
+                    <Button title="Update Password" onPress={handleUpdatePassword} color="#81F4D8" />
+                    <Button title="Cancel" onPress={() => setPasswordModalVisible(false)} color="#81F4D8" />
                 </View>
             </Modal>
         </SafeAreaView>

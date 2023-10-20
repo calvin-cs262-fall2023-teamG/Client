@@ -45,7 +45,6 @@ const Main = () => {
         <SafeAreaView style={styles.container}>
             <View>
                 <View style={styles.InputContainer}>
-                    {/* <Icon name="key" size={20} color="#000" style={styles.icon} /> */}
                     <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
 
                     <TextInput
@@ -54,24 +53,33 @@ const Main = () => {
                         onChangeText={handleSearch}
                     />
                 </View>
-                {/*<TextInput style={styles.InputTextBox}>Search bar</TextInput>*/}
                 <StatusBar style="auto" />
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom:70 }}>
                     {
                         books.map((item, index) => {
                             return (
-                                <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
-                                    <Book bookInfo={item} />
-                                </TouchableOpacity>
+                                <View style={styles.item}>
 
+                                    <View style={styles.square}></View>
+                                    <Book bookInfo={item} />
+                                    <View style={styles.details}>
+                                        <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
+                                            <Text>More details</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             )
                         })
                     }
                 </ScrollView>
-            </View>
 
-            <View style={styles.footerContainer}>
-                <Button style={styles.buttons} onPress={()=>navigation.navigate("Add Book")} label="+" />
+                <View style={styles.footerContainer}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("Add Book")}
+                        style={styles.roundButton}>
+                        <Text style={styles.plus}>+</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -84,7 +92,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     text: {
         fontSize: 50,
         color: '#000',
@@ -110,11 +117,60 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
         position: 'absolute',
+        bottom: 5,
+        right: 5,
+        margin: 10,
+        color: '#81F4D8',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    plus: {
+        fontSize: 30,
+        color: '#000',
+    },
+    button: {
+
+        textAlign: 'center'
+    },
+    roundButton: {
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        backgroundColor: '#81F4D8',
+        borderColor: '#000000',
+        borderWidth: 2,
+    },
+    item: {
+        backgroundColor: '#81F4D8',
+        padding: 15,
+        borderRadius: 30,
+        flexDirection: 'row',
+        marginTop: 15,
+        marginHorizontal: 10,
+    },
+    details: {
+        position: "absolute",
         bottom: 10,
-        right: 10,
-        margin: 20,
-        color: '#81F4D8'
-    }
+        right: 15,
+    },
+
+    itemLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap'
+    },
+    square: {
+        width: 24,
+        height: 24,
+        backgroundColor: 'red',
+        alignItems: "center",
+        opacity: 0.4,
+        borderRadius: 5,
+        marginRight: 15,
+    },
+
 });
 
 export default Main;
