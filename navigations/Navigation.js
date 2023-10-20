@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome } from "react-native-vector-icons";
+import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import BottomTabNavigator from './TabNavigator'
 import LoginScreen from '../screens/LoginScreen';
 import AddBook from "../screens/AddBook";
@@ -39,26 +39,35 @@ const Navigation = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false}} />
           <Stack.Screen name="CreateAccount" component={CreateAccount} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={BottomTabNavigator} options={{
-            title: 'Chapter Cache', headerBackVisible: false, headerRight: () => {
+            title: '', headerBackVisible: false, headerLeft:()=>{
               const navigation = useNavigation();
-              return (
-                <View style={{ flexDirection: "row" }}>
+
+              return(
+              <TouchableOpacity onPress={() => navigation.navigate('Main')} style={{ flexDirection: "row" }}>
+                <Icon style={{ paddingHorizontal: 5, color: '#888181' }} name="book" size={20} />
+                <Text style={{ paddingHorizontal: 5, color: '#888181' }}>Chapter Cache</Text>
+              </TouchableOpacity>)
+            },
+            headerRight: () => {
+              const navigation = useNavigation();
+              return (                
+                  <TouchableOpacity onPress={() => {
+                  navigation.navigate('Login');
+                }} style={{ flexDirection: "row" }} >
                   <Text style={{ paddingHorizontal: 5, color: '#888181'}}>Sign Out</Text>
-                  <FontAwesome style={{ paddingHorizontal: 5, color: '#888181'}}
+                  <Icon style={{ paddingHorizontal: 5, color: '#888181'}}
                     name="sign-out"
                     size={20}
-                    onPress={() => {
-                      navigation.navigate('Login');
-                    }}
+                    
                   />
-                </View>
+                  </TouchableOpacity>
               );
             },
           }}
           />
           <Stack.Screen name="Add Book" component={AddBook} options={{ title: 'Add a Book' }} />
           <Stack.Screen name="Book Info" component={BookInfo} options={{ title: 'Book Info' }} />
-          <Stack.Screen name="Add Book Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
+          <Stack.Screen name="Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
           
         </Stack.Group>
       </Stack.Navigator>
