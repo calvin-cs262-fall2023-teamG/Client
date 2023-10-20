@@ -1,5 +1,5 @@
 import React from 'react';
-import Mailer from 'react-native-mail';
+//import Mailer from 'react-native-mail';
 
 //Function to send an email
 const sendEmail = () => {
@@ -10,7 +10,7 @@ const sendEmail = () => {
         isHTML: false,
     }, (error, event) => {
         if(error){
-            alert("Coul no send mail. Please try again later.");
+            alert("Could not send mail. Please try again later.");
         }
     });
 };
