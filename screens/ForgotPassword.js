@@ -9,6 +9,8 @@ import {
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
+import sendEmail from '../components/sendEmail';
+
 
 
 const ForgotPassword = ({ navigation }) => {
@@ -21,12 +23,19 @@ const ForgotPassword = ({ navigation }) => {
 
      if (emailParts.length === 2 && emailParts[1] === domainToCheck){
         showAlert() 
-        navigation.navigate('Login')
+        navigation.navigate('Login');
      } else{
-        setErrorMessage("Please enter your Calvin email")
+        setErrorMessage("Please enter your Calvin email");
      }
   }
 
+  const checkAndSend = () => {
+    checkEmailDomain();
+
+    // Sending the email requires 
+    //sendEmail();
+    }
+  
 
   const showAlert = () => {
     Alert.alert(
@@ -73,7 +82,7 @@ const ForgotPassword = ({ navigation }) => {
             />
           </View>
 
-          <TouchableOpacity onPress={checkEmailDomain}>
+          <TouchableOpacity onPress={checkAndSend}>
             <View style={styles.resetPasswordButton}>
               <Text>Reset Password</Text>
             </View>
