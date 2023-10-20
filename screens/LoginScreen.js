@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +9,27 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [email, setEmail] = useState(''); // State to store the user's email
+    const [storedUsername, setStoredUsername] = useState(''); // State to store the user's username
+
+    useEffect(() => {
+        // Retrieve user data from AsyncStorage when the component mounts
+        const retrieveUserData = async () => {
+            try {
+                const userData = await AsyncStorage.getItem('userData');
+                if (userData) {
+                    const { username: storedUsername, email } = JSON.parse(userData);
+                    setUsername(storedUsername);
+                    setEmail(email);
+                    setPassword(password)
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        retrieveUserData();
+    }, []);
 
     const handleLogin = async () => {
         try {
@@ -16,6 +37,8 @@ const LoginScreen = ({ navigation }) => {
             if (userData) {
                 const { username: storedUsername, password: storedPassword } = JSON.parse(userData);
                 if ((username === storedUsername && password === storedPassword) || (username === 'admin' && password === "admin")) {
+                    setErrorMessage(''); // Clear any previous error message
+                    // Navigate to the main screen or wherever you want to go
                     navigation.navigate('Main');
                 } else {
                     setErrorMessage("Username or Password Incorrect!");
@@ -28,6 +51,10 @@ const LoginScreen = ({ navigation }) => {
     }
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    }
+
+    const handleResetPassword = async () => {
+        navigation.navigate("ForgotPassword")
     }
 
 
@@ -79,7 +106,7 @@ const LoginScreen = ({ navigation }) => {
                     </View>
 
                     <View style={{ alignItems: 'flex-end' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={handleResetPassword}>
                             <View>
                                 <Text style={styles.ForgotPassword}>Forgot Password?</Text>
                             </View>
