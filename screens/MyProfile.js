@@ -139,7 +139,7 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="envelope" size={18} color="#000" style={styles.icon} />
+                        <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
                         <TextInput
                             style={styles.InputTextBox}
                             value={newEmail}
@@ -166,7 +166,7 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#000" style={styles.icon} />
+                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
                         <TextInput
                             value={newUsername}
                             onChangeText={(text) => setNewUsername(text)}
@@ -193,7 +193,7 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Password:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                         <TextInput
                             value={newPassword}
                             onChangeText={(text) => setNewPassword(text)}
