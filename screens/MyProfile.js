@@ -75,7 +75,7 @@ const MyProfile = () => {
     };
 
     const handleUpdatePassword = () => {
-        if (password !== confirmpassword) {
+        if (newPassword !== confirmpassword) {
             setErrorMessage("Passwords do not match!");
         } else {
             try {
@@ -302,6 +302,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+    errorText:{
+        textAlign: 'center',
+        fontSize:15,
+        color: '#ff0000',
     },
 });
 
