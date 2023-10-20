@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import { Entypo } from '@expo/vector-icons';
 
-export default function AddBookInput({pHolder, icon, entyptoIcon}) {
+export default function AddBookInput({pHolder, icon, entyptoIcon, width}) {
 
   return (
     <View style={styles.wrapper}>
-        <Icon name={icon} size={20} color="#000" style={styles.icon} />
+        <Icon name={icon} size={20} color='#888181' style={styles.icon} />
         
         <TextInput style={styles.input} placeholder={pHolder}/>
     </View>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 15,
     backgroundColor : '#D9FFF6',
-    marginBottom: 15,
+    marginBottom: '5%',
     borderRadius: 15,
     justifyContent: "center" //center vertically
 },
@@ -33,6 +33,5 @@ input:{
     flex:1,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    
 },
 });

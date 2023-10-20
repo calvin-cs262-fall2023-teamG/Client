@@ -10,13 +10,19 @@ import AddBook from "../screens/AddBook";
 import CreateAccount from '../screens/CreateAccount';
 import BookInfo from '../screens/BookInfo';
 import ContactInfo from '../screens/ContactInfo';
+import ForgotPassword from '../screens/ForgotPassword';
 
 const Stack = createNativeStackNavigator();
-
+ 
 const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' screenOptions={{
+        headerBackTitleVisible: false,
+        headerTintColor: '#000000',
+        headerStyle: {
+          backgroundColor: '#81F4D8'
+        }
       }}>
         <Stack.Group>
           <Stack.Screen
@@ -27,19 +33,20 @@ const Navigation = () => {
               headerShown: false,
               headerTitleStyle: {
                 fontSize: 25,
-                fontWeight: 'bold'
-              }
+                fontWeight: 'bold',
+              },
             }} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false}} />
           <Stack.Screen name="CreateAccount" component={CreateAccount} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={BottomTabNavigator} options={{
             title: 'Chapter Cache', headerBackVisible: false, headerRight: () => {
               const navigation = useNavigation();
               return (
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ paddingHorizontal: 5 }}>Sign Out</Text>
-                  <FontAwesome style={{ paddingHorizontal: 5 }}
+                  <Text style={{ paddingHorizontal: 5, color: '#888181'}}>Sign Out</Text>
+                  <FontAwesome style={{ paddingHorizontal: 5, color: '#888181'}}
                     name="sign-out"
-                    size={25}
+                    size={20}
                     onPress={() => {
                       navigation.navigate('Login');
                     }}
@@ -52,6 +59,7 @@ const Navigation = () => {
           <Stack.Screen name="Add Book" component={AddBook} options={{ title: 'Add a Book' }} />
           <Stack.Screen name="Book Info" component={BookInfo} options={{ title: 'Book Info' }} />
           <Stack.Screen name="Add Book Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
+          
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
