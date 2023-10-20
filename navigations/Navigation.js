@@ -67,7 +67,7 @@ const Navigation = () => {
           />
           <Stack.Screen name="Add Book" component={AddBook} options={{ title: 'Add a Book' }} />
           <Stack.Screen name="Book Info" component={BookInfo} options={{ title: 'Book Info' }} />
-          <Stack.Screen name="Add Book Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
+          <Stack.Screen name="Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
           
         </Stack.Group>
       </Stack.Navigator>

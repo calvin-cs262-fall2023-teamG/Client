@@ -18,7 +18,7 @@ const AddBook = ({ navigation }) => {
     const [books, setBooks] = useState([]);
 
     function setTitleAndContinue() {
-        navigation.navigate('Add Book Contact Info', book );
+        navigation.navigate('Contact Info', book );
     }
 
     const pickImageAsync_front = async () => {
