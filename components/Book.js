@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const Book = (props) => {
+  const { book_name, isbn, author, course_name, price, seller_name, seller_email } = props.bookInfo;
 
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
         <View style={styles.square}></View>
-        <Text style={styles.itemText}>{props.text}</Text>
+        <View>
+          <Text style={styles.itemText}>{book_name}</Text>
+          <Text>Author: {author}</Text>
+          <Text>ISBN: {isbn}</Text>
+        </View>
       </View>
       <View style={styles.circular}></View>
     </View>
