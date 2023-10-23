@@ -58,7 +58,7 @@ const ContactInfo = ({ navigation, book }) => {
             </View>
             <View style={styles.inputs}>
                 <View style={styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
                     <TextInput style={styles.InputTextBox}
                         placeholder={"Full Name"}
                         value={name}
@@ -66,7 +66,7 @@ const ContactInfo = ({ navigation, book }) => {
                 </View>
 
                 <View style={styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                     <TextInput style={styles.InputTextBox}
                         placeholder={"Email"}
                         value={email}
@@ -91,7 +91,7 @@ const ContactInfo = ({ navigation, book }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#fff',
     },
 
     shapesContainer: {
@@ -111,9 +111,11 @@ const styles = StyleSheet.create({
         height: 50,
         paddingHorizontal: 15,
         backgroundColor: '#D9FFF6',
-        marginBottom: 15,
+        marginBottom: '5%',
         borderRadius: 15,
-        justifyContent: "center" //center vertically
+        justifyContent: "center",
+        marginLeft: 30,
+        marginRight: 30,
     },
 
     text: {
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 30,
+        marginTop: 25,
 
         alignItems: 'center'
     },
@@ -207,6 +209,9 @@ const styles = StyleSheet.create({
     inputs: {
         marginTop: 200,
     },
+    icon:{
+        marginLeft: 5
+    }
 });
 
 export default ContactInfo;

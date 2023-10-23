@@ -15,5 +15,10 @@
 - UI updates include more consistent color scheme, improved spacing and other tweaks
 
 **(10/23)**
-- Working on UI fixes and possibly a few improvements
+- Working on UI fixes and potentially a few improvements
+- Fixed search bar size
+- Updated 'Sell a book' button width to match the rest of the interface and centered correctly in the footer
+- Fixed slight horizontal scroll that would occur on home page
+- Fixed icons and width of contact info fields
+- Currently working on making book info fill screen
 

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     info:{
         flexDirection: 'row',
         alignItems: 'center',
-        height: 60,
+        height: '11%',
         paddingHorizontal: 15,
         backgroundColor : '#D9FFF6',
         marginBottom: 15,

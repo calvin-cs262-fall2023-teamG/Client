@@ -48,15 +48,15 @@ const Main = () => {
 
         <SafeAreaView style={styles.container}>
                 <View style={styles.InputContainer}>
-                    <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
+                    <Icon name="search" size={20} color="#888181" style={styles.bookIcon} />
                     <TextInput
                         style={styles.InputTextBox}
                         placeholder={"Search for a book"}
                         onChangeText={handleSearch}
                     />
                 </View>
-                <View style = {{alignItems:'center', marginTop: 5, marginBottom:5}}>
-                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books to buy</Text>
+                <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
+                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books for sale</Text>
                 </View>
 
                 <StatusBar style="auto" />
@@ -83,7 +83,7 @@ const Main = () => {
                     <TouchableOpacity
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.plus}>Add a book to sell</Text>
+                        <Text style={styles.plus}>Sell a book</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -115,29 +115,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         height: 50,
-        width: 400,
+        width: 370,
         marginTop: 20,
         alignItems: 'center',
         backgroundColor: '#D9FFF6',
-        borderRadius: 20,
+        borderRadius: 15,
         // justifyContent: "center" //center vertically
     },
 
     bookIcon: {
-        marginLeft: 10,
+        marginLeft: 15,
         marginRight: 10,
     },
     footerContainer: {
         position: 'relative',
-        bottom: 5,
-        right: 5,
         margin: 10,
         color: '#81F4D8',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     plus: {
-        fontSize: 30,
         color: '#000',
     },
     button: {
@@ -145,22 +142,20 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     roundButton: {
-        width: 380,
+        width: 182,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 100,
-        backgroundColor: '#81F4D8',
-        borderColor: '#000000',
-        borderWidth: 2,
+        borderRadius: 15,
+        backgroundColor: '#81F4D8'
     },
     item: {
         backgroundColor: '#D9FFF6',
         padding: 10,
-        borderRadius: 30,
+        borderRadius: 15,
         flexDirection: 'row',
         marginTop: 15,
-        marginHorizontal: 10,
+      
     },
     details: {
         position: "absolute",

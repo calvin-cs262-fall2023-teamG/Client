@@ -7,7 +7,7 @@ const Book = (props) => {
   return (
     <View style={styles.info}>
       <Text style={styles.bookname} numberOfLines={1} ellipsizeMode="tail">{book_name}</Text>
-      <Text>${price}</Text>
+      <Text style={styles.price}>${price}</Text>
     </View>
   )
 }
@@ -15,7 +15,7 @@ const Book = (props) => {
 const styles = StyleSheet.create({
   bookname: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 17,
     maxWidth: 320,
   },
   item: {
@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 15,
   },
+  price: {
+    marginTop: 5,
+    fontStyle: 'italic',
+  }
 
 });
 
