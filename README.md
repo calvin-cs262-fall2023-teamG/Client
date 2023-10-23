@@ -14,3 +14,6 @@
 - This prototype contains no functionality changes but does update the UI/Styles
 - UI updates include more consistent color scheme, improved spacing and other tweaks
 
+**(10/23)**
+- Working on UI fixes and improvements
+
