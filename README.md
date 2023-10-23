@@ -15,5 +15,5 @@
 - UI updates include more consistent color scheme, improved spacing and other tweaks
 
 **(10/23)**
-- Working on UI fixes and improvements
+- Working on UI fixes and possibly a few improvements
 
