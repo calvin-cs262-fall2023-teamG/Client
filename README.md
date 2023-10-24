@@ -1,3 +1,9 @@
+# ChapterCache Client
+--- 
+
+This is the client application for the [CS 262 ChapterCache project.](https://github.com/calvin-cs262-fall2023-teamG/Project)
+
+
 **(10/6)**
 - This prototype allow a user to Login to our app either by using 'admin'- 'admin' credentials.
 
