@@ -22,10 +22,10 @@ const BookInfo = ({route}) => {
 const InfoView = ({name, value, icon})=>{
     return(
         <View style={styles.info}>
-            <Icon name={icon} size={20} color="#000" style={styles.icon} />
+            <Icon name={icon} size={20} color="#888181" style={styles.icon} />
             <View>
-                <Text style={{fontWeight: 'bold'}}>{name}</Text>
-                <Text style={{maxWidth:310}}>{value}</Text>
+                <Text style={{fontWeight: 'bold', color: "#888181"}}>{name}</Text>
+                <Text style={{maxWidth:310, color: "#888181"}}>{value}</Text>
             </View>
         </View>
     )

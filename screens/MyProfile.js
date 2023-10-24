@@ -40,19 +40,30 @@ const MyProfile = () => {
     }, []);
 
     const handleUpdateEmail = () => {
-        AsyncStorage.setItem('userData', JSON.stringify({ email: newEmail, username, password }));
-        setEmail(newEmail);
-        setEmailModalVisible(false);
-        setNewEmail(''); // Clear the input field.
-        setErrorMessage(''); // Clear the error message
+        const domainToCheck = 'calvin.edu';
+        const emailParts = newEmail.split('@');
+
+        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){
+            setErrorMessage("Please enter your Calvin email")
+        } else {
+            AsyncStorage.setItem('userData', JSON.stringify({ email: newEmail, username, password }));
+            setEmail(newEmail);
+            setEmailModalVisible(false);
+            setNewEmail(''); // Clear the input field.
+            setErrorMessage(''); // Clear the error message
+        }
     };
 
     const handleUpdateUsername = () => {
-        AsyncStorage.setItem('userData', JSON.stringify({ email, username: newUsername, password }));
-        setUsername(newUsername);
-        setUsernameModalVisible(false);
-        setNewUsername(''); // Clear the input field.
-        setErrorMessage(''); // Clear the error message
+        if (newUsername.length <= 3) {
+            setErrorMessage("Your username must be at least 4 characters")
+        } else {
+            AsyncStorage.setItem('userData', JSON.stringify({ email, username: newUsername, password }));
+            setUsername(newUsername);
+            setUsernameModalVisible(false);
+            setNewUsername(''); // Clear the input field.
+            setErrorMessage(''); // Clear the error message
+        } 
     };
 
     const clearEmailInput = () => {
@@ -75,7 +86,9 @@ const MyProfile = () => {
     };
 
     const handleUpdatePassword = () => {
-        if (newPassword !== confirmpassword) {
+        if (newPassword.length <= 7) {
+            setErrorMessage("Your password must be at least 8 characters")
+        } else if (newPassword !== confirmpassword) {
             setErrorMessage("Passwords do not match!");
         } else {
             try {
@@ -145,6 +158,9 @@ const MyProfile = () => {
                             autoFocus={true}
                         />
                     </View>
+                    {errorMessage !== '' && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                    )}
                     <TouchableOpacity
                         onPress={handleUpdateEmail}
                         style={styles.modalButton}>
@@ -172,6 +188,9 @@ const MyProfile = () => {
                             autoFocus={true}
                         />
                     </View>
+                    {errorMessage !== '' && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                    )}
                     <TouchableOpacity
                         onPress={handleUpdateUsername}
                         style={styles.modalButton}>
@@ -205,7 +224,7 @@ const MyProfile = () => {
                     </View>
 
                     <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#000" style={styles.icon} />
+                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                         <TextInput
                             style={styles.InputTextBox}
                             placeholder={"Confirm Password"}
@@ -304,6 +323,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize:15,
         color: '#ff0000',
+        paddingBottom:10,
     },
 });
 

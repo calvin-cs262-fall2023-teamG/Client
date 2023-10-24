@@ -71,7 +71,7 @@ const ForgotPassword = ({ navigation }) => {
 
           {/* sets the state of email address*/}
           <View style={styles.InputContainer}>
-            <Icon name="envelope" size={18} color="#000" style={styles.icon} />
+            <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
             <TextInput
               style={styles.InputTextBox}
               placeholder={"Email"}
