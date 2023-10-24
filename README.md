@@ -12,11 +12,13 @@
 
 # **(10/23)**
 *UI fixes & 1 new minor feature*
+- 'Contact info' screen now auto-populates with the users info
 - Fixed search bar size
 - Updated 'Sell a book' button width to match the rest of the interface and centered correctly in the footer
 - Fixed slight horizontal scroll that would occur on home page
 - Fixed icons and width of contact info fields
 - Eliminated blank space in book info screen
+- Other minor UI tweaks
 ### **Known issues**
 - Search function causes book items with short titles to shrink in width
 
