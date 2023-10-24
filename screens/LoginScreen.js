@@ -5,10 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const LoginScreen = ({ navigation }) => {
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(''); //create username, password variables
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState(''); //Displays a message in case the user does something incorrectly
     const [email, setEmail] = useState(''); // State to store the user's email
     const [storedUsername, setStoredUsername] = useState(''); // State to store the user's username
 
@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
             try {
                 const userData = await AsyncStorage.getItem('userData');
                 if (userData) {
-                    const { username: storedUsername, email } = JSON.parse(userData);
+                    const { username: storedUsername, email } = JSON.parse(userData); //check for accuracy of login information
                     setUsername(storedUsername);
                     setEmail(email);
                     setPassword(password)
@@ -29,13 +29,14 @@ const LoginScreen = ({ navigation }) => {
         };
 
         retrieveUserData();
-    }, []);
+    }, []); //This useEffect is triggered as soon as the component appears
 
     const handleLogin = async () => {
         try {
             const userData = await AsyncStorage.getItem('userData');
             if (userData) {
                 const { username: storedUsername, password: storedPassword } = JSON.parse(userData);
+                //checks for appropriate username & password, being either the stored info or "admin, admin"
                 if ((username === storedUsername && password === storedPassword) || (username === 'admin' && password === "admin")) {
                     setErrorMessage(''); // Clear any previous error message
                     // Navigate to the main screen or wherever you want to go
@@ -50,11 +51,11 @@ const LoginScreen = ({ navigation }) => {
         }
     }
     const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+        setShowPassword(!showPassword); //Make the password (in)visible
     }
 
     const handleResetPassword = async () => {
-        navigation.navigate("ForgotPassword")
+        navigation.navigate("ForgotPassword") //allows to access the reset password page
     }
 
 
@@ -73,7 +74,7 @@ const LoginScreen = ({ navigation }) => {
             <ScrollView>
                 <View style={{ paddingHorizontal: 20 }}>
                     <View style={styles.headerContainer}>
-                        <Icon name="book" size={50} color="#000"/>
+                        <Icon name="book" size={50} color="#000" /* Corner logo object */ />
                         <Text style={styles.loginheader}> ChapterCache</Text>
                     </View>
 
@@ -97,7 +98,8 @@ const LoginScreen = ({ navigation }) => {
                             placeholder={"Password"}
                             secureTextEntry={!showPassword}
                             value={password}
-                            onChangeText={text => setPassword(text)} />
+                            onChangeText={text => setPassword(text)} //Collect an input password
+                        />
 
                         {/*Shows or hides the password based on what the user chooses*/}
                         <TouchableOpacity onPress={togglePasswordVisibility}>
@@ -113,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    {errorMessage !== '' && (
+                    {errorMessage !== '' && ( //Handling display of the error message properly
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
 
@@ -140,6 +142,7 @@ const LoginScreen = ({ navigation }) => {
     );
 };
 
+//Styles sheet for this document
 const styles = StyleSheet.create({
     mainbg: {
         flex: 1,
