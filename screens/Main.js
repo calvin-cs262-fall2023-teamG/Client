@@ -1,5 +1,5 @@
-import { StatusBar, FlatList } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, FlatList, TextInput } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
@@ -65,7 +65,7 @@ const Main = () => {
                         books.map((item, index) => {
                             return (
                                 <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
-                                    <View style={styles.item}>
+                                    <View style={[styles.item, { width: '100%' }]}>
 
                                         <View style={styles.square}></View>
                                         <Book bookInfo={item} />
