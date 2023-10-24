@@ -1,10 +1,12 @@
 # **(10/6)**
+*Account login and creation functionality*
 - This prototype allow a user to Login to our app either by using 'admin'- 'admin' credentials.
 
 - They can create their own username and password using our 'Create an Account' button. It stores the values in React Native's async storage which allows you to use the login credentials that was just created.
 - There is a '+' button where the user can add information about their book along with pictures of front and back of the book.
 
 # **(10/19)**
+*UI improvements*
 - This prototype contains no functionality changes but does update the UI/Styles
 - UI updates include more consistent color scheme, improved spacing and other tweaks
 
@@ -15,6 +17,6 @@
 - Fixed slight horizontal scroll that would occur on home page
 - Fixed icons and width of contact info fields
 - Eliminated blank space in book info screen
-**Known issues**
+### **Known issues**
 - Search function causes book items with short titles to shrink in width
 
