@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const Book = (props) => {
   const { book_name, isbn, author, course_name, price, seller_name, seller_email } = props.bookInfo;
 
   return (
-    <View style={styles.info}>
+    <View>
       <Text style={styles.bookname} numberOfLines={1} ellipsizeMode="tail">{book_name}</Text>
       <Text>${price}</Text>
     </View>
@@ -17,24 +17,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     maxWidth: 320,
-  },
-  item: {
-    backgroundColor: '#D9FFF6',
-    padding: 15,
-    borderRadius: 30,
-    flexDirection: 'row',
-    marginTop: 15,
-  },
-  info: {
-  },
-
-  square: {
-    width: 24,
-    height: 24,
-    backgroundColor: 'red',
-    opacity: 0.4,
-    borderRadius: 5,
-    marginRight: 15,
   },
 
 });
