@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Text, View, ScrollView, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InputBox from '../components/InputBox';
 
 const CreateAccount = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -28,7 +29,6 @@ const CreateAccount = ({ navigation }) => {
 
         } else if (password !== confirmpassword) {
             setErrorMessage("Passwords do not match!");  
-
         } else {
             try {
                 // Save user data to AsyncStorage
@@ -39,7 +39,6 @@ const CreateAccount = ({ navigation }) => {
                 setErrorMessage("Error creating account. Please try again.");
             }
         }
-
     }
 
     const togglePasswordVisibility = () => {
@@ -48,7 +47,6 @@ const CreateAccount = ({ navigation }) => {
     const toggleConfirmPasswordVisibility = () => {
         setShowConfirmPassword(!showConfirmPassword);
     }
-
     
 return (
     <View style = {styles.mainbg}>
@@ -72,51 +70,16 @@ return (
                 <Text style = {styles.Info}> Please fill these credentials</Text>
 
                 {/* sets the state of username and password*/}
-                <View style = {styles.InputContainer}>
-                    <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Email"}
-                        value = {email}
-                        onChangeText={text => setEmail(text)}/>
-                </View>
-
-                <View style = {styles.InputContainer}>
-                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"UserName"}
-                        value = {username}
-                        onChangeText={text => setUsername(text)}/>
-                </View>
-
-                <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Password"}
-                        secureTextEntry={!showPassword}
-                        value = {password}
-                        onChangeText={text => setPassword(text)}/>
-                    {/*Shows or hides the password based on what the user chooses*/}
-                    <TouchableOpacity onPress={togglePasswordVisibility}>
-                        <Icon name={showPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
-
-                <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Confirm Password"}
-                        secureTextEntry={!showConfirmPassword}
-                        value = {confirmpassword}
-                        onChangeText={text => setconfirmPassword(text)}/>
-                    {/*Shows or hides the password based on what the user chooses*/}
-                    <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
-                        <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
+                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
+                <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)} />
+                <InputBox pHolder="Password" icon="lock" value={password}
+                        set_text={text => setPassword(text)} secureTextEntry={!showPassword}
+                        togglePasswordVisibility={togglePasswordVisibility}
+                        showPassword={showPassword} />
+                <InputBox pHolder="Confirm Password" icon="lock" value={confirmpassword}
+                        set_text={text => setconfirmPassword(text)} secureTextEntry={!showConfirmPassword}
+                        togglePasswordVisibility={toggleConfirmPasswordVisibility}
+                        showPassword={showConfirmPassword} />
                 
                 {errorMessage !== '' && (
                     <Text style = {styles.errorText}>{errorMessage}</Text>

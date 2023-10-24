@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
 import sendEmail from '../components/sendEmail';
-
-
+import InputBox from '../components/InputBox';
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -72,15 +71,9 @@ const ForgotPassword = ({ navigation }) => {
           <Text style={styles.Info}> Please enter your email address </Text>
 
           {/* sets the state of email address*/}
-          <View style={styles.InputContainer}>
-            <Icon name="envelope" size={18} color="#000" style={styles.icon} />
-            <TextInput
-              style={styles.InputTextBox}
-              placeholder={"Email"}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-            />
-          </View>
+     
+          <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
+
 
           <TouchableOpacity onPress={checkAndSend}>
             <View style={styles.resetPasswordButton}>

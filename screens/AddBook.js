@@ -15,6 +15,11 @@ const AddBook = ({ navigation }) => {
 
     //Temporary variable list of books for proof of concept
     const [book , setBook] = useState();
+    const [isbn , setISBN] = useState();
+    const [author , setAuthor] = useState();
+    const [course_name , setCourseName] = useState();
+    const [price , setPrice] = useState();
+
     const [books, setBooks] = useState([]);
 
     function setTitleAndContinue() {
@@ -45,11 +50,11 @@ const AddBook = ({ navigation }) => {
         <View style={styles.container}>
             
             <ScrollView>
-            <InputBox pHolder='Book Name' icon="book" value={book} onChangeText={text => setBook(text)}/>
-            <InputBox pHolder='ISBN' icon = "hashtag"/>
-            <InputBox pHolder='Author' icon = "user"/>
-            <InputBox pHolder='Course Name' icon = "graduation-cap"/>
-            <InputBox pHolder='Price' icon = "tags"/>
+            <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)}/>
+            <InputBox pHolder='ISBN' icon = "hashtag" value={isbn} set_text={text => setISBN(text)}/>
+            <InputBox pHolder='Author' icon = "user" value={author} set_text={text => setAuthor(text)}/>
+            <InputBox pHolder='Course Name' icon = "graduation-cap" value={course_name} set_text={text => setCourseName(text)}/>
+            <InputBox pHolder='Price' icon = "tags" value={price} set_text={text => setPrice(text)}/>
 
             <View style = {styles.imageContainer}>
                 <TouchableOpacity onPress={pickImageAsync_front}>

@@ -57,25 +57,11 @@ const ContactInfo = ({ navigation, book }) => {
                 <View style={styles.shape5} />
             </View>
             <View style={styles.inputs}>
-                <View style={styles.InputContainer}>
-                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                    <TextInput style={styles.InputTextBox}
-                        placeholder={"Full Name"}
-                        value={name}
-                        onChangeText={text => setName(text)} />
-                </View>
-
-                <View style={styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                    <TextInput style={styles.InputTextBox}
-                        placeholder={"Email"}
-                        value={email}
-                        onChangeText={text => setEmail(text)} />
-                </View>
+                <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
+                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
                 {errorMessage !== '' && (
                     <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
-
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={handleAddBook}>
                         <View style={styles.okButton}>

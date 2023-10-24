@@ -47,14 +47,11 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-                <View style={styles.InputContainer}>
-                    <Icon name="search" size={20} color="#888181" style={styles.bookIcon} />
-                    <TextInput
-                        style={styles.InputTextBox}
-                        placeholder={"Search for a book"}
-                        onChangeText={handleSearch}
-                    />
+                <View style={{marginTop:10, width:400}}>
+                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch} />
+
                 </View>
+
                 <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
                     <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books for sale</Text>
                 </View>

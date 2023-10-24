@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import InputBox from '../components/InputBox';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -10,7 +10,6 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState(''); // State to store the user's email
-    const [storedUsername, setStoredUsername] = useState(''); // State to store the user's username
 
     useEffect(() => {
         // Retrieve user data from AsyncStorage when the component mounts
@@ -81,29 +80,12 @@ const LoginScreen = ({ navigation }) => {
                     <Text style={styles.Info}> Please fill these credentials</Text>
 
                     {/* sets the state of username and password*/}
-                    <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            placeholder={"UserName"}
-                            value={username}
-                            onChangeText={text => setUsername(text)} />
-                    </View>
 
-                    <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            placeholder={"Password"}
-                            secureTextEntry={!showPassword}
-                            value={password}
-                            onChangeText={text => setPassword(text)} />
-
-                        {/*Shows or hides the password based on what the user chooses*/}
-                        <TouchableOpacity onPress={togglePasswordVisibility}>
-                            <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
+                    <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)} />
+                    <InputBox pHolder="Password" icon="lock" value={password}
+                        set_text={text => setPassword(text)} secureTextEntry={!showPassword}
+                        togglePasswordVisibility={togglePasswordVisibility}
+                        showPassword={showPassword} />
 
                     <View style={{ alignItems: 'flex-end' }}>
                         <TouchableOpacity onPress={handleResetPassword}>
