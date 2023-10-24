@@ -9,8 +9,6 @@ import {
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
-import sendEmail from '../components/sendEmail';
-
 
 
 const ForgotPassword = ({ navigation }) => {
@@ -64,7 +62,7 @@ const ForgotPassword = ({ navigation }) => {
       >
         <View style={{ paddingHorizontal: 20 }}>
           <View style={styles.headerContainer}>
-            <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
+            <Icon name="book" size={50} color="#000" />
             <Text style={styles.loginheader}> ChapterCache</Text>
           </View>
 
@@ -93,7 +91,7 @@ const ForgotPassword = ({ navigation }) => {
                     )}
 
           <View style={styles.footer}>
-            <Text style={styles.Infofooter}>Know your Password?</Text>
+            <Text>Know your Password?</Text>
             <View>
               <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                 <View>
@@ -176,11 +174,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
   },
-
-  icon: {
-    marginLeft: 5,
-  },
-
   //Text = 'Reset Password'
   PageTitle: {
     marginTop: 160,
@@ -188,12 +181,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "400",
   },
-
   Info: {
     marginBottom: 40,
     fontSize: 15,
     color: "#888181",
     paddingLeft: 10,
+  },
+  icon: {
+    marginLeft: 5,
   },
 
   //The styling for UserName and Password text boxes, and icons
@@ -207,18 +202,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center", //center vertically
   },
-
   InputTextBox: {
     flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 15,
-  },
-
-  //Error Message
-  errorText: {
-    textAlign: "center",
-    fontSize: 15,
-    color: "#ff0000",
   },
 
   //The styling for the 'Reset Password' Button
@@ -230,6 +217,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center", //center horizontally
     justifyContent: "center", //center vertically
+  },
+    
+  //Error Message
+  errorText: {
+    textAlign: "center",
+    fontSize: 15,
+    color: "#ff0000",
   },
 
   //View for the two styles below: Infofooter, CreateAccount

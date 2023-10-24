@@ -7,7 +7,7 @@ const BookInfo = ({route}) => {
     const { bookInfo } = route.params;
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.content}>
+            <View>
                 <InfoView name ="Book" icon="book" value={bookInfo.book_name}/>
                 <InfoView name ="ISBN" icon = "hashtag" value={bookInfo.isbn}/>
                 <InfoView name ="Author" icon = "user" value={bookInfo.author}/>

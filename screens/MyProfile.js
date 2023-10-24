@@ -105,8 +105,7 @@ const MyProfile = () => {
                 <Text>Email: {email} </Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => setEmailModalVisible(true)}
-                        style={styles.button}>
+                        onPress={() => setEmailModalVisible(true)}>
                         <Text style={styles.buttonText}>Change Email</Text>
                     </TouchableOpacity>
                 </View>
@@ -116,8 +115,7 @@ const MyProfile = () => {
                 <Text>UserName: {username} </Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => setUsernameModalVisible(true)}
-                        style={styles.button}>
+                        onPress={() => setUsernameModalVisible(true)}>
                         <Text style={styles.buttonText}>Change UserName</Text>
                     </TouchableOpacity>
                 </View>
@@ -127,19 +125,18 @@ const MyProfile = () => {
                 <Text>Password: {'*'.repeat(password.length)}</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => setPasswordModalVisible(true)}
-                        style={styles.button}>
+                        onPress={() => setPasswordModalVisible(true)}>
                         <Text style={styles.buttonText}>Change Password</Text>
                     </TouchableOpacity>
                 </View>
             </View>
 
             {/* Email Update Modal */}
-            <Modal isVisible={isEmailModalVisible} style={styles.modal}>
+            <Modal isVisible={isEmailModalVisible}>
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
+                        <Icon name="envelope" size={18} color="#888181"/>
                         <TextInput
                             style={styles.InputTextBox}
                             value={newEmail}
@@ -166,7 +163,7 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
+                        <Icon name="user" size={20} color="#888181"/>
                         <TextInput
                             value={newUsername}
                             onChangeText={(text) => setNewUsername(text)}
@@ -193,7 +190,7 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Password:</Text>
                     <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
+                        <Icon name="lock" size={20} color="#888181"/>
                         <TextInput
                             value={newPassword}
                             onChangeText={(text) => setNewPassword(text)}
@@ -259,6 +256,21 @@ const styles = StyleSheet.create({
         justifyContent: 'left',
         paddingHorizontal: 15
     },
+    buttonContainer: {
+        flex: 1, // Takes up the remaining space to push the button to the right
+        alignItems: 'flex-end', // Align the button to the right
+    },
+    buttonText: {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+    },
     InputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -274,21 +286,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
 
-    },
-    buttonContainer: {
-        flex: 1, // Takes up the remaining space to push the button to the right
-        alignItems: 'flex-end', // Align the button to the right
-    },
-    buttonText: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalContainer: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
     },
     modalButton: {
         backgroundColor: '#81F4D8',

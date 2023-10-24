@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
-import Book from '../components/Book';
+
 
 const PlaceholderImage_front = require('../assets/book_icon_gray.png');
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
@@ -101,37 +101,28 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 15,
     },
-    imageSection: {
-        alignItems: 'center',
-    },
-    shapesContainer: {
-        position: 'absolute',
-        flexWrap: 'wrap',
-        opacity: 0.5
-    },
-    
-    text: {
-        fontSize: 20,
-        marginBottom: 5,
-    },
     imageContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20,
         marginBottom: 0,
     },
+    imageSection: {
+        alignItems: 'center',
+    },
+    text: {
+        fontSize: 20,
+        marginBottom: 5,
+    },
+    addImage: {
+        color: '#81F4D8',
+        alignItems: 'center',
+        fontWeight: 'bold',
+    },
     buttonContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
         marginTop: 25
-    },
-    contact: {
-        height: 50,
-        backgroundColor: '#81F4D8',
-        borderRadius: 15,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
     },
     okButton: {
         height: 50,
@@ -142,15 +133,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         width: 182,
         marginBottom: 20,
-    },
-    addImage: {
-        color: '#81F4D8',
-        alignItems: 'center',
-        fontWeight: 'bold',
-    },
-
-    images:{
-        backgroundColor: '#2065d4'
     },
     shape1: {
         position: 'absolute',
@@ -198,8 +180,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
     },
-    
-
 });
 
 export default AddBook;
