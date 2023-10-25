@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
 import Book from '../components/Book';
@@ -17,6 +18,25 @@ const ContactInfo = ({ navigation, book }) => {
     const [name, setName] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        // Retrieve data from AsyncStorage
+        try {
+          const fetchUserData = async () => {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+              const { email, username, password } = JSON.parse(userData);
+              setEmail(email);
+              setName(username);
+              console.log("Autofilled fields with " + username + " & " + email);
+            }
+          };
+          fetchUserData();
+        } catch (error) {
+          console.error(error);
+        }
+      }, []);
+    
 
     const pickImageAsync_front = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
