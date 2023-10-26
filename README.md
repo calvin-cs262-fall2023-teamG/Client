@@ -22,3 +22,10 @@
 ### **Known issues**
 - Search function causes book items with short titles to shrink in width
 
+NOTES:
+
+How to use <Button>?
+- style: it can either be a 'button' or 'text'. It depends on where you button has a background in the back or not
+- label: the text that goes in the button
+- onPress: The result to the buttonpress action
+How to use <InputBox>?

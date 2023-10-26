@@ -11,6 +11,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
+import Button from '../components/Button';
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -48,7 +49,6 @@ const ForgotPassword = ({ navigation }) => {
   return (
     <View style={styles.mainbg}>
       {/* These are the designs for the main page */}
-
       <View style={styles.shapesContainer}>
         <View style={styles.shape1} />
         <View style={styles.shape2} />
@@ -74,12 +74,7 @@ const ForgotPassword = ({ navigation }) => {
      
           <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
 
-
-          <TouchableOpacity onPress={checkAndSend}>
-            <View style={styles.resetPasswordButton}>
-              <Text>Reset Password</Text>
-            </View>
-          </TouchableOpacity>
+          <Button style = "button" label="Reset Password" onPress={checkAndSend}/>
 
           {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
@@ -88,11 +83,7 @@ const ForgotPassword = ({ navigation }) => {
           <View style={styles.footer}>
             <Text style={styles.Infofooter}>Know your Password?</Text>
             <View>
-              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                <View>
-                  <Text style={styles.CreateAccount}>Sign In</Text>
-                </View>
-              </TouchableOpacity>
+              <Button style = "text" label="Sign In" onPress={() => navigation.navigate("Login")}/>
             </View>
           </View>
         </View>
@@ -170,10 +161,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  icon: {
-    marginLeft: 5,
-  },
-
   //Text = 'Reset Password'
   PageTitle: {
     marginTop: 160,
@@ -189,40 +176,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
 
-  //The styling for UserName and Password text boxes, and icons
-  InputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    paddingHorizontal: 15,
-    backgroundColor: "#D9FFF6",
-    marginBottom: 5,
-    borderRadius: 15,
-    justifyContent: "center", //center vertically
-  },
-
-  InputTextBox: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-
   //Error Message
   errorText: {
     textAlign: "center",
     fontSize: 15,
     color: "#ff0000",
-  },
-
-  //The styling for the 'Reset Password' Button
-  resetPasswordButton: {
-    marginTop: 5,
-    paddingVertical: 10,
-    height: 50,
-    backgroundColor: "#81F4D8",
-    borderRadius: 15,
-    alignItems: "center", //center horizontally
-    justifyContent: "center", //center vertically
   },
 
   //View for the two styles below: Infofooter, CreateAccount
@@ -231,11 +189,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  //Button = 'Create an account'
-  CreateAccount: {
-    fontSize: 15,
-    color: "#00FFC1",
-  },
 });
 
 export default ForgotPassword;

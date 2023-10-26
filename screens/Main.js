@@ -6,7 +6,6 @@ import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
-import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
 const booksData = books_data
 
@@ -48,7 +47,7 @@ const Main = () => {
 
         <SafeAreaView style={styles.container}>
                 <View style={{marginTop:10, width:400}}>
-                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch} />
+                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch}  autofocus = {false}/>
 
                 </View>
 

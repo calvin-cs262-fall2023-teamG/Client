@@ -8,7 +8,6 @@ import Book from '../components/Book';
 const PlaceholderImage_front = require('../assets/book_icon_gray.png');
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 
-
 const AddBook = ({ navigation }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null);
     const [selectedImage_back, setSelectedImage_back] = useState(null);
@@ -46,9 +45,7 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
-      
         <View style={styles.container}>
-            
             <ScrollView>
             <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)}/>
             <InputBox pHolder='ISBN' icon = "hashtag" value={isbn} set_text={text => setISBN(text)}/>
@@ -95,7 +92,6 @@ const AddBook = ({ navigation }) => {
             </View>
             </ScrollView>
         </View>
-      
     )
 }
 
@@ -203,8 +199,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
     },
-    
-
 });
 
 export default AddBook;

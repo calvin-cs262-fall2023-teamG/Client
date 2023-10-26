@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import InputBox from '../components/InputBox';
+import Button from '../components/Button';
 
 const MyProfile = () => {
     const [email, setEmail] = useState('');
@@ -17,7 +18,6 @@ const MyProfile = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [confirmpassword, setconfirmPassword] = useState('');
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -103,6 +103,8 @@ const MyProfile = () => {
         <SafeAreaView style={styles.container}>
             <View style={styles.InfoContainer}>
                 <Text>Email: {email} </Text>
+                {/* <Button style = "text" label="Change Email" onPress={() => setEmailModalVisible(true)}/> */}
+
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         onPress={() => setEmailModalVisible(true)}
@@ -138,26 +140,11 @@ const MyProfile = () => {
             <Modal isVisible={isEmailModalVisible} style={styles.modal}>
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
-                    <View style={styles.InputContainer}>
-                        <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            value={newEmail}
-                            onChangeText={(text) => setNewEmail(text)}
-                            placeholder="New Email"
-                            autoFocus={true}
-                        />
-                    </View>
-                    <TouchableOpacity
-                        onPress={handleUpdateEmail}
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Update Email</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={clearEmailInput} // Clear input and hide modal
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Cancel</Text>
-                    </TouchableOpacity>
+                    <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)}  autofocus = {true} />
+
+                    <Button style = "button" label="Update Email" onPress={handleUpdateEmail}/>
+                    <Button style = "button" label="Cancel" onPress={clearEmailInput}/>
+
                 </View>
             </Modal>
 
@@ -165,26 +152,11 @@ const MyProfile = () => {
             <Modal isVisible={isUsernameModalVisible} style={styles.modal}>
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
-                    <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            value={newUsername}
-                            onChangeText={(text) => setNewUsername(text)}
-                            placeholder="New Username"
-                            style={styles.InputTextBox}
-                            autoFocus={true}
-                        />
-                    </View>
-                    <TouchableOpacity
-                        onPress={handleUpdateUsername}
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Update Username</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={clearUsernameInput}
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Cancel</Text>
-                    </TouchableOpacity>
+                    <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={text => setNewUsername(text)}  autofocus = {true} />
+                    
+                    <Button style = "button" label="Update Username" onPress={handleUpdateUsername}/>
+                    <Button style = "button" label="Cancel" onPress={clearUsernameInput}/>
+
                 </View>
             </Modal>
 
@@ -192,49 +164,24 @@ const MyProfile = () => {
             <Modal isVisible={isPasswordModalVisible} style={styles.modal}>
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Password:</Text>
-                    <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            value={newPassword}
-                            onChangeText={(text) => setNewPassword(text)}
-                            placeholder="New Password"
-                            secureTextEntry={!showPassword}
-                            style={styles.InputTextBox}
-                            autoFocus={true}
-                        />
-                        <TouchableOpacity onPress={togglePasswordVisibility}>
-                            <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
+                    <InputBox pHolder="New Password" icon="lock" value={newPassword}
+                        set_text={text => setNewPassword(text)} secureTextEntry={!showPassword}
+                        togglePasswordVisibility={togglePasswordVisibility}
+                        showPassword={showPassword}
+                        autofocus = {true} />
+                    <InputBox pHolder="Confirm Password" icon="lock" value={confirmpassword}
+                        set_text={text => setconfirmPassword(text)} secureTextEntry={!showConfirmPassword}
+                        togglePasswordVisibility={toggleConfirmPasswordVisibility}
+                        showPassword={showConfirmPassword}
+                        autofocus = {false} />
 
-                    <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#000" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            placeholder={"Confirm Password"}
-                            secureTextEntry={!showConfirmPassword}
-                            value={confirmpassword}
-                            onChangeText={text => setconfirmPassword(text)} />
-                        {/*Shows or hides the password based on what the user chooses*/}
-                        <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
-                            <Icon name={showConfirmPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
                     {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
 
-                    <TouchableOpacity
-                        onPress={handleUpdatePassword}
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Update Password</Text>
-                    </TouchableOpacity>
+                    <Button style = "button" label="Update Password" onPress={handleUpdatePassword}/>
+                    <Button style = "button" label="Cancel" onPress={clearPasswordInput}/>
 
-                    <TouchableOpacity
-                        onPress={clearPasswordInput}
-                        style={styles.modalButton}>
-                        <Text style={styles.modalButtonText}>Cancel</Text>
-                    </TouchableOpacity>
                 </View>
             </Modal>
         </SafeAreaView>
@@ -259,22 +206,6 @@ const styles = StyleSheet.create({
         justifyContent: 'left',
         paddingHorizontal: 15
     },
-    InputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 50,
-        paddingHorizontal: 15,
-        backgroundColor: '#D9FFF6',
-        marginBottom: 15,
-        borderRadius: 15,
-        justifyContent: "center" //center vertically
-    },
-    InputTextBox: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-
-    },
     buttonContainer: {
         flex: 1, // Takes up the remaining space to push the button to the right
         alignItems: 'flex-end', // Align the button to the right
@@ -289,19 +220,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20,
         borderRadius: 10,
-    },
-    modalButton: {
-        backgroundColor: '#81F4D8',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 10,
-        marginVertical: 3,
-    },
-    modalButtonText: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     errorText:{
         textAlign: 'center',
