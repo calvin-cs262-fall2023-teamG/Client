@@ -5,23 +5,22 @@ import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
 
 
-const PlaceholderImage_front = require('../assets/book_icon_gray.png');
+const PlaceholderImage_front = require('../assets/book_icon_gray.png'); //Allow for placeholders
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 
 
 const AddBook = ({ navigation }) => {
-    const [selectedImage_front, setSelectedImage_front] = useState(null);
+    const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
-    //Temporary variable list of books for proof of concept
-    const [book , setBook] = useState();
+    const [book , setBook] = useState(); //Currently not in use
     const [books, setBooks] = useState([]);
 
     function setTitleAndContinue() {
-        navigation.navigate('Contact Info', book );
+        navigation.navigate('Contact Info', book ); //a function to advance the page to the contact info input
     }
 
-    const pickImageAsync_front = async () => {
+    const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           quality: 1,
@@ -30,7 +29,7 @@ const AddBook = ({ navigation }) => {
         setSelectedImage_front(result.assets[0].uri);
       }
     }
-    const pickImageAsync_back = async () => {
+    const pickImageAsync_back = async () => { //Similar to above, but for the back of the book
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           quality: 1,
@@ -44,7 +43,7 @@ const AddBook = ({ navigation }) => {
       
         <View style={styles.container}>
             
-            <ScrollView>
+            <ScrollView>   {/* This section establishes input boxes, and gives them icons */}
             <InputBox pHolder='Book Name' icon="book" value={book} onChangeText={text => setBook(text)}/>
             <InputBox pHolder='ISBN' icon = "hashtag"/>
             <InputBox pHolder='Author' icon = "user"/>
@@ -52,8 +51,9 @@ const AddBook = ({ navigation }) => {
             <InputBox pHolder='Price' icon = "tags"/>
 
             <View style = {styles.imageContainer}>
-                <TouchableOpacity onPress={pickImageAsync_front}>
+
                 {/* Upload front of the book */}
+                <TouchableOpacity onPress={pickImageAsync_front}>
                     <View style = {styles.imageSection}>
                         <View>
                         <Text style = {styles.text}>Front picture</Text>
@@ -66,8 +66,8 @@ const AddBook = ({ navigation }) => {
                 </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={pickImageAsync_back}>
                 {/* Upload back of the book */}
+                <TouchableOpacity onPress={pickImageAsync_back}>
                     <View style = {styles.imageSection}>
                         <View >
                             <Text style = {styles.text}>Back picture</Text>
@@ -82,7 +82,7 @@ const AddBook = ({ navigation }) => {
             </View>
 
             <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={setTitleAndContinue}>
+                <TouchableOpacity onPress={setTitleAndContinue}> {/* A button that calls the function to advance the page */}
                     <View style={styles.okButton}>
                         <Text style={{color: '#000'}}>Next</Text> 
                     </View>
@@ -94,6 +94,7 @@ const AddBook = ({ navigation }) => {
     )
 }
 
+//Stylesheet
 const styles = StyleSheet.create({
     container: {
         flex: 1,
