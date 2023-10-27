@@ -6,12 +6,15 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Alert,
+  Alert, Dimensions
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+
+// get height dimensions of the screen
+const { height: screenHeight } = Dimensions.get('window');
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -112,22 +115,22 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   shape2: {
-    position: "absolute",
+    position: 'absolute',
     width: 200,
     height: 200,
-    top: 800,
     left: 40,
     borderRadius: 100,
-    backgroundColor: "#A1FFB6",
+    backgroundColor: '#A1FFB6',
+    transform: [{ translateY: screenHeight - 30}],
   },
   shape3: {
-    position: "absolute",
+    position: 'absolute',
     width: 200,
     height: 200,
-    top: 700,
     left: -90,
     borderRadius: 100,
-    backgroundColor: "#8CFFD6",
+    backgroundColor: '#8CFFD6',
+    transform: [{ translateY: screenHeight - 120}],
   },
   shape4: {
     position: "absolute",
