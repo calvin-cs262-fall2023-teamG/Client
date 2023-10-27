@@ -13,88 +13,84 @@ const AddBook = ({ navigation }) => {
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
     //Temporary variable list of books for proof of concept
-    const [book , setBook] = useState();
-    const [isbn , setISBN] = useState();
-    const [author , setAuthor] = useState();
-    const [course_name , setCourseName] = useState();
-    const [price , setPrice] = useState();
+    const [book, setBook] = useState();
+    const [isbn, setISBN] = useState();
+    const [author, setAuthor] = useState();
+    const [course_name, setCourseName] = useState();
+    const [price, setPrice] = useState();
 
     const [books, setBooks] = useState([]);
 
-    function setTitleAndContinue() {
-        navigation.navigate('Contact Info', book ); //a function to advance the page to the contact info input
-    }
-
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
-          allowsEditing: true,
-          quality: 1,
-     });
-     if (!result.canceled) {
-        setSelectedImage_front(result.assets[0].uri);
-      }
+            allowsEditing: true,
+            quality: 1,
+        });
+        if (!result.canceled) {
+            setSelectedImage_front(result.assets[0].uri);
+        }
     }
     const pickImageAsync_back = async () => { //Similar to above, but for the back of the book
         let result = await ImagePicker.launchImageLibraryAsync({
-          allowsEditing: true,
-          quality: 1,
-     });
-     if (!result.canceled) {
-        setSelectedImage_back(result.assets[0].uri);
-      }
-    }
+            allowsEditing: true,
+            quality: 1,
+        });
+        if (!result.canceled) {
+            setSelectedImage_back(result.assets[0].uri);
+        }
+ }
 
-    return (
+return (
         <View style={styles.container}>
-            <ScrollView> {/* This section establishes input boxes, and gives them icons */}
-            <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)}/>
-            <InputBox pHolder='ISBN' icon = "hashtag" value={isbn} set_text={text => setISBN(text)}/>
-            <InputBox pHolder='Author' icon = "user" value={author} set_text={text => setAuthor(text)}/>
-            <InputBox pHolder='Course Name' icon = "graduation-cap" value={course_name} set_text={text => setCourseName(text)}/>
-            <InputBox pHolder='Price' icon = "tags" value={price} set_text={text => setPrice(text)}/>
+            <ScrollView>
+                <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)} />
+                <InputBox pHolder='ISBN' icon="hashtag" value={isbn} set_text={text => setISBN(text)} />
+                <InputBox pHolder='Author' icon="user" value={author} set_text={text => setAuthor(text)} />
+                <InputBox pHolder='Course Name' icon="graduation-cap" value={course_name} set_text={text => setCourseName(text)} />
+                <InputBox pHolder='Price' icon="tags" value={price} set_text={text => setPrice(text)} />
 
-            <View style = {styles.imageContainer}>
+                <View style={styles.imageContainer}>
 
-                {/* Upload front of the book */}
-                <TouchableOpacity onPress={pickImageAsync_front}>
-                    <View style = {styles.imageSection}>
-                        <View>
-                        <Text style = {styles.text}>Front picture</Text>
-                        <Text style = {styles.addImage}> Add image</Text>
-                    </View>
-                    <ImageViewer 
-                        placeholderImageSource={PlaceholderImage_front}
-                        selectedImage={selectedImage_front}
-                        />
-                </View>
-                </TouchableOpacity>
-
-                {/* Upload back of the book */}
-                <TouchableOpacity onPress={pickImageAsync_back}>
-                    <View style = {styles.imageSection}>
-                        <View >
-                            <Text style = {styles.text}>Back picture</Text>
-                            <Text style = {styles.addImage}> Add image</Text>
+                    {/* Upload front of the book */}
+                    <TouchableOpacity onPress={pickImageAsync_front}>
+                        <View style={styles.imageSection}>
+                            <View>
+                                <Text style={styles.text}>Front picture</Text>
+                                <Text style={styles.addImage}> Add image</Text>
+                            </View>
+                            <ImageViewer
+                                placeholderImageSource={PlaceholderImage_front}
+                                selectedImage={selectedImage_front}
+                            />
                         </View>
-                    <ImageViewer 
-                        placeholderImageSource={PlaceholderImage_back}
-                        selectedImage={selectedImage_back}
-                        />
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    </TouchableOpacity>
 
-            <View style = {styles.buttonContainer}>
-                <TouchableOpacity onPress={setTitleAndContinue}> {/* A button that calls the function to advance the page */}
-                    <View style={styles.okButton}>
-                        <Text style={{color: '#000'}}>Next</Text> 
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    {/* Upload back of the book */}
+                    <TouchableOpacity onPress={pickImageAsync_back}>
+                        <View style={styles.imageSection}>
+                            <View >
+                                <Text style={styles.text}>Back picture</Text>
+                                <Text style={styles.addImage}> Add image</Text>
+                            </View>
+                            <ImageViewer
+                                placeholderImageSource={PlaceholderImage_back}
+                                selectedImage={selectedImage_back}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Contact Info', book)}>
+                         <View style={styles.okButton}>
+                        <Text style={{ color: '#000' }}>Next</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View> 
             </ScrollView>
         </View>
-    )
-}
+  )
+ }
 
 const styles = StyleSheet.create({
     container: {
@@ -181,7 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
-    },
+    }
 });
 
 export default AddBook;

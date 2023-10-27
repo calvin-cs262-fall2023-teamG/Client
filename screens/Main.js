@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
 
-const booksData = books_data //Collects a hardcoded json full of book objects
+const booksData = books_data; //Collects a hardcoded json full of book objects
 
 const Main = () => {
     const navigation = useNavigation();
@@ -25,7 +25,7 @@ const Main = () => {
     //Alters the "books" list to only show books whose title matches with what is in the search bar
     const handleSearch = (searchTerm) => {
         if (searchTerm === '') {
-            setBooks(booksData);
+            setBooks(booksData); 
         } else {
             const filteredBooks = booksData.filter((book) => {
                 const title = book.book_name.toLowerCase();
@@ -77,11 +77,13 @@ const Main = () => {
                 </ScrollView>
 
                 <View style={styles.footerContainer}>
-                    <TouchableOpacity //The Add Book button, navigates to the AddBook page to begin the AddBook process
+                    <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
                         <Text style={styles.plus}>Sell a book</Text>
                     </TouchableOpacity>
+ 
+                    {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
                 </View>
 
 

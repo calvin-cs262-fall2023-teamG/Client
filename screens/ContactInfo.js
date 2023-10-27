@@ -39,14 +39,14 @@ const ContactInfo = ({ navigation, book }) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.shapesContainer}>
-                <View style={styles.shape1} />
-                <View style={styles.shape2} />
-                <View style={styles.shape3} />
-                <View style={styles.shape4} />
-                <View style={styles.shape5} />
-            </View>
+         <ScrollView style={styles.container}>
+                 <View style={styles.shapesContainer}>
+                     <View style={styles.shape1} />
+                     <View style={styles.shape2} />
+                     <View style={styles.shape3} />
+                     <View style={styles.shape4} />
+                     <View style={styles.shape5} />
+                 </View>
             <View style={styles.inputs}>
                 <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
@@ -125,9 +125,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 15,
         color: '#ff0000',
-    },
-    inputs: {
-        marginTop: 200,
     },
 });
 

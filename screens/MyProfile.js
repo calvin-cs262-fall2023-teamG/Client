@@ -151,7 +151,9 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
                     <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)}  autofocus = {true} />
-
+                    {errorMessage !== '' && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                    )}
                     <Button style = "button" label="Update Email" onPress={handleUpdateEmail}/>
                     <Button style = "button" label="Cancel" onPress={clearEmailInput}/>
 
@@ -163,7 +165,9 @@ const MyProfile = () => {
                 <View style={styles.modalContainer}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
                     <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={text => setNewUsername(text)}  autofocus = {true} />
-                    
+                    {errorMessage !== '' && (
+                        <Text style={styles.errorText}>{errorMessage}</Text>
+                    )}
                     <Button style = "button" label="Update Username" onPress={handleUpdateUsername}/>
                     <Button style = "button" label="Cancel" onPress={clearUsernameInput}/>
 

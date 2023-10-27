@@ -67,12 +67,10 @@ return (
             <View style={{paddingHorizontal: 20}}>
                 <View style = {styles.headerContainer}>
                     <Icon name="book" size={50} color="#000"/>
-                    <Text style = {styles.loginheader}> ChapterCache</Text> {/* Corner Icon */}
+                    <Text style = {styles.loginheader}> ChapterCache</Text> 
                 </View>
-
                 <Text style = {styles.PageTitle}> Create an Account</Text>
                 <Text style = {styles.Info}> Please fill these credentials</Text>
-
                 {/* sets the state of username and password*/}
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {true}/>
                 <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {false} />
@@ -86,10 +84,9 @@ return (
                         togglePasswordVisibility={toggleConfirmPasswordVisibility}
                         showPassword={showConfirmPassword} 
                         autofocus = {false}/>
-                
                 {errorMessage !== '' && (
                     <Text style = {styles.errorText}>{errorMessage}</Text> 
-                )} {/* Display an error message if required */}
+                )}
                 
                 <Button style = "button" label="Create an Account" onPress={handleCreate}/>
 
@@ -100,9 +97,15 @@ return (
                         <Button style = "text" label="Sign In" onPress={()=>navigation.navigate('Login')}/>
                     </View>
                 </View>
+
+                
             </View>
         </ScrollView>
     </View>
+
+
+                
+    
     );
 
 };
