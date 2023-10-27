@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Book from '../components/Book';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+
+/* get height dimensions of the screen */
+const { height: screenHeight } = Dimensions.get('window');
 
 const ContactInfo = ({ navigation, book }) => {
     const [name, setName] = useState(''); // State to store the user's name
@@ -39,7 +42,7 @@ const ContactInfo = ({ navigation, book }) => {
     };
 
     return (
-         <ScrollView style={styles.container}>
+         <View style={styles.container}>
                  <View style={styles.shapesContainer}>
                      <View style={styles.shape1} />
                      <View style={styles.shape2} />
@@ -47,6 +50,7 @@ const ContactInfo = ({ navigation, book }) => {
                      <View style={styles.shape4} />
                      <View style={styles.shape5} />
                  </View>
+        <ScrollView>
             <View style={styles.inputs}>
                 <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
@@ -56,6 +60,7 @@ const ContactInfo = ({ navigation, book }) => {
                 <Button style = "button" label="Add Book" onPress={handleAddBook}/>
             </View>
         </ScrollView>
+        </View>
     )
 }
 
@@ -88,19 +93,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 200,
         height: 200,
-        top: 600,
-        left: -29,
+        left: 40,
         borderRadius: 100,
         backgroundColor: '#A1FFB6',
+        transform: [{ translateY: screenHeight - 120 }],
     },
     shape3: {
         position: 'absolute',
         width: 200,
-        height: 250,
-        top: 550,
-        left: -120,
+        height: 200,
+        left: -90,
         borderRadius: 100,
         backgroundColor: '#8CFFD6',
+        transform: [{ translateY: screenHeight - 210 }],
     },
     shape4: {
         position: 'absolute',

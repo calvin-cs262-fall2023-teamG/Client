@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
+/* get height dimensions of the screen */
+const { height: screenHeight } = Dimensions.get('window');
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState(''); //create username, password variables
@@ -137,19 +139,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 200,
         height: 200,
-        top: 800,
         left: 40,
         borderRadius: 100,
         backgroundColor: '#A1FFB6',
+        transform: [{ translateY: screenHeight - 30}],
     },
     shape3: {
         position: 'absolute',
         width: 200,
         height: 200,
-        top: 700,
         left: -90,
         borderRadius: 100,
         backgroundColor: '#8CFFD6',
+        transform: [{ translateY: screenHeight - 120}],
     },
     shape4: {
         position: 'absolute',
