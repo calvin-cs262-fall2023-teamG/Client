@@ -5,16 +5,16 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 const ContactInfo = ({ navigation, book }) => {
     const [name, setName] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
-    const [errorMessage, setErrorMessage] = useState(''); //Handles error messages
-
-    //A function that brings a book to the Main page
-    const handleAddBook = () => {
-        const domainToCheck = 'calvin.edu'; //Make sure the user is on the calvin domain
+    const [errorMessage, setErrorMessage] = useState('');//Handles error messages
+  
+  //A function that brings a book to the Main page
+    const handleAddBook = () => { //Make sure the user is on the calvin domain
+        const domainToCheck = 'calvin.edu';
         const emailParts = email.split('@');
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
-            setErrorMessage("Please enter your Calvin email");
+            setErrorMessage("Please enter your Calvin email")
         } else {
-            navigation.navigate('Main', book);
+            navigation.navigate('Main', book)
         }
     };
 
@@ -63,11 +63,10 @@ const ContactInfo = ({ navigation, book }) => {
     )
 }
 
-//Stylesheet
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#fff',
     },
     shapesContainer: {
         position: 'absolute',

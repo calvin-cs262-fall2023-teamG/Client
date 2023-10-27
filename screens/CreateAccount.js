@@ -52,7 +52,6 @@ const CreateAccount = ({ navigation }) => {
         setShowConfirmPassword(!showConfirmPassword);
     }
 
-    
 return (
     <View style = {styles.mainbg}>
 
@@ -154,8 +153,6 @@ return (
     );
 
 };
-
-//Stylesheet
 const styles = StyleSheet.create({
     mainbg:{
         flex:1,
