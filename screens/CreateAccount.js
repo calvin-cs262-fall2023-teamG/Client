@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {Text, View, ScrollView, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InputBox from '../components/InputBox';
+import Button from '../components/Button';
 
 const CreateAccount = ({ navigation }) => {
     const [username, setUsername] = useState(''); //Variables to hold username and password for creation
@@ -10,7 +12,6 @@ const CreateAccount = ({ navigation }) => {
     const [email, setEmail] = useState('');         
     const [showPassword, setShowPassword] = useState(false); //Determines whether password is visible
     const [showConfirmPassword, setShowConfirmPassword] = useState(false); //Separately determines whether confirmation of password is visible
-
     const [errorMessage, setErrorMessage] = useState(''); //Stores error messages
     
     //Collects the information once it is compiled and builds an account
@@ -30,7 +31,6 @@ const CreateAccount = ({ navigation }) => {
 
         } else if (password !== confirmpassword) {                          //If the chosen password does not match the confirmation
             setErrorMessage("Passwords do not match!");  
-
         } else {
             try {
                 // Save user data to AsyncStorage
@@ -41,7 +41,6 @@ const CreateAccount = ({ navigation }) => {
                 setErrorMessage("Error creating account. Please try again.");
             }
         }
-
     }
 
     //Password visibility toggle functions
@@ -56,15 +55,15 @@ return (
     <View style = {styles.mainbg}>
 
         {/* These are the designs for the main page */}
-            <View style={styles.shapesContainer}>
-                <View style={styles.shape1} />
-                <View style={styles.shape2} />
-                <View style={styles.shape3} />
-                <View style={styles.shape4} />
-                <View style={styles.shape5} />
-            </View>
+        <View style={styles.shapesContainer}>
+            <View style={styles.shape1} />
+            <View style={styles.shape2} />
+            <View style={styles.shape3} />
+            <View style={styles.shape4} />
+            <View style={styles.shape5} />
+        </View>
 
-            <ScrollView>
+        <ScrollView>
             <View style={{paddingHorizontal: 20}}>
                 <View style = {styles.headerContainer}>
                     <Icon name="book" size={50} color="#000"/>
@@ -74,81 +73,35 @@ return (
                 <Text style = {styles.PageTitle}> Create an Account</Text>
                 <Text style = {styles.Info}> Please fill these credentials</Text>
 
-                {/* sets the state of email */}
-                <View style = {styles.InputContainer}>
-                    <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Email"}
-                        value = {email}
-                        onChangeText={text => setEmail(text)}/>
-                </View>
-
-                {/* sets the state of username */}
-                <View style = {styles.InputContainer}>
-                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"UserName"}
-                        value = {username}
-                        onChangeText={text => setUsername(text)}/>
-                </View>
-
-                {/* sets the state of password */}
-                <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Password"}
-                        secureTextEntry={!showPassword} //If showPassword is false, don't show the password - function implemented below
-                        value = {password}
-                        onChangeText={text => setPassword(text)}/>
-
-                    {/*Shows or hides the password based on what the user chooses*/}
-                    <TouchableOpacity onPress={togglePasswordVisibility}>
-                        <Icon name={showPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
-
-                {/* sets the state of password confirmation box */}
-                <View style = {styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                    <TextInput 
-                        style = {styles.InputTextBox} 
-                        placeholder= {"Confirm Password"}
-                        secureTextEntry={!showConfirmPassword}
-                        value = {confirmpassword}
-                        onChangeText={text => setconfirmPassword(text)}/>
-
-                    {/*Shows or hides the password based on what the user chooses*/}
-                    <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
-                        <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
-                    </TouchableOpacity>
-                </View>
+                {/* sets the state of username and password*/}
+                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {true}/>
+                <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {false} />
+                <InputBox pHolder="Password" icon="lock" value={password}
+                        set_text={text => setPassword(text)} secureTextEntry={!showPassword}
+                        togglePasswordVisibility={togglePasswordVisibility}
+                        showPassword={showPassword} 
+                        autofocus = {false}/>
+                <InputBox pHolder="Confirm Password" icon="lock" value={confirmpassword}
+                        set_text={text => setconfirmPassword(text)} secureTextEntry={!showConfirmPassword}
+                        togglePasswordVisibility={toggleConfirmPasswordVisibility}
+                        showPassword={showConfirmPassword} 
+                        autofocus = {false}/>
                 
                 {errorMessage !== '' && (
                     <Text style = {styles.errorText}>{errorMessage}</Text> 
                 )} {/* Display an error message if required */}
                 
-                <TouchableOpacity onPress={handleCreate}> {/* Once an account is ready, build it */}
-                    <View style = {styles.signInButton}>
-                        <Text>Create an Account</Text> 
-                    </View>
-                </TouchableOpacity>
+                <Button style = "button" label="Create an Account" onPress={handleCreate}/>
 
                 {/* Having an account automatically sends you back to the login screen */}
                 <View style = {styles.footer}>
                     <Text style = {styles.Infofooter}>Already have an Account?</Text>
                     <View>
-                        <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-                            <View>
-                                <Text style={styles.CreateAccount}>Sign In</Text> 
-                            </View>
-                        </TouchableOpacity>
+                        <Button style = "text" label="Sign In" onPress={()=>navigation.navigate('Login')}/>
                     </View>
                 </View>
             </View>
-            </ScrollView>
+        </ScrollView>
     </View>
     );
 

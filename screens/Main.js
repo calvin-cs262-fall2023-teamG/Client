@@ -6,7 +6,6 @@ import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
-import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
 const booksData = books_data //Collects a hardcoded json full of book objects
 
@@ -48,15 +47,13 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-                <View style={styles.InputContainer}>
-                    <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
-                    <TextInput
-                        placeholder={"Search for a book"} //Text input which handles searching for items
-                        onChangeText={handleSearch}
-                    />
+                <View style={{marginTop:10, width:400}}>
+                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch}  autofocus = {false}/>
+
                 </View>
-                <View style = {{alignItems:'center', marginTop: 5, marginBottom:5}} /* Identification of the book list for users */>
-                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books to buy</Text>
+
+                <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
+                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books for sale</Text>
                 </View>
 
                 <StatusBar style="auto" />

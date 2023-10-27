@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InputBox from '../components/InputBox';
+import Button from '../components/Button';
 
 
 const LoginScreen = ({ navigation }) => {
@@ -10,7 +12,6 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState(''); //Displays a message in case the user does something incorrectly
     const [email, setEmail] = useState(''); // State to store the user's email
-    const [storedUsername, setStoredUsername] = useState(''); // State to store the user's username
 
     useEffect(() => {
         // Retrieve user data from AsyncStorage when the component mounts
@@ -82,57 +83,27 @@ const LoginScreen = ({ navigation }) => {
                     <Text style={styles.Info}> Please fill these credentials</Text>
 
                     {/* sets the state of username and password*/}
-                    <View style={styles.InputContainer}>
-                        <Icon name="user" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            placeholder={"UserName"}
-                            value={username}
-                            onChangeText={text => setUsername(text)} />
-                    </View>
-
-                    <View style={styles.InputContainer}>
-                        <Icon name="lock" size={20} color="#888181" style={styles.icon} />
-                        <TextInput
-                            style={styles.InputTextBox}
-                            placeholder={"Password"}
-                            secureTextEntry={!showPassword}
-                            value={password}
-                            onChangeText={text => setPassword(text)} //Collect an input password
-                        />
-
-                        {/*Shows or hides the password based on what the user chooses*/}
-                        <TouchableOpacity onPress={togglePasswordVisibility}>
-                            <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#000" style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
+                    <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {true} />
+                    <InputBox pHolder="Password" icon="lock" value={password}
+                        set_text={text => setPassword(text)} secureTextEntry={!showPassword}
+                        togglePasswordVisibility={togglePasswordVisibility}
+                        showPassword={showPassword}
+                        autofocus = {false} />
 
                     <View style={{ alignItems: 'flex-end' }}>
-                        <TouchableOpacity onPress={handleResetPassword}>
-                            <View>
-                                <Text style={styles.ForgotPassword}>Forgot Password?</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <Button style="text" label="Forgot Password?" onPress={handleResetPassword}/>
                     </View>
 
                     {errorMessage !== '' && ( //Handling display of the error message properly
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
-
-                    <TouchableOpacity onPress={handleLogin}>
-                        <View style={styles.signInButton}>
-                            <Text>Sign In</Text>
-                        </View>
-                    </TouchableOpacity>
+                    
+                    <Button style = "button" label="Sign In" onPress={handleLogin}/>
 
                     <View style={styles.footer}>
                         <Text style={styles.Infofooter}> Don't have an account?</Text>
                         <View>
-                            <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
-                                <View>
-                                    <Text style={styles.CreateAccount}>Create an Account</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <Button style="text" label="Create an Account" onPress={() => navigation.navigate('CreateAccount')}/>
                         </View>
                     </View>
                 </View>
@@ -238,40 +209,12 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: "center" //center vertically
     },
-    icon: {
-        marginLeft: 5,
-    },
-    InputTextBox: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-
-    },
-
-    //Button = 'Forgot Password?'
-    ForgotPassword: {
-        textAlign: 'left',
-        fontSize: 15,
-        color: '#00FFC1',
-        marginBottom: 6,
-    },
 
     //Error Message
     errorText: {
         textAlign: 'center',
         fontSize: 15,
         color: '#ff0000',
-    },
-
-    //The styling for the 'Sign In' Button
-    signInButton: {
-        marginTop: 60,
-        paddingVertical: 10,
-        height: 50,
-        backgroundColor: '#81F4D8',
-        borderRadius: 15,
-        alignItems: "center", //center horizontally
-        justifyContent: "center" //center vertically
     },
 
     //View for the two styles below: Infofooter, CreateAccount
@@ -286,11 +229,6 @@ const styles = StyleSheet.create({
         color: '#000000',
     },
 
-    //Button = 'Create an account'
-    CreateAccount: {
-        fontSize: 15,
-        color: '#00FFC1',
-    },
 })
 
 export default LoginScreen;

@@ -8,12 +8,17 @@ import ImageViewer from '../components/ImageViewer';
 const PlaceholderImage_front = require('../assets/book_icon_gray.png'); //Allow for placeholders
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 
-
 const AddBook = ({ navigation }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
 
-    const [book , setBook] = useState(); //Currently not in use
+    //Temporary variable list of books for proof of concept
+    const [book , setBook] = useState();
+    const [isbn , setISBN] = useState();
+    const [author , setAuthor] = useState();
+    const [course_name , setCourseName] = useState();
+    const [price , setPrice] = useState();
+
     const [books, setBooks] = useState([]);
 
     function setTitleAndContinue() {
@@ -40,15 +45,13 @@ const AddBook = ({ navigation }) => {
     }
 
     return (
-      
         <View style={styles.container}>
-            
-            <ScrollView>   {/* This section establishes input boxes, and gives them icons */}
-            <InputBox pHolder='Book Name' icon="book" value={book} onChangeText={text => setBook(text)}/>
-            <InputBox pHolder='ISBN' icon = "hashtag"/>
-            <InputBox pHolder='Author' icon = "user"/>
-            <InputBox pHolder='Course Name' icon = "graduation-cap"/>
-            <InputBox pHolder='Price' icon = "tags"/>
+            <ScrollView> {/* This section establishes input boxes, and gives them icons */}
+            <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)}/>
+            <InputBox pHolder='ISBN' icon = "hashtag" value={isbn} set_text={text => setISBN(text)}/>
+            <InputBox pHolder='Author' icon = "user" value={author} set_text={text => setAuthor(text)}/>
+            <InputBox pHolder='Course Name' icon = "graduation-cap" value={course_name} set_text={text => setCourseName(text)}/>
+            <InputBox pHolder='Price' icon = "tags" value={price} set_text={text => setPrice(text)}/>
 
             <View style = {styles.imageContainer}>
 
@@ -90,7 +93,6 @@ const AddBook = ({ navigation }) => {
             </View>
             </ScrollView>
         </View>
-      
     )
 }
 

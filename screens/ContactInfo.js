@@ -1,14 +1,34 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Book from '../components/Book';
+import InputBox from '../components/InputBox';
+import Button from '../components/Button';
 
 const ContactInfo = ({ navigation, book }) => {
     const [name, setName] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
-    const [errorMessage, setErrorMessage] = useState('');//Handles error messages
-  
-  //A function that brings a book to the Main page
-    const handleAddBook = () => { //Make sure the user is on the calvin domain
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        // Retrieve data from AsyncStorage
+        try {
+          const fetchUserData = async () => {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+              const { email, username, password } = JSON.parse(userData);
+              setEmail(email);
+              setName(username);
+              console.log("Autofilled fields with " + username + " & " + email);
+            }
+          };
+          fetchUserData();
+        } catch (error) {
+          console.error(error);
+        }
+      }, []);
+
+    const handleAddBook = () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = email.split('@');
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
@@ -28,36 +48,12 @@ const ContactInfo = ({ navigation, book }) => {
                 <View style={styles.shape5} />
             </View>
             <View style={styles.inputs}>
-
-                {/* The name input on the contact info page */}
-                <View style={styles.inputContainer}>
-                    <Icon name="lock" size={20} color="#000"/>
-                    <TextInput style={styles.InputTextBox}
-                        placeholder={"Full Name"}
-                        value={name}
-                        onChangeText={text => setName(text)} />
-                </View>
-
-                {/* The email input on the contact info page */}
-                <View style={styles.inputContainer}>
-                    <Icon name="lock" size={20} color="#000"/>
-                    <TextInput style={styles.InputTextBox}
-                        placeholder={"Email"}
-                        value={email}
-                        onChangeText={text => setEmail(text)} />
-                </View>
-                {errorMessage !== '' && ( //Display this if the error message was triggered
+                <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
+                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
+                {errorMessage !== '' && (
                     <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
-
-                {/* This button will advance back to the main page with the created book with it */}
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleAddBook}>
-                        <View style={styles.okButton}>
-                            <Text >Add Book</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                <Button style = "button" label="Add Book" onPress={handleAddBook}/>
             </View>
         </ScrollView>
     )
@@ -71,6 +67,12 @@ const styles = StyleSheet.create({
     shapesContainer: {
         position: 'absolute',
         flexWrap: 'wrap',
+    },
+    inputs: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginTop: 200,
+        paddingHorizontal: 50,
     },
     shape1: {
         position: 'absolute',
@@ -118,47 +120,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
     },
-    inputs: {
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: 250,
-        paddingHorizontal: 15,
-    },
-    //The styling for Full name and Email text boxes, and icons
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-        backgroundColor: '#D9FFF6',
-        marginBottom: 15,
-        borderRadius: 15,
-        justifyContent: "center" //center vertically
-    },
-    InputTextBox: {
-        flex: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
     //Error Message
     errorText: {
         textAlign: 'center',
         fontSize: 15,
         color: '#ff0000',
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 30,
-        alignItems: 'center'
-    },
-    okButton: {
-        height: 50,
-        backgroundColor: '#81F4D8',
-        borderRadius: 15,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-        width: 182
+    inputs: {
+        marginTop: 200,
     },
 });
 
