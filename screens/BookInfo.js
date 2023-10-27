@@ -4,9 +4,10 @@ import { StyleSheet, View, Text, SafeAreaView,ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
 const BookInfo = ({route}) => {
-    const { bookInfo } = route.params;
+    const { bookInfo } = route.params; //The elements to be held come from the book you accessed to get here
     return (
         <SafeAreaView style={styles.container}>
+            {/* The format for storing book data */}
             <View>
                 <InfoView name ="Book" icon="book" value={bookInfo.book_name}/>
                 <InfoView name ="ISBN" icon = "hashtag" value={bookInfo.isbn}/>
@@ -19,6 +20,8 @@ const BookInfo = ({route}) => {
         </SafeAreaView>
     )
 }
+
+//Displays information regarding the book
 const InfoView = ({name, value, icon})=>{
     return(
         <View style={styles.info}>
@@ -30,6 +33,8 @@ const InfoView = ({name, value, icon})=>{
         </View>
     )
 }
+
+//Stylesheet
 const styles = StyleSheet.create({
     container: {
         flex: 1,

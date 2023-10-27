@@ -2,18 +2,13 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
-
-
-
-
 const ContactInfo = ({ navigation, book }) => {
     const [name, setName] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
-    const [errorMessage, setErrorMessage] = useState('');
-
-
-
-    const handleAddBook = () => {
+    const [errorMessage, setErrorMessage] = useState('');//Handles error messages
+  
+  //A function that brings a book to the Main page
+    const handleAddBook = () => { //Make sure the user is on the calvin domain
         const domainToCheck = 'calvin.edu';
         const emailParts = email.split('@');
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
@@ -33,6 +28,8 @@ const ContactInfo = ({ navigation, book }) => {
                 <View style={styles.shape5} />
             </View>
             <View style={styles.inputs}>
+
+                {/* The name input on the contact info page */}
                 <View style={styles.inputContainer}>
                     <Icon name="lock" size={20} color="#000"/>
                     <TextInput style={styles.InputTextBox}
@@ -41,6 +38,7 @@ const ContactInfo = ({ navigation, book }) => {
                         onChangeText={text => setName(text)} />
                 </View>
 
+                {/* The email input on the contact info page */}
                 <View style={styles.inputContainer}>
                     <Icon name="lock" size={20} color="#000"/>
                     <TextInput style={styles.InputTextBox}
@@ -48,10 +46,11 @@ const ContactInfo = ({ navigation, book }) => {
                         value={email}
                         onChangeText={text => setEmail(text)} />
                 </View>
-                {errorMessage !== '' && (
+                {errorMessage !== '' && ( //Display this if the error message was triggered
                     <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
 
+                {/* This button will advance back to the main page with the created book with it */}
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={handleAddBook}>
                         <View style={styles.okButton}>

@@ -4,36 +4,38 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CreateAccount = ({ navigation }) => {
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(''); //Variables to hold username and password for creation
     const [password, setPassword] = useState('');
-    const [confirmpassword, setconfirmPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [confirmpassword, setconfirmPassword] = useState(''); //The comparator to ensure password correctness
+    const [email, setEmail] = useState('');         
+    const [showPassword, setShowPassword] = useState(false); //Determines whether password is visible
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false); //Separately determines whether confirmation of password is visible
 
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState(''); //Stores error messages
     
+    //Collects the information once it is compiled and builds an account
     const handleCreate = async ()=>{
-        const domainToCheck = 'calvin.edu';
+        const domainToCheck = 'calvin.edu'; //Ensure use of a Calvin email
         const emailParts = email.split('@');
 
-        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){
+        //Error messages...
+        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){ //If the email is too short or isn't identified as a Calvin email:
             setErrorMessage("Please enter your Calvin email");
 
-        } else if (username.length <= 3) {
-            setErrorMessage("Your username must be at least 4 characters")
+        } else if (username.length <= 3) {                                  //If the email is too short
+            setErrorMessage("Your username must be at least 4 characters");
 
-        } else if (password.length <= 7) {  
-            setErrorMessage("Your password must be at least 8 characters")
+        } else if (password.length <= 7) {                                  //If the password is too short
+            setErrorMessage("Your password must be at least 8 characters");
 
-        } else if (password !== confirmpassword) {
+        } else if (password !== confirmpassword) {                          //If the chosen password does not match the confirmation
             setErrorMessage("Passwords do not match!");  
 
         } else {
             try {
                 // Save user data to AsyncStorage
                 await AsyncStorage.setItem('userData', JSON.stringify({ username, password, email }));
-                navigation.navigate('Login');
+                navigation.navigate('Login'); //Navigate back to the login page ONLY if the account creation was successful
             } catch (error) {
                 console.error(error);
                 setErrorMessage("Error creating account. Please try again.");
@@ -42,6 +44,7 @@ const CreateAccount = ({ navigation }) => {
 
     }
 
+    //Password visibility toggle functions
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
@@ -49,11 +52,10 @@ const CreateAccount = ({ navigation }) => {
         setShowConfirmPassword(!showConfirmPassword);
     }
 
-    
 return (
     <View style = {styles.mainbg}>
+
         {/* These are the designs for the main page */}
-        
             <View style={styles.shapesContainer}>
                 <View style={styles.shape1} />
                 <View style={styles.shape2} />
@@ -61,17 +63,18 @@ return (
                 <View style={styles.shape4} />
                 <View style={styles.shape5} />
             </View>
+
             <ScrollView>
             <View style={{paddingHorizontal: 20}}>
                 <View style = {styles.headerContainer}>
                     <Icon name="book" size={50} color="#000"/>
-                    <Text style = {styles.loginheader}> ChapterCache</Text>
+                    <Text style = {styles.loginheader}> ChapterCache</Text> {/* Corner Icon */}
                 </View>
 
                 <Text style = {styles.PageTitle}> Create an Account</Text>
                 <Text style = {styles.Info}> Please fill these credentials</Text>
 
-                {/* sets the state of username and password*/}
+                {/* sets the state of email */}
                 <View style = {styles.InputContainer}>
                     <Icon name="envelope" size={18} color="#888181" style={styles.icon} />
                     <TextInput 
@@ -81,6 +84,7 @@ return (
                         onChangeText={text => setEmail(text)}/>
                 </View>
 
+                {/* sets the state of username */}
                 <View style = {styles.InputContainer}>
                     <Icon name="user" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
@@ -90,20 +94,23 @@ return (
                         onChangeText={text => setUsername(text)}/>
                 </View>
 
+                {/* sets the state of password */}
                 <View style = {styles.InputContainer}>
                     <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
                         style = {styles.InputTextBox} 
                         placeholder= {"Password"}
-                        secureTextEntry={!showPassword}
+                        secureTextEntry={!showPassword} //If showPassword is false, don't show the password - function implemented below
                         value = {password}
                         onChangeText={text => setPassword(text)}/>
+
                     {/*Shows or hides the password based on what the user chooses*/}
                     <TouchableOpacity onPress={togglePasswordVisibility}>
                         <Icon name={showPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
                     </TouchableOpacity>
                 </View>
 
+                {/* sets the state of password confirmation box */}
                 <View style = {styles.InputContainer}>
                     <Icon name="lock" size={20} color="#888181" style={styles.icon} />
                     <TextInput 
@@ -112,6 +119,7 @@ return (
                         secureTextEntry={!showConfirmPassword}
                         value = {confirmpassword}
                         onChangeText={text => setconfirmPassword(text)}/>
+
                     {/*Shows or hides the password based on what the user chooses*/}
                     <TouchableOpacity onPress={toggleConfirmPasswordVisibility}>
                         <Icon name={showConfirmPassword ? "eye": "eye-slash"} size={20} color="#000" style={styles.icon} />
@@ -119,15 +127,16 @@ return (
                 </View>
                 
                 {errorMessage !== '' && (
-                    <Text style = {styles.errorText}>{errorMessage}</Text>
-                )}
+                    <Text style = {styles.errorText}>{errorMessage}</Text> 
+                )} {/* Display an error message if required */}
                 
-                <TouchableOpacity onPress={handleCreate}>
+                <TouchableOpacity onPress={handleCreate}> {/* Once an account is ready, build it */}
                     <View style = {styles.signInButton}>
                         <Text>Create an Account</Text> 
                     </View>
                 </TouchableOpacity>
 
+                {/* Having an account automatically sends you back to the login screen */}
                 <View style = {styles.footer}>
                     <Text style = {styles.Infofooter}>Already have an Account?</Text>
                     <View>
@@ -144,7 +153,6 @@ return (
     );
 
 };
-
 const styles = StyleSheet.create({
     mainbg:{
         flex:1,

@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, FlatList, TextInput } from 'react-native';
+import { StatusBar, FlatList } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
@@ -8,22 +8,22 @@ import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
-const booksData = books_data
+const booksData = books_data //Collects a hardcoded json full of book objects
 
 const Main = () => {
     const navigation = useNavigation();
 
-    //Temporary variable list of books for proof of concept
+    //List of books generation
     const [book, setBook] = useState();
-    const [books, setBooks] = useState(booksData);
+    const [books, setBooks] = useState(booksData); //sets the book list to the hardcoded json. Eventually this should be created dynamically
 
-    //The list of books is created like such
+    //Method to add a created book to a list
     function handleAddBook() {
-        //Keyboard.dismiss();
         setBooks([...books, book]);
         setBook(null);
     }
 
+    //Alters the "books" list to only show books whose title matches with what is in the search bar
     const handleSearch = (searchTerm) => {
         if (searchTerm === '') {
             setBooks(booksData);
@@ -37,7 +37,8 @@ const Main = () => {
         }
     };
 
-
+    //A function to perform multiple functions upon pressing the "Add Book" button
+    //Currently not in use (dynamic book adding is not yet implemented)
     const AddBookPage = () => {
         navigation.navigate("Add Book");
         //const currentBookObject = await book;
@@ -48,23 +49,23 @@ const Main = () => {
 
         <SafeAreaView style={styles.container}>
                 <View style={styles.InputContainer}>
-                    <Icon name="search" size={20} color="#888181" style={styles.bookIcon} />
+                    <Icon name="search" size={20} color="#000" style={styles.bookIcon} />
                     <TextInput
-                        placeholder={"Search for a book"}
+                        placeholder={"Search for a book"} //Text input which handles searching for items
                         onChangeText={handleSearch}
                     />
                 </View>
-                <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
-                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books for sale</Text>
+                <View style = {{alignItems:'center', marginTop: 5, marginBottom:5}} /* Identification of the book list for users */>
+                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books to buy</Text>
                 </View>
 
                 <StatusBar style="auto" />
                 <ScrollView contentContainerStyle={{ paddingHorizontal: 0 }}>
                     {
-                        books.map((item, index) => {
+                        books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
-                                <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
-                                    <View style={[styles.item, { width: '100%' }]}>
+                                <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
+                                    <View style={styles.item}>
 
                                         <View style={styles.square}></View>
                                         <Book bookInfo={item} />
@@ -79,7 +80,7 @@ const Main = () => {
                 </ScrollView>
 
                 <View style={styles.footerContainer}>
-                    <TouchableOpacity
+                    <TouchableOpacity //The Add Book button, navigates to the AddBook page to begin the AddBook process
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
                         <Text style={styles.plus}>Sell a book</Text>
@@ -199,5 +200,4 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 });
-
 export default Main;

@@ -9,7 +9,7 @@
 // const sendEmail = () => {
 //     Mailer.mail({
 //         subject: "Reset Password",
-//         recipients: 'danielp315@gmail.com',
+//         recipients: 'danielp315@gmail.com', //This is a placeholder.
 //         body: 'Please follow the instructions to reset your password.',
 //         isHTML: false,
 //     }, (error, event) => {
