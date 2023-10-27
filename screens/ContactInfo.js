@@ -5,7 +5,7 @@ import Book from '../components/Book';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
-/* get height dimensions of the screen */
+// get height dimensions of the screen 
 const { height: screenHeight } = Dimensions.get('window');
 
 const ContactInfo = ({ navigation, book }) => {
