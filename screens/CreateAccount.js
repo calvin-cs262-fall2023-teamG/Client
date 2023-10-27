@@ -200,15 +200,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
     },
-
     headerContainer:{
         flexDirection: 'row',
         paddingTop: 20,
         alignItems: "center",
         paddingTop: 40
-    },
-
-    bookIcon: {
     },
 
     //Text = "logo + ChapterCache"
@@ -252,14 +248,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         
-    },
-
-    //Button = 'Forgot Password?'
-    ForgotPassword:{
-        textAlign: 'left',
-        fontSize:15,
-        color:'#00FFC1',
-        marginBottom:6,
     },
 
     //Error Message

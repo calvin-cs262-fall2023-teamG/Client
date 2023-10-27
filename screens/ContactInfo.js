@@ -1,61 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
-import ImageViewer from '../components/ImageViewer';
-import Book from '../components/Book';
+import React, { useState } from 'react'
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
-import InputBox from '../components/InputBox';
 
-const PlaceholderImage_front = require('../assets/book_icon.png');
-const PlaceholderImage_back = require('../assets/book_icon_back.png');
+
 
 
 
 const ContactInfo = ({ navigation, book }) => {
-    const [selectedImage_front, setSelectedImage_front] = useState(null);
-    const [selectedImage_back, setSelectedImage_back] = useState(null);
     const [name, setName] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
     const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        // Retrieve data from AsyncStorage
-        try {
-          const fetchUserData = async () => {
-            const userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-              const { email, username, password } = JSON.parse(userData);
-              setEmail(email);
-              setName(username);
-              console.log("Autofilled fields with " + username + " & " + email);
-            }
-          };
-          fetchUserData();
-        } catch (error) {
-          console.error(error);
-        }
-      }, []);
-    
 
-    const pickImageAsync_front = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            quality: 1,
-        });
-        if (!result.canceled) {
-            setSelectedImage_front(result.assets[0].uri);
-        }
-    }
-    const pickImageAsync_back = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            quality: 1,
-        });
-        if (!result.canceled) {
-            setSelectedImage_back(result.assets[0].uri);
-        }
-    }
 
     const handleAddBook = () => {
         const domainToCheck = 'calvin.edu';
@@ -77,16 +33,16 @@ const ContactInfo = ({ navigation, book }) => {
                 <View style={styles.shape5} />
             </View>
             <View style={styles.inputs}>
-                <View style={styles.InputContainer}>
-                    <Icon name="user" size={20} color="#888181" style={styles.icon} />
+                <View style={styles.inputContainer}>
+                    <Icon name="lock" size={20} color="#000"/>
                     <TextInput style={styles.InputTextBox}
                         placeholder={"Full Name"}
                         value={name}
                         onChangeText={text => setName(text)} />
                 </View>
 
-                <View style={styles.InputContainer}>
-                    <Icon name="lock" size={20} color="#888181" style={styles.icon} />
+                <View style={styles.inputContainer}>
+                    <Icon name="lock" size={20} color="#000"/>
                     <TextInput style={styles.InputTextBox}
                         placeholder={"Email"}
                         value={email}
@@ -113,59 +69,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-
     shapesContainer: {
         position: 'absolute',
         flexWrap: 'wrap',
-    },
-    inputs: {
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: 200,
-        paddingHorizontal: 50,
-    },
-    //The styling for UserName and Password text boxes, and icons
-    InputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 50,
-        paddingHorizontal: 15,
-        backgroundColor: '#D9FFF6',
-        marginBottom: '5%',
-        borderRadius: 15,
-        justifyContent: "center",
-        marginLeft: 30,
-        marginRight: 30,
-    },
-
-    text: {
-        fontSize: 20,
-        marginBottom: 5,
-    },
-
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 25,
-
-        alignItems: 'center'
-    },
-    contact: {
-        height: 50,
-        backgroundColor: '#81F4D8',
-        borderRadius: 15,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    okButton: {
-        height: 50,
-        backgroundColor: '#81F4D8',
-        borderRadius: 15,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-        width: 182
     },
     shape1: {
         position: 'absolute',
@@ -213,12 +119,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
     },
-
+    inputs: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginTop: 250,
+        paddingHorizontal: 15,
+    },
+    //The styling for Full name and Email text boxes, and icons
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 15,
+        backgroundColor: '#D9FFF6',
+        marginBottom: 15,
+        borderRadius: 15,
+        justifyContent: "center" //center vertically
+    },
     InputTextBox: {
         flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 15,
-
     },
     //Error Message
     errorText: {
@@ -226,12 +146,21 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#ff0000',
     },
-    inputs: {
-        marginTop: 200,
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 30,
+        alignItems: 'center'
     },
-    icon:{
-        marginLeft: 5
-    }
+    okButton: {
+        height: 50,
+        backgroundColor: '#81F4D8',
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 20,
+        width: 182
+    },
 });
 
 export default ContactInfo;

@@ -50,7 +50,6 @@ const Main = () => {
                 <View style={styles.InputContainer}>
                     <Icon name="search" size={20} color="#888181" style={styles.bookIcon} />
                     <TextInput
-                        style={styles.InputTextBox}
                         placeholder={"Search for a book"}
                         onChangeText={handleSearch}
                     />
@@ -100,17 +99,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10
     },
-    searchContainer: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 15
-    },
-    text: {
-        fontSize: 50,
-        color: '#000',
-    },
     InputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -122,11 +110,36 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         // justifyContent: "center" //center vertically
     },
-
     bookIcon: {
         marginLeft: 15,
         marginRight: 10,
     },
+
+    item: {
+        backgroundColor: '#D9FFF6',
+        padding: 10,
+        borderRadius: 30,
+        flexDirection: 'row',
+        marginTop: 15,
+        marginHorizontal: 10,
+    },
+    square: {
+        width: 28,
+        height: 40,
+        backgroundColor: 'red',
+        alignItems: "center",
+        opacity: 0.4,
+        borderRadius: 5,
+        marginRight: 10,
+    },
+    details: {
+        position: "absolute",
+        bottom: 0,
+        right: 10,
+        margin: 10,
+        color: '#81F4D8'
+    },
+
     footerContainer: {
         position: 'relative',
         margin: 10,
@@ -152,10 +165,10 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: '#D9FFF6',
         padding: 10,
-        borderRadius: 15,
+        borderRadius: 30,
         flexDirection: 'row',
         marginTop: 15,
-      
+        marginHorizontal: 10,
     },
     details: {
         position: "absolute",
@@ -185,7 +198,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginRight: 10,
     },
-
 });
 
 export default Main;

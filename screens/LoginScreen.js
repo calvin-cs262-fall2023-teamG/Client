@@ -73,7 +73,7 @@ const LoginScreen = ({ navigation }) => {
             <ScrollView>
                 <View style={{ paddingHorizontal: 20 }}>
                     <View style={styles.headerContainer}>
-                        <Icon name="book" size={50} color="#000" style={styles.bookIcon} />
+                        <Icon name="book" size={50} color="#000"/>
                         <Text style={styles.loginheader}> ChapterCache</Text>
                     </View>
 
@@ -200,9 +200,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 40,
         alignItems: "center"
-    },
-
-    bookIcon: {
     },
 
     //Text = "logo + ChapterCache"
