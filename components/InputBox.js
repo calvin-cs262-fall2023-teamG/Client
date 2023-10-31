@@ -29,13 +29,6 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    marginLeft: 5,
-    width: '9%'
-  },
-  eyeIcon: {
-    marginRight: 10,
-  },
   //The styling for UserName and Password text boxes, and icons
   InputContainer: {
     flexDirection: 'row',
@@ -47,9 +40,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center" //center vertically
   },
+  icon: {
+    marginLeft: 5,
+    width: '9%'
+  },
   InputTextBox: {
     flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 10,
+  },
+  eyeIcon: {
+    marginRight: 10,
   },
 });

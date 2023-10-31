@@ -48,13 +48,13 @@ const Main = () => {
 
         <SafeAreaView style={styles.container}>
                 <View style={{marginTop:10, width:400}}>
-                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch}  autofocus = {false}/>
-
+                    <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch}  autofocus = {false}/>
                 </View>
 
                 <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
                     <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
                 </View>
+
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
                 <ScrollView>
                     {
@@ -66,7 +66,7 @@ const Main = () => {
                                         <View style={styles.square}></View>
                                         <Book bookInfo={item} />
                                         <View style={styles.details}>
-                                            <Text style={{ textDecorationLine: "underline" }}>More details</Text>
+                                            <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -79,12 +79,11 @@ const Main = () => {
                     <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.plus}>Sell a Book</Text>
+                        <Text style={styles.sellBook}>Sell a Book</Text>
                     </TouchableOpacity>
  
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
                 </View>
-
 
             </SafeAreaView >
     );
@@ -98,7 +97,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10
     },
-
+    item: {
+        backgroundColor: '#D9FFF6',
+        padding: 10,
+        borderRadius: 20,
+        flexDirection: 'row',
+        marginTop: 10,
+        width: '98%',
+        borderWidth: 1,
+        borderColor: '#e9ebee',
+    },
     square: {
         width: 28,
         height: 40,
@@ -115,7 +123,6 @@ const styles = StyleSheet.create({
         margin: 10,
         color: '#81F4D8'
     },
-
     footerContainer: {
         position: 'relative',
         margin: 10,
@@ -125,12 +132,6 @@ const styles = StyleSheet.create({
     },
 
     //Sell a Book
-    plus: {
-        color: '#000',
-    },
-    button: {
-        textAlign: 'center'
-    },
     roundButton: {
         width: 182,
         height: 50,
@@ -139,21 +140,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#81F4D8'
     },
-    item: {
-        backgroundColor: '#D9FFF6',
-        padding: 10,
-        borderRadius: 20,
-        flexDirection: 'row',
-        marginTop: 15,
-    },
-    buttons: {
-        color: '#888181',
-    },
-
-    itemLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap'
+    sellBook: {
+        color: '#000',
     },
 });
+
 export default Main;
