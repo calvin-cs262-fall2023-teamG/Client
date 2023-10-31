@@ -73,12 +73,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         flexWrap: 'wrap',
     },
-    inputs: {
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: 200,
-        paddingHorizontal: 20,
-    },
     shape1: {
         position: 'absolute',
         top: -80,
@@ -124,6 +118,12 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: '#B4F7C3',
         transform: [{ rotate: '70deg' }],
+    },
+    inputs: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginTop: 200,
+        paddingHorizontal: 20,
     },
     //Error Message
     errorText: {

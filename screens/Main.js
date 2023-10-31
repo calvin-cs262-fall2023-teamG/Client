@@ -81,7 +81,7 @@ const Main = () => {
                     <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.plus}>Sell a Book</Text>
+                        <Text style={styles.sellBook}>Sell a Book</Text>
                     </TouchableOpacity>
  
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
@@ -100,7 +100,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10
     },
-
+    item: {
+        backgroundColor: '#D9FFF6',
+        padding: 10,
+        borderRadius: 20,
+        flexDirection: 'row',
+        marginTop: 15,
+        width: '99%'
+    },
     square: {
         width: 28,
         height: 40,
@@ -117,7 +124,6 @@ const styles = StyleSheet.create({
         margin: 10,
         color: '#81F4D8'
     },
-
     footerContainer: {
         position: 'relative',
         margin: 10,
@@ -127,12 +133,6 @@ const styles = StyleSheet.create({
     },
 
     //Sell a Book
-    plus: {
-        color: '#000',
-    },
-    button: {
-        textAlign: 'center'
-    },
     roundButton: {
         width: 182,
         height: 50,
@@ -141,41 +141,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#81F4D8'
     },
-    item: {
-        backgroundColor: '#D9FFF6',
-        padding: 10,
-        borderRadius: 20,
-        flexDirection: 'row',
-        marginTop: 15,
-        width: '99%'
-    },
-    details: {
-        position: "absolute",
-        bottom: 0,
-        right: 10,
-        margin: 10,
-        color: '#81F4D8'
-    },
-    search: {
-
-    },
-    buttons: {
-        color: '#888181',
-    },
-
-    itemLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-    },
-    square: {
-        width: 28,
-        height: 40,
-        backgroundColor: 'red',
-        alignItems: "center",
-        opacity: 0.4,
-        borderRadius: 5,
-        marginRight: 10,
+    sellBook: {
+        color: '#000',
     },
 });
+
 export default Main;

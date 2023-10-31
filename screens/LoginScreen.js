@@ -200,18 +200,6 @@ const styles = StyleSheet.create({
         color: '#888181',
     },
 
-    //The styling for UserName and Password text boxes, and icons
-    InputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 50,
-        paddingHorizontal: 15,
-        backgroundColor: '#D9FFF6',
-        marginBottom: 15,
-        borderRadius: 15,
-        justifyContent: "center" //center vertically
-    },
-
     //Error Message
     errorText: {
         textAlign: 'center',
