@@ -92,7 +92,7 @@ const LoginScreen = ({ navigation }) => {
                         showPassword={showPassword}
                         autofocus = {false} />
 
-                    <View style={{ alignItems: 'flex-end' }}>
+                    <View style={{ alignItems: 'flex-end', marginTop: 5, }}>
                         <Button style="text" label="Forgot Password?" onPress={handleResetPassword}/>
                     </View>
 
@@ -181,21 +181,21 @@ const styles = StyleSheet.create({
     //Text = "logo + ChapterCache"
     loginheader: {
         marginLeft: 5,
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: '700',
     },
 
     //Text = 'Sign In'
     PageTitle: {
-        paddingTop: 70,
+        paddingTop: 85,
         marginBottom: 12,
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: '400',
     },
 
     //Text = 'Please fill these credentials'
     Info: {
-        marginBottom: 50,
+        marginBottom: 40,
         fontSize: 15,
         color: '#888181',
     },

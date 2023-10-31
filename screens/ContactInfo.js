@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         marginTop: 200,
-        paddingHorizontal: 50,
+        paddingHorizontal: 20,
     },
     shape1: {
         position: 'absolute',
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 15,
         color: '#ff0000',
+        marginTop: 10,
     },
 });
 

@@ -53,11 +53,12 @@ const Main = () => {
                 </View>
 
                 <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
-                    <Text style = {{fontSize:18, fontWeight:'bold', textDecorationLine:'underline'}}>Books for sale</Text>
+                    <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
                 </View>
+                <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
 
                 <StatusBar style="auto" />
-                <ScrollView contentContainerStyle={{ paddingHorizontal: 0 }}>
+                <ScrollView>
                     {
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
@@ -80,7 +81,7 @@ const Main = () => {
                     <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.plus}>Sell a book</Text>
+                        <Text style={styles.plus}>Sell a Book</Text>
                     </TouchableOpacity>
  
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
@@ -99,30 +100,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 10
     },
-    InputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 50,
-        width: 370,
-        marginTop: 20,
-        alignItems: 'center',
-        backgroundColor: '#D9FFF6',
-        borderRadius: 15,
-        // justifyContent: "center" //center vertically
-    },
-    bookIcon: {
-        marginLeft: 15,
-        marginRight: 10,
-    },
 
-    item: {
-        backgroundColor: '#D9FFF6',
-        padding: 10,
-        borderRadius: 30,
-        flexDirection: 'row',
-        marginTop: 15,
-        marginHorizontal: 10,
-    },
     square: {
         width: 28,
         height: 40,
@@ -147,11 +125,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
+    //Sell a Book
     plus: {
         color: '#000',
     },
     button: {
-
         textAlign: 'center'
     },
     roundButton: {
@@ -165,10 +144,10 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: '#D9FFF6',
         padding: 10,
-        borderRadius: 30,
+        borderRadius: 20,
         flexDirection: 'row',
         marginTop: 15,
-        marginHorizontal: 10,
+        width: '99%'
     },
     details: {
         position: "absolute",

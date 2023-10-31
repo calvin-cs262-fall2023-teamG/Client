@@ -55,8 +55,8 @@ return (
                     <TouchableOpacity onPress={pickImageAsync_front}>
                         <View style={styles.imageSection}>
                             <View>
-                                <Text style={styles.text}>Front picture</Text>
-                                <Text style={styles.addImage}> Add image</Text>
+                                <Text style={styles.text}>Front Picture</Text>
+                                <Text style={styles.addImage}> Add Image</Text>
                             </View>
                             <ImageViewer
                                 placeholderImageSource={PlaceholderImage_front}
@@ -69,8 +69,8 @@ return (
                     <TouchableOpacity onPress={pickImageAsync_back}>
                         <View style={styles.imageSection}>
                             <View >
-                                <Text style={styles.text}>Back picture</Text>
-                                <Text style={styles.addImage}> Add image</Text>
+                                <Text style={styles.text}>Back Picture</Text>
+                                <Text style={styles.addImage}>Add Image</Text>
                             </View>
                             <ImageViewer
                                 placeholderImageSource={PlaceholderImage_back}
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
         color: '#81F4D8',
         alignItems: 'center',
         fontWeight: 'bold',
+        marginLeft: 20,
     },
     buttonContainer: {
         flexDirection: 'row',
