@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
 
   //Text = 'Reset Password'
   PageTitle: {
-    marginTop: 160,
+    marginTop: 190,
     marginBottom: 12,
     fontSize: 40,
     fontWeight: "400",

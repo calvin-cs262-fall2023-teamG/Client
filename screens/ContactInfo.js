@@ -50,7 +50,12 @@ const ContactInfo = ({ navigation, book }) => {
                      <View style={styles.shape4} />
                      <View style={styles.shape5} />
                  </View>
-        <ScrollView>
+        <ScrollView style={{paddingHorizontal: 20,}} showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
+
+            <Text style={styles.PageTitle}> Contact Information</Text>
+            <Text style={styles.Info}>The information below will be provided to the buyer</Text>
+
             <View style={styles.inputs}>
                 <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
@@ -74,56 +79,71 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     shape1: {
-        position: 'absolute',
-        top: -80,
+        position: "absolute",
+        top: -90,
         left: -80,
         width: 190,
         height: 190,
         borderRadius: 90,
-        backgroundColor: '#8CFFD6',
+        backgroundColor: "#8CFFD6",
         opacity: 0.5,
-    },
-    shape2: {
+      },
+      shape2: {
         position: 'absolute',
         width: 200,
         height: 200,
         left: 40,
         borderRadius: 100,
         backgroundColor: '#A1FFB6',
-        transform: [{ translateY: screenHeight - 120 }],
-    },
-    shape3: {
+        transform: [{ translateY: screenHeight - 110}],
+      },
+      shape3: {
         position: 'absolute',
         width: 200,
         height: 200,
         left: -90,
         borderRadius: 100,
         backgroundColor: '#8CFFD6',
-        transform: [{ translateY: screenHeight - 210 }],
-    },
-    shape4: {
-        position: 'absolute',
+        transform: [{ translateY: screenHeight - 200}],
+      },
+      shape4: {
+        position: "absolute",
         width: 260,
-        height: 150,
-        left: 200,
+        height: 120,
+        left: 210,
         borderRadius: 70,
-        backgroundColor: '#8CFFD6',
-        transform: [{ rotate: '50deg' }],
-    },
-    shape5: {
-        position: 'absolute',
+        backgroundColor: "#8CFFD6",
+        transform: [{ rotate: "50deg" }],
+      },
+      shape5: {
+        position: "absolute",
         width: 280,
-        height: 150,
+        height: 140,
         left: 280,
         borderRadius: 40,
-        backgroundColor: '#B4F7C3',
-        transform: [{ rotate: '70deg' }],
+        backgroundColor: "#B4F7C3",
+        transform: [{ rotate: "70deg" }],
+      },
+
+    //Text = 'Contact Information'
+    PageTitle: {
+        marginTop: 180,
+        marginBottom: 12,
+        fontSize: 37,
+        fontWeight: "400",
+    },
+    Info: {
+        marginBottom: 15,
+        fontSize: 14,
+        color: "#888181",
+        paddingLeft: 10,
+        marginLeft: 5,
     },
     inputs: {
         justifyContent: 'center',
         alignContent: 'center',
-        marginTop: 200,
-        paddingHorizontal: 20,
+        marginTop: 20,
+
     },
     //Error Message
     errorText: {
