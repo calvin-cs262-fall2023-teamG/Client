@@ -156,7 +156,6 @@ const MyProfile = () => {
                     )}
                     <Button style = "button" label="Update Email" onPress={handleUpdateEmail}/>
                     <Button style = "button" label="Cancel" onPress={clearEmailInput}/>
-
                 </View>
             </Modal>
 
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize:15,
         color: '#ff0000',
-        paddingBottom:10,
+        marginTop: 10,
     },
 });
 

@@ -6,7 +6,9 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
   const isPassword = secureTextEntry !== undefined && secureTextEntry;
   return (
     <View style={styles.InputContainer}>
-      <Icon name={icon} size={20} color='#888181' style={styles.icon} />
+      <View style ={styles.icon}>
+        <Icon name={icon} size={20} color='#888181'/>
+      </View>
       <TextInput
         style={styles.InputTextBox}
         placeholder={pHolder}
@@ -19,7 +21,7 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
       {((togglePasswordVisibility && showPassword) != undefined) && (
 
         <TouchableOpacity onPress={togglePasswordVisibility}>
-          <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#888181" style={styles.icon} />
+          <Icon name={showPassword ? "eye" : "eye-slash"} size={20} color="#888181" style={styles.eyeIcon} />
         </TouchableOpacity>
         )}
     </View>
@@ -29,6 +31,10 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
 const styles = StyleSheet.create({
   icon: {
     marginLeft: 5,
+    width: '9%'
+  },
+  eyeIcon: {
+    marginRight: 10,
   },
   //The styling for UserName and Password text boxes, and icons
   InputContainer: {
@@ -44,6 +50,6 @@ const styles = StyleSheet.create({
   InputTextBox: {
     flex: 1,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
 });

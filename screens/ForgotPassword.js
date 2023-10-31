@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 15,
     color: "#ff0000",
+    marginTop: 10,
   },
 
   //View for the two styles below: Infofooter, CreateAccount

@@ -182,15 +182,16 @@ const styles = StyleSheet.create({
     PageTitle:{
         paddingTop: 70,
         marginBottom: 12,
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: '400',
     },
 
     //Text = 'Please fill these credentials'
     Info:{
-        marginBottom: 50,
+        marginBottom: 40,
         fontSize:15,
         color:'#888181',
+        marginLeft: 10,
     },
 
     //The styling for UserName and Password text boxes, and icons
@@ -219,6 +220,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize:15,
         color: '#ff0000',
+        marginTop: 10,
     },
 
     //The styling for the 'Sign In' Button
@@ -235,16 +237,16 @@ const styles = StyleSheet.create({
     //View for the two styles below: Infofooter, CreateAccount
     footer:{
         alignItems: 'center',
-        marginTop: 70,
+        marginTop: 60,
     },
 
-    //Text = 'Don't have an account'
+    //Text = 'Already have an Account?'
     Infofooter:{        
         fontSize:15,
         color:'#000000',
     },
 
-    //Button = 'Create an account'
+    //Button = 'Sign In'
     CreateAccount:{
         fontSize:15,
         color:'#00FFC1',
