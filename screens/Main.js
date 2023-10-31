@@ -48,13 +48,13 @@ const Main = () => {
 
         <SafeAreaView style={styles.container}>
                 <View style={{marginTop:10, width:400}}>
-                    <InputBox pHolder="Search for a book" icon="search" value={books} set_text={handleSearch}  autofocus = {false}/>
-
+                    <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch}  autofocus = {false}/>
                 </View>
 
                 <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
                     <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
                 </View>
+
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
 
                 <StatusBar style="auto" />
@@ -68,7 +68,7 @@ const Main = () => {
                                         <View style={styles.square}></View>
                                         <Book bookInfo={item} />
                                         <View style={styles.details}>
-                                            <Text style={{ textDecorationLine: "underline" }}>More details</Text>
+                                            <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -87,7 +87,6 @@ const Main = () => {
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
                 </View>
 
-
             </SafeAreaView >
     );
 }
@@ -105,8 +104,10 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         flexDirection: 'row',
-        marginTop: 15,
-        width: '99%'
+        marginTop: 10,
+        width: '98%',
+        borderWidth: 1,
+        borderColor: '#e9ebee',
     },
     square: {
         width: 28,
