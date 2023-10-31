@@ -6,8 +6,9 @@ import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
 const CreateAccount = ({ navigation }) => {
-    const [username, setUsername] = useState(''); //Variables to hold username and password for creation
-    const [password, setPassword] = useState('');
+    const [fullname, setFullname] = useState(''); //Variables to hold fullname
+    const [username, setUsername] = useState(''); //Variables to hold username 
+    const [password, setPassword] = useState(''); //Variables to hold password
     const [confirmpassword, setconfirmPassword] = useState(''); //The comparator to ensure password correctness
     const [email, setEmail] = useState('');         
     const [showPassword, setShowPassword] = useState(false); //Determines whether password is visible
@@ -20,11 +21,11 @@ const CreateAccount = ({ navigation }) => {
         const emailParts = email.split('@');
 
         //Error messages...
-        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){ //If the email is too short or isn't identified as a Calvin email:
-            setErrorMessage("Please enter your Calvin email");
-
-        } else if (username.length <= 3) {                                  //If the email is too short
+        if (username.length <= 3) {                                  //If the email is too short
             setErrorMessage("Your username must be at least 4 characters");
+        
+        }else if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){ //If the email is too short or isn't identified as a Calvin email:
+            setErrorMessage("Please enter your Calvin email");
 
         } else if (password.length <= 7) {                                  //If the password is too short
             setErrorMessage("Your password must be at least 8 characters");
@@ -34,7 +35,7 @@ const CreateAccount = ({ navigation }) => {
         } else {
             try {
                 // Save user data to AsyncStorage
-                await AsyncStorage.setItem('userData', JSON.stringify({ username, password, email }));
+                await AsyncStorage.setItem('userData', JSON.stringify({ fullname, username, password, email }));
                 navigation.navigate('Login'); //Navigate back to the login page ONLY if the account creation was successful
             } catch (error) {
                 console.error(error);
@@ -71,9 +72,10 @@ return (
                 </View>
                 <Text style = {styles.PageTitle}> Create an Account</Text>
                 <Text style = {styles.Info}> Please fill these credentials</Text>
-                {/* sets the state of username and password*/}
-                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {true}/>
+                {/* sets the state of fullname, email, username, and password*/}
+                <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)}  autofocus = {true}/>
                 <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {false} />
+                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {false}/>
                 <InputBox pHolder="Password" icon="lock" value={password}
                         set_text={text => setPassword(text)} secureTextEntry={!showPassword}
                         togglePasswordVisibility={togglePasswordVisibility}
