@@ -1,4 +1,4 @@
-import { StatusBar, FlatList } from 'expo-status-bar';
+import { FlatList } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
@@ -56,8 +56,6 @@ const Main = () => {
                     <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
                 </View>
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
-
-                <StatusBar style="auto" />
                 <ScrollView>
                     {
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
@@ -147,17 +145,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexDirection: 'row',
         marginTop: 15,
-        width: '99%'
-    },
-    details: {
-        position: "absolute",
-        bottom: 0,
-        right: 10,
-        margin: 10,
-        color: '#81F4D8'
-    },
-    search: {
-
     },
     buttons: {
         color: '#888181',
@@ -167,15 +154,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         flexWrap: 'wrap'
-    },
-    square: {
-        width: 28,
-        height: 40,
-        backgroundColor: 'red',
-        alignItems: "center",
-        opacity: 0.4,
-        borderRadius: 5,
-        marginRight: 10,
     },
 });
 export default Main;
