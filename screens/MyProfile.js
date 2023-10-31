@@ -6,6 +6,7 @@ import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
 const MyProfile = () => {
+    const [fullname, setFullname] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,7 +27,8 @@ const MyProfile = () => {
             try {
                 const userData = await AsyncStorage.getItem('userData');
                 if (userData) {
-                    const { email, username, password } = JSON.parse(userData);
+                    const { fullname, email, username, password } = JSON.parse(userData);
+                    setFullname(fullname);
                     setEmail(email);
                     setUsername(username);
                     setPassword(password);
@@ -114,6 +116,10 @@ const MyProfile = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.InfoContainer}>
+                <Text>Full Name: {fullname} </Text>
+            </View>
+
             <View style={styles.InfoContainer}>
                 <Text>Email: {email} </Text>
                 {/* <Button style = "text" label="Change Email" onPress={() => setEmailModalVisible(true)}/> */}

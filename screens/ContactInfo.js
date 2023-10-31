@@ -9,7 +9,7 @@ import Button from '../components/Button';
 const { height: screenHeight } = Dimensions.get('window');
 
 const ContactInfo = ({ navigation, book }) => {
-    const [name, setName] = useState(''); // State to store the user's name
+    const [fullname, setFullname] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -19,10 +19,10 @@ const ContactInfo = ({ navigation, book }) => {
           const fetchUserData = async () => {
             const userData = await AsyncStorage.getItem('userData');
             if (userData) {
-              const { email, username, password } = JSON.parse(userData);
+              const { email, fullname } = JSON.parse(userData);
               setEmail(email);
-              setName(username);
-              console.log("Autofilled fields with " + username + " & " + email);
+              setFullname(fullname);
+              console.log("Autofilled fields with " + fullname + " & " + email);
             }
           };
           fetchUserData();
@@ -57,7 +57,7 @@ const ContactInfo = ({ navigation, book }) => {
             <Text style={styles.Info}>The information below will be provided to the buyer</Text>
 
             <View style={styles.inputs}>
-                <InputBox pHolder="Full Name" icon="user" value={name} set_text={text => setName(text)} />
+                <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)} />
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
                 {errorMessage !== '' && (
                     <Text style={styles.errorText}>{errorMessage}</Text>
