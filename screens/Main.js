@@ -1,11 +1,14 @@
-import { FlatList } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
+
+// get width dimensions of the screen
+const { width: screenWidth } = Dimensions.get('window');
+const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 const booksData = books_data; //Collects a hardcoded json full of book objects
 
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         flexDirection: 'row',
         marginTop: 10,
-        width: '98%',
+        width: boxWidth,
         borderWidth: 1,
         borderColor: '#e9ebee',
     },

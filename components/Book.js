@@ -6,7 +6,7 @@ const Book = (props) => {
   //Parameters of the Book object are held here (props)
 
   return (
-    <View>
+    <View style={styles.bookcontainer}>
       <Text style={styles.bookname} numberOfLines={1} ellipsizeMode="tail">{book_name}</Text>
       <Text style={styles.price}>${price}</Text>
     </View>
@@ -14,10 +14,12 @@ const Book = (props) => {
 }
 
 const styles = StyleSheet.create({
+  bookcontainer: {
+    maxWidth: '87%',
+  },
   bookname: {
     fontWeight: 'bold',
     fontSize: 17,
-    maxWidth: 320,
   },
 
 });
