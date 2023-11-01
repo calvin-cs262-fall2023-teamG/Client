@@ -33,3 +33,5 @@ How to use <Button>?
 - label: the text that goes in the button
 - onPress: The result to the buttonpress action
 How to use <InputBox>?
+
+### Adding help pages
