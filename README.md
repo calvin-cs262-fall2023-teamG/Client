@@ -34,4 +34,4 @@ How to use <Button>?
 - onPress: The result to the buttonpress action
 How to use <InputBox>?
 
-### Adding help pages
+### (11/1)
