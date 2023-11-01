@@ -6,18 +6,18 @@ import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
 const MyProfile = () => {
-    const [fullname, setFullname] = useState('');
+    const [fullname, setFullname] = useState(''); //strings
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [isEmailModalVisible, setEmailModalVisible] = useState(false);
+    const [isEmailModalVisible, setEmailModalVisible] = useState(false); //booleans
     const [isUsernameModalVisible, setUsernameModalVisible] = useState(false);
     const [isPasswordModalVisible, setPasswordModalVisible] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [confirmpassword, setconfirmPassword] = useState('');
+    const [confirmpassword, setconfirmPassword] = useState(''); //helpers and corroborators
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -68,6 +68,7 @@ const MyProfile = () => {
         } 
     };
 
+    //These functions are for resetting the holder strings
     const clearEmailInput = () => {
         setNewEmail('');
         setEmailModalVisible(false);

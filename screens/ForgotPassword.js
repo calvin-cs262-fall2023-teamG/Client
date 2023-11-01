@@ -18,13 +18,13 @@ const { height: screenHeight } = Dimensions.get('window');
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); //save strings for email and error message to be presented
   
   const checkEmailDomain = async () => {
      const domainToCheck = 'calvin.edu';
      const emailParts = email.split('@');
 
-     if (emailParts.length === 2 && emailParts[1] === domainToCheck){
+     if (emailParts.length === 2 && emailParts[1] === domainToCheck){ //make sure there are two parts of the email field and one is a calvin domain
         showAlert() 
         navigation.navigate('Login');
      } else{
@@ -37,6 +37,7 @@ const ForgotPassword = ({ navigation }) => {
 
     // Sending the email requires 
     //sendEmail();
+    //Presently nonfunctional and to be implemented later
     }
   
 
@@ -51,7 +52,7 @@ const ForgotPassword = ({ navigation }) => {
 
   return (
     <View style={styles.mainbg}>
-      {/* These are the designs for the main page */}
+      {/* These are the designs for the main page, which carry over */}
       <View style={styles.shapesContainer}>
         <View style={styles.shape1} />
         <View style={styles.shape2} />
