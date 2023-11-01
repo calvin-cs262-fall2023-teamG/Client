@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
 
 const booksData = books_data; //Collects a hardcoded json full of book objects
@@ -14,23 +14,29 @@ const Main = () => {
 
     //List of books generation
     const [book, setBook] = useState();
-    const [books, setBooks] = useState(booksData); //sets the book list to the hardcoded json. Eventually this should be created dynamically
+    const [books, setBooks] = useState([]); //sets the book list to the hardcoded json. It will be turned instead into the library from the database.
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
 
     //Method to fetch the library of books from the database. Should be executed when page is navigated to.
     const fetchLibrary = async () => {
+        setLoading(true);
         try {
-            //const response = await fetch("calvin.edu"); //this is a PLACEHOLDER, it should fetch from the database
-            //const json = await response.json; //collect a json from the response
-            //setBooks(json); //put the json into our book arrangement
+            const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books'); //this is not working yet, possibly issue with slashes?
+            const json = await response.json(); //collect a json from the response
+            setBooks(json); //put the json into our book arrangement
         } catch (error) {
             console.error(error);
-            console.log("Using default list values");
+            console.log("Using default list values"); //Log that you are using hardcoded values
             setBooks(booksData);
         } finally {
             setLoading(false);
         }
     }
+
+    //The following useEffect initializes the book list
+    useEffect(() => {
+            fetchLibrary();
+    }, []); //This should only happen on page init
 
     //Method to add a created book to a list
     function handleAddBook() {
@@ -41,8 +47,8 @@ const Main = () => {
     //Alters the "books" list to only show books whose title matches with what is in the search bar
     const handleSearch = (searchTerm) => {
         if (searchTerm === '') {
-            setBooks(booksData); 
-            //fetchLibrary(); //this should only be uncommented when the database is functional
+            //setBooks(booksData); 
+            fetchLibrary(); //this should only be uncommented when the database is functional
         } else {
             const filteredBooks = booksData.filter((book) => {
                 const title = book.book_name.toLowerCase();
@@ -73,6 +79,7 @@ const Main = () => {
                 </View>
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
+                {isLoading ? (<ActivityIndicator />) : (
                 <ScrollView>
                     {
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
@@ -91,6 +98,7 @@ const Main = () => {
                         })
                     }
                 </ScrollView>
+                )}
 
                 <View style={styles.footerContainer}>
                     <TouchableOpacity 
