@@ -13,6 +13,7 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
         style={styles.InputTextBox}
         placeholder={pHolder}
         value={value}
+        autoCapitalize='none'
         onChangeText={set_text}
         autoFocus={autofocus}
         secureTextEntry={isPassword} // Conditionally apply secureTextEntry

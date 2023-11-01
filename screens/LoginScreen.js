@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
@@ -14,105 +13,112 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState(''); //Displays a message in case the user does something incorrectly
     const [email, setEmail] = useState(''); // State to store the user's email
+    const [matchingUser, setMatchingUser] = useState(null);
+    const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
 
     useEffect(() => {
         // Retrieve user data from AsyncStorage when the component mounts
         const retrieveUserData = async () => {
+            setLoading(true);
             try {
-                const userData = await AsyncStorage.getItem('userData');
-                if (userData) {
-                    const { username: storedUsername, email } = JSON.parse(userData); //check for accuracy of login information
-                    setUsername(storedUsername);
-                    setEmail(email);
-                    setPassword(password)
+                const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users');
+                const userData = await response.json();
+                
+                console.log("Fetched User Data:", userData);
+        
+                const user = userData.find(user => user.username === username && user.password === password);
+                console.log("Fetched User Data:", user);
+        
+                setMatchingUser(user)
+                if (user) {
+                    setUsername(user.username);
+                    setPassword(user.password);
+                    setEmail(user.email);
+                    setErrorMessage('');
                 }
+        
             } catch (error) {
                 console.error(error);
+            } finally{
+                setLoading(false);
             }
-        };
-
+        }
+        
         retrieveUserData();
-    }, []); //This useEffect is triggered as soon as the component appears
+        
+    }, [username, password]); //This useEffect is triggered as soon as the component appears
 
     const handleLogin = async () => {
-        try {
-            const userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-                const { username: storedUsername, password: storedPassword } = JSON.parse(userData);
-                //checks for appropriate username & password, being either the stored info or "admin, admin"
-                if ((username === storedUsername && password === storedPassword) || (username === 'admin' && password === "admin")) {
-                    setErrorMessage(''); // Clear any previous error message
-                    // Navigate to the main screen or wherever you want to go
-                    navigation.navigate('Main');
-                } else {
-                    setErrorMessage("Username or Password Incorrect!");
-                }
-            }
-        } catch (error) {
-            console.error(error);
-            setErrorMessage("Error logging in. Please try again.");
+
+        if ((matchingUser || (username === 'admin' && password === "admin"))) {
+
+            setErrorMessage(''); // Clear any previous error message
+            // Navigate to the main screen or wherever you want to go
+            navigation.navigate('Main');
+        } else {
+            setErrorMessage("Username or Password Incorrect!");
         }
     }
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword); //Make the password (in)visible
-    }
+const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); //Make the password (in)visible
+}
 
-    const handleResetPassword = async () => {
-        navigation.navigate("ForgotPassword") //allows to access the reset password page
-    }
+const handleResetPassword = async () => {
+    navigation.navigate("ForgotPassword") //allows to access the reset password page
+}
 
 
-    return (
+return (
 
-        <View style={styles.mainbg}>
-            {/* These are the designs for the main page */}
+    <View style={styles.mainbg}>
+        {/* These are the designs for the main page */}
 
-            <View style={styles.shapesContainer}>
-                <View style={styles.shape1} />
-                <View style={styles.shape2} />
-                <View style={styles.shape3} />
-                <View style={styles.shape4} />
-                <View style={styles.shape5} />
-            </View>
-            <ScrollView>
-                <View style={{ paddingHorizontal: 20 }}>
-                    <View style={styles.headerContainer}>
-                        <Icon name="book" size={50} color="#000" /* Corner logo object */ />
-                        <Text style={styles.loginheader}> ChapterCache</Text>
-                    </View>
+        <View style={styles.shapesContainer}>
+            <View style={styles.shape1} />
+            <View style={styles.shape2} />
+            <View style={styles.shape3} />
+            <View style={styles.shape4} />
+            <View style={styles.shape5} />
+        </View>
+        <ScrollView>
+            <View style={{ paddingHorizontal: 20 }}>
+                <View style={styles.headerContainer}>
+                    <Icon name="book" size={50} color="#000" /* Corner logo object */ />
+                    <Text style={styles.loginheader}> ChapterCache</Text>
+                </View>
 
-                    <Text style={styles.PageTitle}> Sign in</Text>
-                    <Text style={styles.Info}> Please fill these credentials</Text>
+                <Text style={styles.PageTitle}> Sign in</Text>
+                <Text style={styles.Info}> Please fill these credentials</Text>
 
-                    {/* sets the state of username and password*/}
-                    <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {true} />
-                    <InputBox pHolder="Password" icon="lock" value={password}
-                        set_text={text => setPassword(text)} secureTextEntry={!showPassword}
-                        togglePasswordVisibility={togglePasswordVisibility}
-                        showPassword={showPassword}
-                        autofocus = {false} />
+                {/* sets the state of username and password*/}
+                <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)} autofocus={true} />
+                <InputBox pHolder="Password" icon="lock" value={password}
+                    set_text={text => setPassword(text)} secureTextEntry={!showPassword}
+                    togglePasswordVisibility={togglePasswordVisibility}
+                    showPassword={showPassword}
+                    autofocus={false} />
 
-                    <View style={{ alignItems: 'flex-end', marginTop: 5, }}>
-                        <Button style="text" label="Forgot Password?" onPress={handleResetPassword}/>
-                    </View>
+                <View style={{ alignItems: 'flex-end', marginTop: 5, }}>
+                    <Button style="text" label="Forgot Password?" onPress={handleResetPassword} />
+                </View>
 
-                    {errorMessage !== '' && ( //Handling display of the error message properly
-                        <Text style={styles.errorText}>{errorMessage}</Text>
-                    )}
-                    
-                    <Button style = "button" label="Sign In" onPress={handleLogin}/>
+                {errorMessage !== '' && ( //Handling display of the error message properly
+                    <Text style={styles.errorText}>{errorMessage}</Text>
+                )}
 
-                    <View style={styles.footer}>
-                        <Text style={styles.Infofooter}> Don't have an account?</Text>
-                        <View>
-                            <Button style="text" label="Create an Account" onPress={() => navigation.navigate('CreateAccount')}/>
-                        </View>
+                <Button style="button" label="Sign In" onPress={handleLogin} />
+
+                <View style={styles.footer}>
+                    <Text style={styles.Infofooter}> Don't have an account?</Text>
+                    <View>
+                        <Button style="text" label="Create an Account" onPress={() => navigation.navigate('CreateAccount')} />
                     </View>
                 </View>
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
+    </View>
 
-    );
+);
 };
 
 //Styles sheet for this document
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
         left: 40,
         borderRadius: 100,
         backgroundColor: '#A1FFB6',
-        transform: [{ translateY: screenHeight - 30}],
+        transform: [{ translateY: screenHeight - 30 }],
     },
     shape3: {
         position: 'absolute',
@@ -151,7 +157,7 @@ const styles = StyleSheet.create({
         left: -90,
         borderRadius: 100,
         backgroundColor: '#8CFFD6',
-        transform: [{ translateY: screenHeight - 120}],
+        transform: [{ translateY: screenHeight - 120 }],
     },
     shape4: {
         position: 'absolute',
