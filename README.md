@@ -34,6 +34,6 @@ How to use <Button>?
 - onPress: The result to the buttonpress action
 How to use <InputBox>?
 
-### **(11/1)**
+# **(11/1)**
 - Added help page to the 'Add Book' page
 - Added background component for reusability
