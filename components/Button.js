@@ -9,8 +9,8 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 export default function Button({ label, onPress , style}) {
-  const buttonstyle = style==="button" ? styles.button : {};
-  const textstyle = style==="text" ? styles.text:{};
+  const buttonstyle = style==="button" ? styles.button : {}; //If the button is a "Button," it will have a dedicated area
+  const textstyle = style==="text" ? styles.text:{}; //If the button is a "Text," only the text will be pressed
   return ( 
     <TouchableOpacity onPress={onPress}>
       <View style={buttonstyle}>

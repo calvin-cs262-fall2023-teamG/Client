@@ -6,17 +6,18 @@ import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
 const MyProfile = () => {
+    const [fullname, setFullname] = useState(''); //strings
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [isEmailModalVisible, setEmailModalVisible] = useState(false);
+    const [isEmailModalVisible, setEmailModalVisible] = useState(false); //booleans
     const [isUsernameModalVisible, setUsernameModalVisible] = useState(false);
     const [isPasswordModalVisible, setPasswordModalVisible] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [confirmpassword, setconfirmPassword] = useState('');
+    const [confirmpassword, setconfirmPassword] = useState(''); //helpers and corroborators
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -26,7 +27,8 @@ const MyProfile = () => {
             try {
                 const userData = await AsyncStorage.getItem('userData');
                 if (userData) {
-                    const { email, username, password } = JSON.parse(userData);
+                    const { fullname, email, username, password } = JSON.parse(userData);
+                    setFullname(fullname);
                     setEmail(email);
                     setUsername(username);
                     setPassword(password);
@@ -66,6 +68,7 @@ const MyProfile = () => {
         } 
     };
 
+    //These functions are for resetting the holder strings
     const clearEmailInput = () => {
         setNewEmail('');
         setEmailModalVisible(false);
@@ -114,6 +117,10 @@ const MyProfile = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.InfoContainer}>
+                <Text>Full Name: {fullname} </Text>
+            </View>
+
             <View style={styles.InfoContainer}>
                 <Text>Email: {email} </Text>
                 {/* <Button style = "text" label="Change Email" onPress={() => setEmailModalVisible(true)}/> */}

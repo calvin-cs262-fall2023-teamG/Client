@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const Book = (props) => {
   const { book_name, isbn, author, course_name, price, seller_name, seller_email } = props.bookInfo;
+  //Parameters of the Book object are held here (props)
 
   return (
     <View style={styles.bookcontainer}>

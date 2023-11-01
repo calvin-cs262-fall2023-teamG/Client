@@ -3,9 +3,10 @@ import { StatusBar } from 'react-native';
 import Navigation from './navigations/Navigation';
 
 const App = () => {
-  StatusBar.setTranslucent(true);
   return (
-    <Navigation/> //The Navigation element provides all the controls for accessing app pages.
+    <Navigation> //The Navigation element provides all the controls for accessing app pages.
+      <StatusBar hidden={true} />
+    </Navigation>
   );
 }
 

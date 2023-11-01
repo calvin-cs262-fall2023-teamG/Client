@@ -33,3 +33,7 @@ How to use <Button>?
 - label: the text that goes in the button
 - onPress: The result to the buttonpress action
 How to use <InputBox>?
+
+# **(11/1)**
+- Added help page to the 'Add Book' page
+- Added background component for reusability
