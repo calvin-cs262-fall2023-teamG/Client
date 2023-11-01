@@ -11,6 +11,7 @@ import CreateAccount from '../screens/CreateAccount';
 import BookInfo from '../screens/BookInfo';
 import ContactInfo from '../screens/ContactInfo';
 import ForgotPassword from '../screens/ForgotPassword';
+import AddBookHelp from '../screens/AddBookHelp';
 
 const Stack = createNativeStackNavigator();    //This is the element to manage the screen displayed at a particular time
  
@@ -61,13 +62,28 @@ const Navigation = () => {
                     
                   />
                   </TouchableOpacity>
+                  
               );
             },
           }}
           />
-          <Stack.Screen name="Add Book" component={AddBook} options={{ title: 'Add a Book' }} /*Defining book-related pages*/ />
+      
           <Stack.Screen name="Book Info" component={BookInfo} options={{ title: 'Book Info' }} />
           <Stack.Screen name="Contact Info" component={ContactInfo} options={{title:'Contact Info'}}/>
+          <Stack.Screen name="Add Book Help" component={AddBookHelp} options={{title:'Help'}}/>
+          <Stack.Screen
+          name="Add Book"
+          component={AddBook}
+          options={({ navigation }) => ({
+            title: 'Add a Book',
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Add Book Help")}>
+                <Text style={{ paddingHorizontal: 10, color: '#888181' }}>Help</Text>
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
           
         </Stack.Group>
       </Stack.Navigator>
