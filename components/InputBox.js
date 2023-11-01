@@ -13,8 +13,9 @@ export default function InputBox({ pHolder, icon, value, set_text, secureTextEnt
         style={styles.InputTextBox}
         placeholder={pHolder}
         value={value}
-        onChangeText={set_text} //Changing Inputbox text alters its text value
-        autoFocus={autofocus} //Clicking the input box centers it
+        autoCapitalize='none'
+        onChangeText={set_text}
+        autoFocus={autofocus}
         secureTextEntry={isPassword} // Conditionally apply secureTextEntry
       />
       {/*Shows or hides the password based on what the user chooses*/}
