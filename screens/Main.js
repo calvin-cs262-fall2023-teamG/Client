@@ -1,5 +1,5 @@
 import { FlatList } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, ActivityIndicator } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
@@ -15,6 +15,22 @@ const Main = () => {
     //List of books generation
     const [book, setBook] = useState();
     const [books, setBooks] = useState(booksData); //sets the book list to the hardcoded json. Eventually this should be created dynamically
+    const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
+
+    //Method to fetch the library of books from the database. Should be executed when page is navigated to.
+    const fetchLibrary = async () => {
+        try {
+            //const response = await fetch("calvin.edu"); //this is a PLACEHOLDER, it should fetch from the database
+            //const json = await response.json; //collect a json from the response
+            //setBooks(json); //put the json into our book arrangement
+        } catch (error) {
+            console.error(error);
+            console.log("Using default list values");
+            setBooks(booksData);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     //Method to add a created book to a list
     function handleAddBook() {
@@ -26,6 +42,7 @@ const Main = () => {
     const handleSearch = (searchTerm) => {
         if (searchTerm === '') {
             setBooks(booksData); 
+            //fetchLibrary(); //this should only be uncommented when the database is functional
         } else {
             const filteredBooks = booksData.filter((book) => {
                 const title = book.book_name.toLowerCase();
