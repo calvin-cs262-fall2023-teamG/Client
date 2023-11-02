@@ -47,3 +47,4 @@ How to use <InputBox>?
 - Installed 'react native reanimated'
 - Added entrance animations to 'Main' page
 - Added entrance animations to 'Add Book' page
+- W
