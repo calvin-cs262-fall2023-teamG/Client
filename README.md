@@ -36,6 +36,7 @@ How to use <InputBox>?
 
 # **(11/1)**
 - Added help page to the 'Add Book' page
+# **UI Updates**
 - Added background component for reusability
 # **(11/2)**
 - Added help page to the 'Book Info' page
