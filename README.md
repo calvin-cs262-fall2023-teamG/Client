@@ -3,7 +3,7 @@
 This is the client application for the [CS 262 ChapterCache project.](https://github.com/calvin-cs262-fall2023-teamG/Project)
 
 
-**(10/6)**
+# **(10/6)**
 - This prototype allow a user to Login to our app either by using 'admin'- 'admin' credentials.
 
 - They can create their own username and password using our 'Create an Account' button. It stores the values in React Native's async storage which allows you to use the login credentials that was just created.
@@ -38,3 +38,5 @@ How to use <InputBox>?
 - Added help page to the 'Add Book' page
 - Added background component for reusability
 # **(11/2)**
+- Added help page to the 'Book Info' page
+- Fixed help page text formatting
