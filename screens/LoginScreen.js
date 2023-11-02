@@ -13,6 +13,7 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState(''); //Displays a message in case the user does something incorrectly
     const [email, setEmail] = useState(''); // State to store the user's email
+    const [name, setName] = useState(''); // State to store the user's email
     const [matchingUser, setMatchingUser] = useState(null);
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
 
@@ -28,13 +29,13 @@ const LoginScreen = ({ navigation }) => {
         
                 const user = userData.find(user => user.username === username && user.password === password);
                 console.log("Fetched User Data:", user);
-        
+                setErrorMessage(''); // Clear any previous error message
                 setMatchingUser(user)
                 if (user) {
                     setUsername(user.username);
                     setPassword(user.password);
                     setEmail(user.email);
-                    setErrorMessage('');
+                    setName(user.Name)
                 }
         
             } catch (error) {
@@ -50,9 +51,7 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
 
-        if ((matchingUser || (username === 'admin' && password === "admin"))) {
-
-            setErrorMessage(''); // Clear any previous error message
+        if (matchingUser) {
             // Navigate to the main screen or wherever you want to go
             navigation.navigate('Main');
         } else {
