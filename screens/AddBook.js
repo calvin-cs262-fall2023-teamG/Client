@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'rea
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from '../components/ImageViewer';
-import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp} from 'react-native-reanimated';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
 
 const PlaceholderImage_front = require('../assets/book_icon_gray.png'); //Allow for placeholders
@@ -56,7 +56,7 @@ return (
 
                     {/* Upload front of the book */}
                     <TouchableOpacity onPress={pickImageAsync_front}>
-                        <Animated.View style={styles.imageSection} entering={BounceInLeft.duration(500)}>
+                        <Animated.View style={styles.imageSection} entering={FadeInLeft.duration(500)}>
                             <View>
                                 <Text style={styles.text}>Front Picture</Text>
                                 <Text style={styles.addImage}> Add Image</Text>
@@ -70,7 +70,7 @@ return (
 
                     {/* Upload back of the book */}
                     <TouchableOpacity onPress={pickImageAsync_back}>
-                        <Animated.View style={styles.imageSection} entering={BounceInRight.duration(500)}>
+                        <Animated.View style={styles.imageSection} entering={FadeInRight.duration(500)}>
                             <View >
                                 <Text style={styles.text}>Back Picture</Text>
                                 <Text style={styles.addImage}>Add Image</Text>

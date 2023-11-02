@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions } from 'react-native'
 import Background from '../components/Background';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
 // get height dimensions of the screen 
 
@@ -11,7 +12,7 @@ const BookInfoHelp = ({  }) => {
     
 
     return (
-        <View>
+        <Animated.View entering={FadeInUp.duration(500)}>
             <Background></Background>
             <TextFunc textTitle={'Book name: '} textBody={'The title of this book.'}/>
             <TextFunc textTitle={'ISBN #: '} textBody={'ISBN is a book\'s unique id number usually found on the back cover of a book above the bar code on the copyright page.'}/>
@@ -20,7 +21,7 @@ const BookInfoHelp = ({  }) => {
             <TextFunc textTitle={'Price: '} textBody={'The price that this book is being sold for.'} />
             <TextFunc textTitle={'Seller name: '} textBody={'The name of the person selling this book.'} />
             <TextFunc textTitle={'Seller Email: '} textBody={'The email of the person selling this book. Use this to contact the person.'} />
-      </View>
+      </Animated.View>
     )
 }
 

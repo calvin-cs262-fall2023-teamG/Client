@@ -47,3 +47,10 @@ How to use <InputBox>?
 - Installed 'react native reanimated'
 - Added entrance animations to 'Main' page
 - Added entrance animations to 'Add Book' page
+- Added entrance animations to 'Contact Info' page
+- Added entrance animations to 'Add Book Help' page
+- Added entrance animations to 'Book Info Help' page
+- Book info now fills full screen
+### **Known issues**
+- Full name field not being currectly retrived from backend
+- Modals in profile view could use some extra space above keyboard

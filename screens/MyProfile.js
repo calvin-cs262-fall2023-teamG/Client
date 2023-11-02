@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+import Background from '../components/Background';
 
 const MyProfile = () => {
     const [fullname, setFullname] = useState(''); //strings
@@ -205,6 +206,7 @@ const MyProfile = () => {
                 </View>
             </Modal>
         </SafeAreaView>
+        
     );
 }
 
