@@ -51,6 +51,7 @@ How to use <InputBox>?
 - Added entrance animations to 'Add Book Help' page
 - Added entrance animations to 'Book Info Help' page
 - Book info now fills full screen
+- Modals now appear higher above keyboard
+- Added entrance animation for modals
 ### **Known issues**
 - Full name field not being currectly retrived from backend
-- Modals in profile view could use some extra space above keyboard (In progress)

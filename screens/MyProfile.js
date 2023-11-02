@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 import Background from '../components/Background';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
 
 const MyProfile = () => {
     const [fullname, setFullname] = useState(''); //strings
@@ -156,7 +157,7 @@ const MyProfile = () => {
 
             {/* Email Update Modal */}
             <Modal isVisible={isEmailModalVisible}>
-                <View style={styles.modalContainer}>
+                <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
                     <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)}  autofocus = {true} />
                     {errorMessage !== '' && (
@@ -164,12 +165,12 @@ const MyProfile = () => {
                     )}
                     <Button style = "button" label="Update Email" onPress={handleUpdateEmail}/>
                     <Button style = "button" label="Cancel" onPress={clearEmailInput}/>
-                </View>
+                </Animated.View>
             </Modal>
 
             {/* Username Update Modal */}
             <Modal isVisible={isUsernameModalVisible} style={styles.modal}>
-                <View style={styles.modalContainer}>
+                <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
                     <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={text => setNewUsername(text)}  autofocus = {true} />
                     {errorMessage !== '' && (
@@ -178,12 +179,12 @@ const MyProfile = () => {
                     <Button style = "button" label="Update Username" onPress={handleUpdateUsername}/>
                     <Button style = "button" label="Cancel" onPress={clearUsernameInput}/>
 
-                </View>
+                </Animated.View>
             </Modal>
 
             {/* Password Update Modal */}
             <Modal isVisible={isPasswordModalVisible} style={styles.modal}>
-                <View style={styles.modalContainer}>
+                <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                     <Text paddingHorizontal={10}>Enter New Password:</Text>
                     <InputBox pHolder="New Password" icon="lock" value={newPassword}
                         set_text={text => setNewPassword(text)} secureTextEntry={!showPassword}
@@ -203,7 +204,7 @@ const MyProfile = () => {
                     <Button style = "button" label="Update Password" onPress={handleUpdatePassword}/>
                     <Button style = "button" label="Cancel" onPress={clearPasswordInput}/>
 
-                </View>
+                </Animated.View>
             </Modal>
         </SafeAreaView>
         
@@ -242,6 +243,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20,
         borderRadius: 10,
+        marginBottom: 250
     },
     errorText:{
         textAlign: 'center',
