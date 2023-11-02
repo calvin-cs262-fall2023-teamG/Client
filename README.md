@@ -53,4 +53,4 @@ How to use <InputBox>?
 - Book info now fills full screen
 ### **Known issues**
 - Full name field not being currectly retrived from backend
-- Modals in profile view could use some extra space above keyboard
+- Modals in profile view could use some extra space above keyboard (In progress)
