@@ -5,7 +5,7 @@ import Background from '../components/Background';
 // get height dimensions of the screen 
 
 
-const AddBookHelp = ({  }) => {
+const BookInfoHelp = ({  }) => {
     
 
     
@@ -13,12 +13,13 @@ const AddBookHelp = ({  }) => {
     return (
         <View>
             <Background></Background>
-            <TextFunc textTitle={'Book name: '} textBody={'The title of the book.'}/>
+            <TextFunc textTitle={'Book name: '} textBody={'The title of this book.'}/>
             <TextFunc textTitle={'ISBN #: '} textBody={'ISBN is a book\'s unique id number usually found on the back cover of a book above the bar code on the copyright page.'}/>
-            <TextFunc textTitle={'Author: '} textBody={'Enter the writer of the book.'}/>
+            <TextFunc textTitle={'Author: '} textBody={'The writer of this book.'}/>
             <TextFunc textTitle={'Course name: '} textBody={'The name of the course that this book was used for.'}/>
-            <TextFunc textTitle={'Price: '} textBody={<Text>The price that <Text style={{textDecorationLine: 'underline'}}>you</Text> would like to sell your book for.</Text>} />
-            <TextFunc textTitle={'Front & back pictures: '} textBody={'A picture of the front and back cover of your book.'}/>
+            <TextFunc textTitle={'Price: '} textBody={'The price that this book is being sold for.'} />
+            <TextFunc textTitle={'Seller name: '} textBody={'The name of the person selling this book.'} />
+            <TextFunc textTitle={'Seller Email: '} textBody={'The email of the person selling this book. Use this to contact the person.'} />
       </View>
     )
 }
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default AddBookHelp;
+export default BookInfoHelp;
