@@ -45,4 +45,5 @@ How to use <InputBox>?
 - Removed scroll bar from 'Main' page
 - Fixed border radius of book objects
 - Installed 'react native reanimated'
-- Basic animations on home screen
+- Added entrance animations to 'Main' page
+- Added entrance animations to 'Add Book' page

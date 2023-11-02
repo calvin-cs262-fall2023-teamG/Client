@@ -5,7 +5,7 @@ import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
-import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn} from 'react-native-reanimated';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp} from 'react-native-reanimated';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
@@ -51,7 +51,7 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-                <Animated.View style={{marginTop:10, width:400}} entering={BounceInRight.duration(500)}>
+                <Animated.View style={{marginTop:10, width:400}} entering={BounceInUp.duration(500)}>
                     <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch}  autofocus = {false}/>
                 </Animated.View>
 
@@ -60,7 +60,7 @@ const Main = () => {
                 </Animated.View>
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
-                <Animated.ScrollView showsVerticalScrollIndicator={false} entering={StretchInY.duration(500)}>
+                <Animated.ScrollView showsVerticalScrollIndicator={false} entering={FadeInUp.duration(500)}>
                     {
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
@@ -80,11 +80,13 @@ const Main = () => {
                 </Animated.ScrollView>
 
                 <View style={styles.footerContainer}>
+                    <Animated.View entering={BounceInDown.duration(500)}>
                     <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.sellBook}>Sell a Book</Text>
+                        <Animated.Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Animated.Text>
                     </TouchableOpacity>
+                    </Animated.View>
  
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
                 </View>
