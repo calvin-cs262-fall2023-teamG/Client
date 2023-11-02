@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Book from '../components/Book';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
 // get height dimensions of the screen 
 const { height: screenHeight } = Dimensions.get('window');
@@ -52,18 +53,18 @@ const ContactInfo = ({ navigation, book }) => {
                  </View>
         <ScrollView style={{paddingHorizontal: 20,}} showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
-
-            <Text style={styles.PageTitle}> Contact Information</Text>
-            <Text style={styles.Info}>The information below will be provided to the buyer</Text>
-
-            <View style={styles.inputs}>
+            <Animated.View entering={FadeInUp.duration(500)}>
+              <Text style={styles.PageTitle}> Contact Information</Text>
+              <Text style={styles.Info}>The information below will be provided to the buyer</Text>
+            </Animated.View>
+            <Animated.View style={styles.inputs} entering={FadeInDown.duration(500)}>
                 <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)} />
                 <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
                 {errorMessage !== '' && (
                     <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
                 <Button style = "button" label="Add Book" onPress={handleAddBook}/>
-            </View>
+            </Animated.View>
         </ScrollView>
         </View>
     )

@@ -2,13 +2,15 @@
 import React from 'react'
 import { StyleSheet, View, Text, SafeAreaView,ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
+import Background from '../components/Background';
 
 const BookInfo = ({route}) => {
     const { bookInfo } = route.params; //The elements to be held come from the book you accessed to get here
     return (
         <SafeAreaView style={styles.container}>
             {/* The format for storing book data */}
-            <View>
+            <Animated.View entrance={FadeInUp.duration(500)}>
                 <InfoView name ="Book" icon="book" value={bookInfo.title}/>
                 <InfoView name ="ISBN" icon = "hashtag" value={bookInfo.isbn}/>
                 <InfoView name ="Author" icon = "user" value={bookInfo.author}/>
@@ -16,7 +18,7 @@ const BookInfo = ({route}) => {
                 <InfoView name ="Price" icon = "tags" value= {`$${bookInfo.price}`}/>
                 <InfoView name ="Seller Name" icon="user" value={bookInfo.seller_name}/>
                 <InfoView name ="Seller Email" icon = "envelope" value={bookInfo.seller_email}/>
-            </View>
+            </Animated.View>
         </SafeAreaView>
     )
 }
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 15,
         backgroundColor : '#D9FFF6',
-        height: '15%',
+        height: '14.63%',
         borderColor: '#000',
         borderBottomWidth: 1,
     },

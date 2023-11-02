@@ -1,11 +1,15 @@
-import { FlatList } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
+import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
+
+// get width dimensions of the screen
+const { width: screenWidth } = Dimensions.get('window');
+const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 const booksData = books_data; //Collects a hardcoded json full of book objects
 
@@ -16,7 +20,7 @@ const Main = () => {
     const [book, setBook] = useState();
     const [books, setBooks] = useState([]); //sets the book list to the hardcoded json. It will be turned instead into the library from the database.
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
-
+  
     //Method to fetch the library of books from the database. Should be executed when page is navigated to.
     const fetchLibrary = async () => {
         setLoading(true);
@@ -32,7 +36,7 @@ const Main = () => {
             setLoading(false);
         }
     }
-
+    
     //The following useEffect initializes the book list
     useEffect(() => {
             fetchLibrary();
@@ -51,7 +55,7 @@ const Main = () => {
             fetchLibrary(); //this should only be uncommented when the database is functional
         } else {
             const filteredBooks = booksData.filter((book) => {
-                const title = book.book_name.toLowerCase();
+                const title = book.title.toLowerCase();
                 return title.includes(searchTerm.toLowerCase());
             });
 
@@ -70,17 +74,17 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-                <View style={{marginTop:10, width:400}}>
+                <Animated.View style={{marginTop:10, width:400}} entering={FadeInUp.duration(500)}>
                     <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch}  autofocus = {false}/>
-                </View>
+                </Animated.View>
 
-                <View style = {{alignItems:'center', marginTop: 9, marginBottom:5}}>
+                <Animated.View style = {{alignItems:'center', marginTop: 9, marginBottom:5}} entering={FadeIn.duration(500)}>
                     <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
-                </View>
+                </Animated.View>
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
                 {isLoading ? (<ActivityIndicator />) : (
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
@@ -101,16 +105,18 @@ const Main = () => {
                 )}
 
                 <View style={styles.footerContainer}>
+                    <Animated.View entering={FadeInDown.duration(500)}>
                     <TouchableOpacity 
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
-                        <Text style={styles.sellBook}>Sell a Book</Text>
+                        <Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Text>
                     </TouchableOpacity>
+                    </Animated.View>
  
                     {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
                 </View>
 
-            </SafeAreaView >
+            </SafeAreaView>
     );
 }
 
@@ -125,12 +131,12 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: '#D9FFF6',
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 15,
         flexDirection: 'row',
         marginTop: 10,
-        width: '98%',
+        width: boxWidth,
         borderWidth: 1,
-        borderColor: '#e9ebee',
+        borderColor: '#fff',
     },
     square: {
         width: 28,

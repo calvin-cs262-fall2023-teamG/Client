@@ -3,7 +3,7 @@
 This is the client application for the [CS 262 ChapterCache project.](https://github.com/calvin-cs262-fall2023-teamG/Project)
 
 
-**(10/6)**
+# **(10/6)**
 - This prototype allow a user to Login to our app either by using 'admin'- 'admin' credentials.
 
 - They can create their own username and password using our 'Create an Account' button. It stores the values in React Native's async storage which allows you to use the login credentials that was just created.
@@ -34,4 +34,24 @@ How to use <Button>?
 - onPress: The result to the buttonpress action
 How to use <InputBox>?
 
-### Adding help pages
+# **(11/1)**
+- Added help page to the 'Add Book' page
+- Added background component for reusability
+# **(11/2)**
+### Help page updates
+- Added help page to the 'Book Info' page
+- Fixed help page text formatting
+### UI Updates
+- Removed scroll bar from 'Main' page
+- Fixed border radius of book objects
+- Installed 'react native reanimated'
+- Added entrance animations to 'Main' page
+- Added entrance animations to 'Add Book' page
+- Added entrance animations to 'Contact Info' page
+- Added entrance animations to 'Add Book Help' page
+- Added entrance animations to 'Book Info Help' page
+- Book info now fills full screen
+- Modals now appear higher above keyboard
+- Added entrance animation for modals
+### **Known issues**
+- Full name field not being currectly retrived from backend
