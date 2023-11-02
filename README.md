@@ -42,3 +42,7 @@ How to use <InputBox>?
 - Added help page to the 'Book Info' page
 - Fixed help page text formatting
 ### UI Updates
+- Removed scroll bar from 'Main' page
+- Fixed border radius of book objects
+- Installed 'react native reanimated'
+- Basic animations on home screen

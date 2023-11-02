@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import Navigation from './navigations/Navigation';
+import Animated, {SlideInDown, SlideInUp} from 'react-native-reanimated';
 
 const App = () => {
   return (
