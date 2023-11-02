@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Book = (props) => {
-  const { book_name, isbn, author, course_name, price, seller_name, seller_email } = props.bookInfo;
+  const { title, isbn, author, coursename, price, seller_name, seller_email } = props.bookInfo;
   //Parameters of the Book object are held here (props)
 
   return (
     <View style={styles.bookcontainer}>
-      <Text style={styles.bookname} numberOfLines={1} ellipsizeMode="tail">{book_name}</Text>
+      <Text style={styles.bookname} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
       <Text style={styles.price}>${price}</Text>
     </View>
   )

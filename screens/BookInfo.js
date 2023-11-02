@@ -11,10 +11,10 @@ const BookInfo = ({route}) => {
         <SafeAreaView style={styles.container}>
             {/* The format for storing book data */}
             <Animated.View entrance={FadeInUp.duration(500)}>
-                <InfoView name ="Book" icon="book" value={bookInfo.book_name}/>
+                <InfoView name ="Book" icon="book" value={bookInfo.title}/>
                 <InfoView name ="ISBN" icon = "hashtag" value={bookInfo.isbn}/>
                 <InfoView name ="Author" icon = "user" value={bookInfo.author}/>
-                <InfoView name ="Course Name" icon = "graduation-cap" value={bookInfo.course_name}/>
+                <InfoView name ="Course Name" icon = "graduation-cap" value={bookInfo.coursename}/>
                 <InfoView name ="Price" icon = "tags" value= {`$${bookInfo.price}`}/>
                 <InfoView name ="Seller Name" icon="user" value={bookInfo.seller_name}/>
                 <InfoView name ="Seller Email" icon = "envelope" value={bookInfo.seller_email}/>
