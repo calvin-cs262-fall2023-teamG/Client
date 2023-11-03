@@ -3,6 +3,7 @@ import { Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView, Dimens
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+import bcrypt from 'react-native-bcrypt';
 
 // get height dimensions of the screen
 const { height: screenHeight } = Dimensions.get('window');
@@ -16,7 +17,9 @@ const LoginScreen = ({ navigation }) => {
     const [name, setName] = useState(''); // State to store the user's email
     const [matchingUser, setMatchingUser] = useState(null);
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
+    const saltRounds = 10; // Number of salt rounds, higher is more secure but slower
 
+    
     useEffect(() => {
         // Retrieve user data from AsyncStorage when the component mounts
         const retrieveUserData = async () => {
@@ -25,19 +28,10 @@ const LoginScreen = ({ navigation }) => {
                 const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users');
                 const userData = await response.json();
                 
-                console.log("Fetched User Data:", userData);
-        
-                const user = userData.find(user => user.username === username && user.password === password);
-                console.log("Fetched User Data:", user);
+                //Look for the user by username
+                const user = userData.find(user => user.username === username);
                 setErrorMessage(''); // Clear any previous error message
-                setMatchingUser(user)
-                if (user) {
-                    setUsername(user.username);
-                    setPassword(user.password);
-                    setEmail(user.email);
-                    setName(user.Name)
-                }
-        
+                setMatchingUser(user)        
             } catch (error) {
                 console.error(error);
             } finally{
@@ -50,12 +44,25 @@ const LoginScreen = ({ navigation }) => {
     }, [username, password]); //This useEffect is triggered as soon as the component appears
 
     const handleLogin = async () => {
+        try{
 
-        if (matchingUser) {
-            // Navigate to the main screen or wherever you want to go
-            navigation.navigate('Main');
-        } else {
-            setErrorMessage("Username or Password Incorrect!");
+            if (matchingUser) {
+                const enteredPassword = password; // Get this from user input
+            
+                //Compare what the user inputted with the hashed password in the database
+                const isPasswordCorrect = bcrypt.compareSync(enteredPassword, matchingUser.passwordhash);
+                if (isPasswordCorrect) {
+                    // Password is correct, navigate to the main screen
+                    navigation.navigate('Main');
+                }else {
+                    setErrorMessage("Username or Password Incorrect!");
+                }
+            } else {
+                setErrorMessage("Username or Password Incorrect!");
+            }
+        }catch (error) {
+            setErrorMessage("Uh-oh Something went wrong");
+            console.error('Error during password comparison:', error);
         }
     }
 const togglePasswordVisibility = () => {
