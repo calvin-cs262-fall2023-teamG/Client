@@ -28,14 +28,10 @@ const LoginScreen = ({ navigation }) => {
                 const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users');
                 const userData = await response.json();
                 
-                console.log("Fetched User Data:", userData);
-        
+                //Look for the user by username
                 const user = userData.find(user => user.username === username);
-                console.log("Fetched User Data:", user);
                 setErrorMessage(''); // Clear any previous error message
-                setMatchingUser(user)
-                
-        
+                setMatchingUser(user)        
             } catch (error) {
                 console.error(error);
             } finally{
@@ -51,16 +47,12 @@ const LoginScreen = ({ navigation }) => {
         try{
 
             if (matchingUser) {
-                console.log("matched ", matchingUser)
-
-                console.log("matched password", matchingUser.passwordhash)
-                console.log("entered",password )
                 const enteredPassword = password; // Get this from user input
             
+                //Compare what the user inputted with the hashed password in the database
                 const isPasswordCorrect = bcrypt.compareSync(enteredPassword, matchingUser.passwordhash);
-                console.log(isPasswordCorrect)
                 if (isPasswordCorrect) {
-                    // Password is correct, navigate to the main screen or wherever you want to go
+                    // Password is correct, navigate to the main screen
                     navigation.navigate('Main');
                 }else {
                     setErrorMessage("Username or Password Incorrect!");
@@ -69,6 +61,7 @@ const LoginScreen = ({ navigation }) => {
                 setErrorMessage("Username or Password Incorrect!");
             }
         }catch (error) {
+            setErrorMessage("Uh-oh Something went wrong");
             console.error('Error during password comparison:', error);
         }
     }
