@@ -1,62 +1,61 @@
-//Holds information about the book
-import React from 'react'
-import { StyleSheet, View, Text, SafeAreaView,ScrollView } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
-import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
-import Background from '../components/Background';
+import React from 'react';
+import { StyleSheet, View, Text, SafeAreaView, Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const BookInfo = ({route}) => {
-    const { bookInfo } = route.params; //The elements to be held come from the book you accessed to get here
+const { width } = Dimensions.get('window');
+
+const InfoView = ({ name, value, icon }) => {
     return (
-        <SafeAreaView style={styles.container}>
-            {/* The format for storing book data */}
-            <Animated.View entrance={FadeInUp.duration(500)}>
-                <InfoView name ="Book" icon="book" value={bookInfo.title}/>
-                <InfoView name ="ISBN" icon = "hashtag" value={bookInfo.isbn}/>
-                <InfoView name ="Author" icon = "user" value={bookInfo.author}/>
-                <InfoView name ="Course Name" icon = "graduation-cap" value={bookInfo.coursename}/>
-                <InfoView name ="Price" icon = "tags" value= {`$${bookInfo.price}`}/>
-                <InfoView name ="Seller Name" icon="user" value={bookInfo.seller_name}/>
-                <InfoView name ="Seller Email" icon = "envelope" value={bookInfo.seller_email}/>
-            </Animated.View>
-        </SafeAreaView>
-    )
-}
-
-//Displays information regarding the book
-const InfoView = ({name, value, icon})=>{
-    return(
-        <View style={styles.info}>
+        <View style={[styles.info]}>
             <Icon name={icon} size={20} color="#888181" style={styles.icon} />
             <View>
-                <Text style={{fontWeight: 'bold', color: "#888181"}}>{name}</Text>
-                <Text style={{maxWidth:310, color: "#888181"}}>{value}</Text>
+                <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
+                <Text style={{ maxWidth: 0.9 * width, color: "#888181" }}>{value}</Text>
             </View>
         </View>
-    )
+    );
 }
 
-//Stylesheet
+const BookInfo = ({ route }) => {
+    const { bookInfo } = route.params;
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <View>
+                <InfoView name="Book" icon="book" value={bookInfo.book_name} />
+                <InfoView name="ISBN" icon="hashtag" value={bookInfo.isbn} />
+                <InfoView name="Author" icon="user" value={bookInfo.author} />
+                <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.course_name} />
+                <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
+                <InfoView name="Seller Name" icon="user" value={bookInfo.seller_name} />
+                <InfoView name="Seller Email" icon="envelope" value={bookInfo.seller_email} />
+            </View>
+        </SafeAreaView>
+    );
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
-        paddingHorizontal: 30,
-        paddingTop: 30,
+        alignItems: 'center',
     },
-    info:{
+
+    info: {
+        flex: 1,
+        marginTop: 10,
+        marginBottom: 10,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#D9FFF6',
+        borderRadius: 15,
+        justifyContent: 'left',
         paddingHorizontal: 15,
-        backgroundColor : '#D9FFF6',
-        height: '14.63%',
-        borderColor: '#000',
-        borderBottomWidth: 1,
     },
-    icon:{
-        marginRight:10
-    }
 
+    icon: {
+        marginRight: 10
+    }
 });
 
 export default BookInfo;
