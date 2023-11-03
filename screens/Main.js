@@ -55,8 +55,8 @@ const Main = () => {
             fetchLibrary(); //this should only be uncommented when the database is functional
         } else {
             const filteredBooks = booksData.filter((book) => {
-                const title = book.title.toLowerCase();
-                return title.includes(searchTerm.toLowerCase());
+                const book_name = book.book_name.toLowerCase();
+                return book_name.includes(searchTerm.toLowerCase());
             });
 
             setBooks(filteredBooks);
