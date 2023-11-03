@@ -58,4 +58,4 @@ How to use <InputBox>?
 - Added entrance animation for modals
 - Removed herobrine
 ### **Known issues**
-- Full name field not being properly retrived from backend
+- Text improperly formatted on 'Book Info' page
