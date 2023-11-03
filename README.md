@@ -54,4 +54,4 @@ How to use <InputBox>?
 - Modals now appear higher above keyboard
 - Added entrance animation for modals
 ### **Known issues**
-- Full name field not being currectly retrived from backend
+- Full name field not being properly retrived from backend
