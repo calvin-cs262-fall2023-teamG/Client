@@ -23,6 +23,7 @@ This is the client application for the [CS 262 ChapterCache project.](https://gi
 - Fixed icons and width of contact info fields
 - Eliminated blank space in book info screen
 - Other minor UI tweaks
+- Removed herobrine
 ### **Known issues**
 - Search function causes book items with short titles to shrink in width
 
@@ -37,10 +38,12 @@ How to use <InputBox>?
 # **(11/1)**
 - Added help page to the 'Add Book' page
 - Added background component for reusability
+- Removed herobrine
 # **(11/2)**
 ### Help page updates
 - Added help page to the 'Book Info' page
 - Fixed help page text formatting
+- Removed herobrine
 ### UI Updates
 - Removed scroll bar from 'Main' page
 - Fixed border radius of book objects
@@ -53,5 +56,6 @@ How to use <InputBox>?
 - Book info now fills full screen
 - Modals now appear higher above keyboard
 - Added entrance animation for modals
+- Removed herobrine
 ### **Known issues**
 - Full name field not being properly retrived from backend
