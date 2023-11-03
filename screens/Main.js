@@ -83,9 +83,10 @@ const Main = () => {
                 </Animated.View>
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
-                {isLoading ? (<ActivityIndicator />) : (
+                
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {
+                        isLoading ? (<ActivityIndicator />) : (
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
                                 <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
@@ -98,11 +99,11 @@ const Main = () => {
                                         </View>
                                     </View>
                                 </TouchableOpacity>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        )}
                 </ScrollView>
-                )}
+                
 
                 <View style={styles.footerContainer}>
                     <Animated.View entering={FadeInDown.duration(500)}>
