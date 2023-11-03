@@ -1,7 +1,7 @@
 const books_data =
   [
     {
-      "book_name": "The theory of Software engineering in 262 days 262 pages",
+      "title": "The theory of Software engineering in 262 days 262 pages",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course1",
@@ -10,7 +10,7 @@ const books_data =
       "seller_email": "email1"
     },
     {
-      "book_name": "Advanded Networking: From Ethernet to Application",
+      "title": "Advanded Networking: From Ethernet to Application",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course2",
@@ -19,7 +19,7 @@ const books_data =
       "seller_email": "email2"
     },
     {
-      "book_name": "High Performance computing",
+      "title": "High Performance computing",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course3",
@@ -28,7 +28,7 @@ const books_data =
       "seller_email": "email3"
     },
     {
-      "book_name": "Physics",
+      "title": "Physics",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course4",
@@ -37,7 +37,7 @@ const books_data =
       "seller_email": "email4"
     },
     {
-      "book_name": "Linear Algebra",
+      "title": "Linear Algebra",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course5",
@@ -46,7 +46,7 @@ const books_data =
       "seller_email": "email5"
     },
     {
-      "book_name": "Software engineering",
+      "title": "Software engineering",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course1",
@@ -55,7 +55,7 @@ const books_data =
       "seller_email": "email1"
     },
     {
-      "book_name": "Web Developement",
+      "title": "Web Developement",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course2",
@@ -64,7 +64,7 @@ const books_data =
       "seller_email": "email2"
     },
     {
-      "book_name": "Computer Architechture",
+      "title": "Computer Architechture",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course3",
@@ -73,7 +73,7 @@ const books_data =
       "seller_email": "email3"
     },
     {
-      "book_name": "Chemistry",
+      "title": "Chemistry",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course4",
@@ -82,7 +82,7 @@ const books_data =
       "seller_email": "email4"
     },
     {
-      "book_name": "Advanced Linear Algebra",
+      "title": "Advanced Linear Algebra",
       "isbn": "123456789",
       "author": "Author A",
       "course_name": "Course5",
