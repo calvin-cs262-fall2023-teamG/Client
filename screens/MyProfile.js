@@ -5,11 +5,15 @@ import Modal from 'react-native-modal';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 import Background from '../components/Background';
-import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
+import bcrypt from 'react-native-bcrypt';
+import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+
+const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
 const MyProfile = () => {
     const [fullname, setFullname] = useState(''); //strings
     const [email, setEmail] = useState('');
+    const [userID, setUserID] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [newEmail, setNewEmail] = useState('');
@@ -29,7 +33,8 @@ const MyProfile = () => {
             try {
                 const userData = await AsyncStorage.getItem('userData');
                 if (userData) {
-                    const { fullname, email, username, password } = JSON.parse(userData);
+                    const { ID, fullname, email, username, password } = JSON.parse(userData);
+                    setUserID(ID)
                     setFullname(fullname);
                     setEmail(email);
                     setUsername(username);
@@ -47,7 +52,7 @@ const MyProfile = () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = newEmail.split('@');
 
-        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){
+        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
             AsyncStorage.setItem('userData', JSON.stringify({ email: newEmail, username, password }));
@@ -67,7 +72,7 @@ const MyProfile = () => {
             setUsernameModalVisible(false);
             setNewUsername(''); // Clear the input field.
             setErrorMessage(''); // Clear the error message
-        } 
+        }
     };
 
     //These functions are for resetting the holder strings
@@ -76,13 +81,13 @@ const MyProfile = () => {
         setEmailModalVisible(false);
         setErrorMessage('');
     };
-    
+
     const clearUsernameInput = () => {
         setNewUsername('');
         setUsernameModalVisible(false);
         setErrorMessage('');
     };
-    
+
     const clearPasswordInput = () => {
         setNewPassword('');
         setconfirmPassword('');
@@ -90,19 +95,36 @@ const MyProfile = () => {
         setErrorMessage('');
     };
 
-    const handleUpdatePassword = () => {
+    const handleUpdatePassword = async () => {
         if (newPassword.length <= 7) {
             setErrorMessage("Your password must be at least 8 characters")
         } else if (newPassword !== confirmpassword) {
             setErrorMessage("Passwords do not match!");
         } else {
             try {
-            AsyncStorage.setItem('userData', JSON.stringify({ email, username, password: newPassword }));
-            setPassword(newPassword);
-            setPasswordModalVisible(false);
-            setNewPassword(''); // Clear the input field.
-            setconfirmPassword(''); // Clear the input field.
-            setErrorMessage(''); // Clear the error message
+                bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error('Error hashing password:', err);
+                        return;
+                    }
+                    const data = { id: userID, passwordhash: hash }
+                    const response = await fetch(`https://chaptercachecalvin.azurewebsites.net/users/${userID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    }
+                    setPassword(newPassword);
+                    setPasswordModalVisible(false);
+                    setNewPassword(''); // Clear the input field.
+                    setconfirmPassword(''); // Clear the input field.
+                    setErrorMessage(''); // Clear the error message
+                });
             } catch (error) {
                 console.error(error);
                 setErrorMessage("Error creating account. Please try again.");
@@ -159,12 +181,12 @@ const MyProfile = () => {
             <Modal isVisible={isEmailModalVisible}>
                 <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                     <Text paddingHorizontal={10}>Enter New Email:</Text>
-                    <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)}  autofocus = {true} />
+                    <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)} autofocus={true} />
                     {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
-                    <Button style = "button" label="Update Email" onPress={handleUpdateEmail}/>
-                    <Button style = "button" label="Cancel" onPress={clearEmailInput}/>
+                    <Button style="button" label="Update Email" onPress={handleUpdateEmail} />
+                    <Button style="button" label="Cancel" onPress={clearEmailInput} />
                 </Animated.View>
             </Modal>
 
@@ -172,12 +194,12 @@ const MyProfile = () => {
             <Modal isVisible={isUsernameModalVisible} style={styles.modal}>
                 <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                     <Text paddingHorizontal={10}>Enter New Username:</Text>
-                    <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={text => setNewUsername(text)}  autofocus = {true} />
+                    <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={text => setNewUsername(text)} autofocus={true} />
                     {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
-                    <Button style = "button" label="Update Username" onPress={handleUpdateUsername}/>
-                    <Button style = "button" label="Cancel" onPress={clearUsernameInput}/>
+                    <Button style="button" label="Update Username" onPress={handleUpdateUsername} />
+                    <Button style="button" label="Cancel" onPress={clearUsernameInput} />
 
                 </Animated.View>
             </Modal>
@@ -190,24 +212,24 @@ const MyProfile = () => {
                         set_text={text => setNewPassword(text)} secureTextEntry={!showPassword}
                         togglePasswordVisibility={togglePasswordVisibility}
                         showPassword={showPassword}
-                        autofocus = {true} />
+                        autofocus={true} />
                     <InputBox pHolder="Confirm Password" icon="lock" value={confirmpassword}
                         set_text={text => setconfirmPassword(text)} secureTextEntry={!showConfirmPassword}
                         togglePasswordVisibility={toggleConfirmPasswordVisibility}
                         showPassword={showConfirmPassword}
-                        autofocus = {false} />
+                        autofocus={false} />
 
                     {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
 
-                    <Button style = "button" label="Update Password" onPress={handleUpdatePassword}/>
-                    <Button style = "button" label="Cancel" onPress={clearPasswordInput}/>
+                    <Button style="button" label="Update Password" onPress={handleUpdatePassword} />
+                    <Button style="button" label="Cancel" onPress={clearPasswordInput} />
 
                 </Animated.View>
             </Modal>
         </SafeAreaView>
-        
+
     );
 }
 
@@ -245,9 +267,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 250
     },
-    errorText:{
+    errorText: {
         textAlign: 'center',
-        fontSize:15,
+        fontSize: 15,
         color: '#ff0000',
         marginTop: 10,
     },

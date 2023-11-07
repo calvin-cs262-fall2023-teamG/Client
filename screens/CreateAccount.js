@@ -35,7 +35,7 @@ const CreateAccount = ({ navigation }) => {
         } else {
             try {
                 // Save user data to AsyncStorage
-                await AsyncStorage.setItem('userData', JSON.stringify({ fullname, username, password, email }));
+                await AsyncStorage.setItem('userData', JSON.stringify({ fullname, email, username, password, }));
                 navigation.navigate('Login'); //Navigate back to the login page ONLY if the account creation was successful
             } catch (error) {
                 console.error(error);
