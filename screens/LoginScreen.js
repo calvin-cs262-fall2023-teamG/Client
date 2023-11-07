@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
 
             if (matchingUser) {
                 const enteredPassword = password; // Get this from user input
-            
+                console.log(matchingUser)
                 //Compare what the user inputted with the hashed password in the database
                 const isPasswordCorrect = bcrypt.compareSync(enteredPassword, matchingUser.passwordhash);
                 if (isPasswordCorrect) {
