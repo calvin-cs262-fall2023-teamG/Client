@@ -77,7 +77,7 @@ const Navigation = () => {
             title: 'Book Info',
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.navigate("Book Info Help")}>
-                <Text style={{ paddingHorizontal: 10, color: '#888181' }}>Help</Text>
+                <Text style={{ paddingHorizontal: 10, color: '#000' }}>Help</Text>
               </TouchableOpacity>
             ),
           })}
@@ -92,7 +92,7 @@ const Navigation = () => {
             title: 'Add a Book',
             headerRight: () => (
               <TouchableOpacity onPress={() => navigation.navigate("Add Book Help")}>
-                <Text style={{ paddingHorizontal: 10, color: '#888181' }}>Help</Text>
+                <Text style={{ paddingHorizontal: 10, color: '#000' }}>Help</Text>
               </TouchableOpacity>
             ),
           })}

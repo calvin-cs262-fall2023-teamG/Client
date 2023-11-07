@@ -25,7 +25,7 @@ const Main = () => {
     const fetchLibrary = async () => {
         setLoading(true);
         try {
-            const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books'); //this is not working yet, possibly issue with slashes?
+            const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books'); 
             const json = await response.json(); //collect a json from the response
             setBooks(json); //put the json into our book arrangement
         } catch (error) {
@@ -36,6 +36,7 @@ const Main = () => {
             setLoading(false);
         }
     }
+    
     
     //The following useEffect initializes the book list
     useEffect(() => {
@@ -83,9 +84,11 @@ const Main = () => {
                 </Animated.View>
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
-                {isLoading ? (<ActivityIndicator />) : (
-                <ScrollView showsVerticalScrollIndicator={false}>
+                
+                <ScrollView showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}>
                     {
+                        isLoading ? (<ActivityIndicator />) : (
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
                             return (
                                 <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
@@ -98,11 +101,11 @@ const Main = () => {
                                         </View>
                                     </View>
                                 </TouchableOpacity>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        )}
                 </ScrollView>
-                )}
+                
 
                 <View style={styles.footerContainer}>
                     <Animated.View entering={FadeInDown.duration(500)}>
