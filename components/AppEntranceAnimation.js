@@ -4,7 +4,7 @@ import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, 
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 
 export default function AppEntranceAnimation() {
-  
+    //COMPONENT NOT IN USE, MAY BE WORKED ON IF REUSABILITY REQUIRED
     const keyframe = new Keyframe({
         0: {
           transform: [{ translateY: 0 }],
