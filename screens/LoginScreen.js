@@ -86,7 +86,9 @@ return (
             <View style={styles.shape4} />
             <View style={styles.shape5} />
         </View>
-        <ScrollView>
+        <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
             <View style={{ paddingHorizontal: 20 }}>
                 <View style={styles.headerContainer}>
                     <Icon name="book" size={50} color="#000" /* Corner logo object */ />

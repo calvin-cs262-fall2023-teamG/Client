@@ -11,14 +11,28 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 export default function Button({ label, onPress , style}) {
   const buttonstyle = style==="button" ? styles.button : {}; //If the button is a "Button," it will have a dedicated area
   const textstyle = style==="text" ? styles.text:{}; //If the button is a "Text," only the text will be pressed
-  return ( 
-    <TouchableOpacity onPress={onPress}>
-      <View style={buttonstyle}>
-        <Text style = {textstyle}>{label}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const smallbutton = style==="small button" ? styles.smallButton:{};
+  if (style=== "button") {
+    return ( 
+      <TouchableOpacity onPress={onPress}>
+        <View style={buttonstyle}>
+          <Text style = {textstyle}>{label}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  else {
+    return ( 
+      <TouchableOpacity onPress={onPress}>
+        <View style={smallbutton}>
+          <Text style = {textstyle}>{label}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }
+
 
 const styles = StyleSheet.create({
   button: {
@@ -33,5 +47,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: '#00FFC1',
+  },
+  smallButton: {
+    width: 190,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    backgroundColor: '#81F4D8',
+    marginBottom: 30,
   }
 });
