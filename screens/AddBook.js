@@ -43,7 +43,9 @@ const AddBook = ({ navigation }) => {
 
 return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
                 <Animated.View entering={FadeInUp.duration(500)}>
                 <InputBox pHolder='Book Name' icon="book" value={book} set_text={text => setBook(text)} />
                 <InputBox pHolder='ISBN' icon="hashtag" value={isbn} set_text={text => setISBN(text)} />

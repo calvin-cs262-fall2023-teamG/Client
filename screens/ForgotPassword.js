@@ -9,7 +9,6 @@ import {
   Alert, Dimensions
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
-import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 

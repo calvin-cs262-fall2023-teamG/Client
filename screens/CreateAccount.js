@@ -4,6 +4,10 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
+import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
+import bcrypt from 'react-native-bcrypt';
+
+const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
 const CreateAccount = ({ navigation }) => {
     const [fullname, setFullname] = useState(''); //Variables to hold fullname
@@ -34,9 +38,31 @@ const CreateAccount = ({ navigation }) => {
             setErrorMessage("Passwords do not match!");  
         } else {
             try {
-                // Save user data to AsyncStorage
-                await AsyncStorage.setItem('userData', JSON.stringify({ fullname, email, username, password, }));
-                navigation.navigate('Login'); //Navigate back to the login page ONLY if the account creation was successful
+                const uniqueId = uuid.v4(); //Generate a unique ID
+                console.log(uniqueId)
+                bcrypt.hash(password, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error('Error hashing password:', err);
+                        return;
+                    }
+                    const data = {"id": uniqueId, "name": fullname, "emailaddress": email, "username": username, "passwordhash": hash}
+                    console.log(data)
+                    const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    }
+                    
+                    // Save user data to AsyncStorage
+                    navigation.navigate('Login'); //Navigate back to the login page ONLY if the account creation was successful
+                });
             } catch (error) {
                 console.error(error);
                 setErrorMessage("Error creating account. Please try again.");
@@ -64,7 +90,9 @@ return (
             <View style={styles.shape5} />
         </View>
 
-        <ScrollView>
+        <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
             <View style={{paddingHorizontal: 20}}>
                 <View style = {styles.headerContainer}>
                     <Icon name="book" size={50} color="#000"/>
