@@ -59,3 +59,4 @@ How to use <InputBox>?
 - Removed herobrine
 ### **Known issues**
 - Text improperly formatted on 'Book Info' page
+# **(11/7)**
