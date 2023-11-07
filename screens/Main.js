@@ -105,7 +105,7 @@ const Main = () => {
                                 )
                             })
                         )}
-                        <AppEntranceAnimation></AppEntranceAnimation>
+                        
                 </ScrollView>
                 
 
