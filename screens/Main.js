@@ -25,7 +25,7 @@ const Main = () => {
     const fetchLibrary = async () => {
         setLoading(true);
         try {
-            const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books'); //this is not working yet, possibly issue with slashes?
+            const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books'); 
             const json = await response.json(); //collect a json from the response
             setBooks(json); //put the json into our book arrangement
         } catch (error) {
@@ -36,6 +36,7 @@ const Main = () => {
             setLoading(false);
         }
     }
+    
     
     //The following useEffect initializes the book list
     useEffect(() => {
@@ -84,7 +85,8 @@ const Main = () => {
 
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
                 
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}>
                     {
                         isLoading ? (<ActivityIndicator />) : (
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
