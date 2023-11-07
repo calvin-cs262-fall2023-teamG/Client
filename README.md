@@ -60,3 +60,4 @@ How to use <InputBox>?
 ### **Known issues**
 - Text improperly formatted on 'Book Info' page
 # **(11/7)**
+- Adding entrance animation
