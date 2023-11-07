@@ -5,10 +5,12 @@ import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 import bcrypt from 'react-native-bcrypt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppEntranceAnimation from '../components/AppEntranceAnimation';
+import Animated, {Easing, SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut, Keyframe} from 'react-native-reanimated';
 
 
 // get height dimensions of the screen
-const { height: screenHeight } = Dimensions.get('window');
+const screenHeight = Dimensions.get('screen').height;
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState(''); //create username, password variables
@@ -20,6 +22,22 @@ const LoginScreen = ({ navigation }) => {
     const [matchingUser, setMatchingUser] = useState(null);
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
     const saltRounds = 10; // Number of salt rounds, higher is more secure but slower
+
+    // Setup the animation for the header
+    const keyframe = new Keyframe({
+        0: {
+          transform: [{ scale: 1.5}, {translateY: screenHeight / 4 }, {translateX: 80}],
+        },
+    
+        65: {
+            transform: [{ scale: 1.5}, {translateY: screenHeight / 4 }, {translateX: 80}],
+          },
+        
+        100: {
+          transform: [{ scale: 1}, {translateY: 0 }, {translateX: 0}],
+        },
+      });
+      
 
     
     useEffect(() => {
@@ -82,49 +100,56 @@ return (
     <View style={styles.mainbg}>
         {/* These are the designs for the main page */}
 
-        <View style={styles.shapesContainer}>
+        
+
+        <Animated.View style={styles.shapesContainer} >
             <View style={styles.shape1} />
             <View style={styles.shape2} />
             <View style={styles.shape3} />
             <View style={styles.shape4} />
             <View style={styles.shape5} />
-        </View>
+        </Animated.View>
+        
         <ScrollView
+        
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
             <View style={{ paddingHorizontal: 20 }}>
-                <View style={styles.headerContainer}>
+                <Animated.View style={styles.headerContainer} entering={keyframe.duration(1500)}>
                     <Icon name="book" size={50} color="#000" /* Corner logo object */ />
                     <Text style={styles.loginheader}> ChapterCache</Text>
-                </View>
+                </Animated.View>
 
-                <Text style={styles.PageTitle}> Sign in</Text>
-                <Text style={styles.Info}> Please fill these credentials</Text>
+                <Animated.Text style={styles.PageTitle} entering={FadeIn.delay(1500)}> Sign in</Animated.Text>
+                <Animated.Text style={styles.Info} entering={FadeIn.delay(1500)}> Please fill these credentials</Animated.Text>
 
                 {/* sets the state of username and password*/}
-                <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)} autofocus={true} />
+                <Animated.View entering={FadeIn.delay(1500)}>
+                <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)} autofocus={false} />
                 <InputBox pHolder="Password" icon="lock" value={password}
                     set_text={text => setPassword(text)} secureTextEntry={!showPassword}
                     togglePasswordVisibility={togglePasswordVisibility}
                     showPassword={showPassword}
                     autofocus={false} />
+                    </Animated.View>
 
-                <View style={{ alignItems: 'flex-end', marginTop: 5, }}>
+                <Animated.View style={{ alignItems: 'flex-end', marginTop: 5, }} entering={FadeIn.delay(1500)}>
                     <Button style="text" label="Forgot Password?" onPress={handleResetPassword} />
-                </View>
+                </Animated.View>
 
                 {errorMessage !== '' && ( //Handling display of the error message properly
                     <Text style={styles.errorText}>{errorMessage}</Text>
                 )}
-
+                <Animated.View entering={FadeIn.delay(1500)}>
                 <Button style="button" label="Sign In" onPress={handleLogin} />
+                </Animated.View>
 
-                <View style={styles.footer}>
+                <Animated.View style={styles.footer} entering={FadeIn.delay(1500)}>
                     <Text style={styles.Infofooter}> Don't have an account?</Text>
                     <View>
                         <Button style="text" label="Create an Account" onPress={() => navigation.navigate('CreateAccount')} />
                     </View>
-                </View>
+                </Animated.View>
             </View>
         </ScrollView>
     </View>
@@ -192,7 +217,8 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         paddingTop: 40,
-        alignItems: "center"
+        alignItems: "center",
+        zIndex: 1,
     },
 
     //Text = "logo + ChapterCache"

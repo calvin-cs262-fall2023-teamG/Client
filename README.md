@@ -57,7 +57,7 @@ How to use <InputBox>?
 - Modals now appear higher above keyboard
 - Added entrance animation for modals
 - Removed herobrine
-### **Known issues**
-- Text improperly formatted on 'Book Info' page
 # **(11/7)**
-- Adding entrance animation
+- Added entrance animation to 'Login' page
+### **Known issues**
+- Brief shift down after animation completes

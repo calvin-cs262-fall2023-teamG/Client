@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
+import AppEntranceAnimation from '../components/AppEntranceAnimation';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
@@ -104,6 +105,7 @@ const Main = () => {
                                 )
                             })
                         )}
+                        <AppEntranceAnimation></AppEntranceAnimation>
                 </ScrollView>
                 
 
