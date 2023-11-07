@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 import bcrypt from 'react-native-bcrypt';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 // get height dimensions of the screen
 const { height: screenHeight } = Dimensions.get('window');
@@ -45,7 +47,6 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try{
-
             if (matchingUser) {
                 const enteredPassword = password; // Get this from user input
                 console.log(matchingUser)
@@ -54,6 +55,8 @@ const LoginScreen = ({ navigation }) => {
                 if (isPasswordCorrect) {
                     // Password is correct, navigate to the main screen
                     navigation.navigate('Main');
+                    // Store user information in AsyncStorage
+                    await AsyncStorage.setItem('userData', JSON.stringify({ ID: matchingUser.id, fullname: matchingUser.name, email: matchingUser.emailaddress, username: matchingUser.username, password: enteredPassword }));
                 }else {
                     setErrorMessage("Username or Password Incorrect!");
                 }
