@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageViewer from '../components/ImageViewer';
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
@@ -9,18 +10,35 @@ import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, 
 const PlaceholderImage_front = require('../assets/book_icon_gray.png'); //Allow for placeholders
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 
-const AddBook = ({ navigation }) => {
+const AddBook = ({ navigation, route }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
+    const [passedBook, setPassedBook] = useState("");
 
-    //Temporary variable list of books for proof of concept
-    const [book, setBook] = useState();
-    const [isbn, setISBN] = useState();
-    const [author, setAuthor] = useState();
-    const [course_name, setCourseName] = useState();
-    const [price, setPrice] = useState();
-
-    const [books, setBooks] = useState([]);
+    //book aspects
+    const [book, setBook] = useState("");
+    const [isbn, setISBN] = useState("");
+    const [author, setAuthor] = useState("");
+    const [course_name, setCourseName] = useState("");
+    const [price, setPrice] = useState("");
+    const [id, setID] = useState(0);
+    //const [books, setBooks] = useState([]);
+    useEffect(() => {
+        // Retrieve data from AsyncStorage, same function from ContactInfo
+        try {
+          const fetchUserData = async () => {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+              const { ID } = JSON.parse(userData);
+              setID(ID);
+              console.log("Collected ID: " + id);
+            }
+          };
+          fetchUserData();
+        } catch (error) {
+          console.error(error);
+        }
+      }, []);
 
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -39,7 +57,14 @@ const AddBook = ({ navigation }) => {
         if (!result.canceled) {
             setSelectedImage_back(result.assets[0].uri);
         }
- }
+    }
+
+    const advancePage = () => {
+        
+        setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
+        console.log("Passing: " + passedBook);
+        navigation.navigate('Contact Info', { receivedBook: passedBook });
+    }
 
 return (
         <View style={styles.container}>
@@ -86,7 +111,7 @@ return (
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Contact Info', book)}>
+                    <TouchableOpacity onPress={advancePage}>
                          <Animated.View style={styles.okButton} entering={FadeInDown.duration(500)}>
                         <Text style={{ color: '#000' }}>Next</Text>
                         </Animated.View>

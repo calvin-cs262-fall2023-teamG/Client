@@ -9,10 +9,12 @@ import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, 
 // get height dimensions of the screen 
 const { height: screenHeight } = Dimensions.get('window');
 
-const ContactInfo = ({ navigation, book }) => {
+const ContactInfo = ({ navigation, route }) => {
     const [fullname, setFullname] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
     const [errorMessage, setErrorMessage] = useState('');
+
+    const { receivedBook } = route.params; //this one is passed in to go to database
 
     useEffect(() => {
         // Retrieve data from AsyncStorage
@@ -23,7 +25,7 @@ const ContactInfo = ({ navigation, book }) => {
               const { email, fullname } = JSON.parse(userData);
               setEmail(email);
               setFullname(fullname);
-              console.log("Autofilled fields with " + fullname + " & " + email);
+              console.log("Autofilled fields with " + fullname + " & " + email + ", ID: " + id);
             }
           };
           fetchUserData();
@@ -38,7 +40,9 @@ const ContactInfo = ({ navigation, book }) => {
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            navigation.navigate('Main', book)
+            console.log("Sending to database: " + receivedBook);
+            //send the json to database
+            navigation.navigate('Main')
         }
     };
 
