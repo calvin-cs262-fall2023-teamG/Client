@@ -4,6 +4,7 @@ import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageViewer from '../components/ImageViewer';
+import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
 
@@ -13,7 +14,7 @@ const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 const AddBook = ({ navigation, route }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
-    const [passedBook, setPassedBook] = useState("");
+    const [passedBook, setPassedBook] = useState("placeholder passedBook");
 
     //book aspects
     const [book, setBook] = useState("");
@@ -34,11 +35,18 @@ const AddBook = ({ navigation, route }) => {
               console.log("Collected ID: " + id);
             }
           };
-          fetchUserData();
+          fetchUserData(); //execute the above function
         } catch (error) {
           console.error(error);
+          setID(0); //get rid of unhandled promise rejection?
         }
       }, []);
+
+    //Set the book to pass whenever an aspect is changed
+    useEffect(() => {
+        const uniqueId = uuid.v4(); //Generate a unique ID
+        setPassedBook(JSON.stringify({id: uniqueId, title: book, author: author, isbn: isbn, price: price, coursename: course_name, userID: id}));
+    }, [book, isbn, author, course_name, price]);
 
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,7 +69,7 @@ const AddBook = ({ navigation, route }) => {
 
     const advancePage = () => {
         
-        setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
+        //setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
         console.log("Passing: " + passedBook);
         navigation.navigate('Contact Info', { receivedBook: passedBook });
     }

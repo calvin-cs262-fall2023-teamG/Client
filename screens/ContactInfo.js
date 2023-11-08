@@ -34,15 +34,31 @@ const ContactInfo = ({ navigation, route }) => {
         }
       }, []);
 
-    const handleAddBook = () => {
+    const handleAddBook = async () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = email.split('@');
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            console.log("Sending to database: " + receivedBook);
-            //send the json to database
-            navigation.navigate('Main')
+            console.log("Sending to database: " + receivedBook); //Ensure valid data is going to data base
+            try {
+              const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books/', {
+                method: 'POST',
+                 headers: {
+                    'Content-Type': 'application/json',
+                 },
+                body: receivedBook
+              });
+
+              if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+              } 
+            } catch (error) {
+              console.error(error);
+            } finally {
+              navigation.navigate('Main')
+            }
         }
     };
 
