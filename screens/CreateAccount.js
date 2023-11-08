@@ -47,7 +47,7 @@ const CreateAccount = ({ navigation }) => {
                     }
                     const data = {"id": uniqueId, "name": fullname, "emailaddress": email, "username": username, "passwordhash": hash}
                     console.log(data)
-                    const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users/', {
+                    const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/users/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

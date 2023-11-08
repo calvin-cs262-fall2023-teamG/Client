@@ -42,7 +42,7 @@ const ContactInfo = ({ navigation, route }) => {
         } else {
             console.log("Sending to database: " + receivedBook); //Ensure valid data is going to data base
             try {
-              const response = await fetch('https://chaptercachecalvin.azurewebsites.net/books/', {
+              const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
                 method: 'POST',
                  headers: {
                     'Content-Type': 'application/json',
