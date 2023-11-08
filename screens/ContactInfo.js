@@ -40,14 +40,14 @@ const ContactInfo = ({ navigation, route }) => {
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            console.log("Sending to database: " + receivedBook); //Ensure valid data is going to data base
+            console.log("Sending to database: " + JSON.stringify(receivedBook)); //Ensure valid data is going to data base
             try {
               const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
                 method: 'POST',
                  headers: {
                     'Content-Type': 'application/json',
                  },
-                body: receivedBook
+                body: JSON.stringify(receivedBook)
               });
 
               if (!response.ok) {

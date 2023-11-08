@@ -14,7 +14,7 @@ const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 const AddBook = ({ navigation, route }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
-    const [passedBook, setPassedBook] = useState("placeholder passedBook");
+    const [passedBook, setPassedBook] = useState();
 
     //book aspects
     const [book, setBook] = useState("");
@@ -45,7 +45,8 @@ const AddBook = ({ navigation, route }) => {
     //Set the book to pass whenever an aspect is changed
     useEffect(() => {
         const uniqueId = uuid.v4(); //Generate a unique ID
-        setPassedBook(JSON.stringify({title: book, author: author, isbn: isbn, coursename: course_name, userID: id})); //price is excluded during testing due to type mismatch
+        const data = {title: book, author: author, isbn: isbn, coursename: course_name, userID: id}
+        setPassedBook(data); //price is excluded during testing due to type mismatch
     }, [book, isbn, author, course_name]);
 
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
@@ -70,7 +71,7 @@ const AddBook = ({ navigation, route }) => {
     const advancePage = () => {
         
         //setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
-        console.log("Passing: " + passedBook);
+        console.log("Passing: " + JSON.stringify(passedBook));
         navigation.navigate('Contact Info', { receivedBook: passedBook });
     }
 
