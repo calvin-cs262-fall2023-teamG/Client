@@ -9,10 +9,12 @@ import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, 
 // get height dimensions of the screen 
 const { height: screenHeight } = Dimensions.get('window');
 
-const ContactInfo = ({ navigation, book }) => {
+const ContactInfo = ({ navigation, route }) => {
     const [fullname, setFullname] = useState(''); // State to store the user's name
     const [email, setEmail] = useState(''); // State to store the user's email
     const [errorMessage, setErrorMessage] = useState('');
+
+    const { receivedBook } = route.params; //this one is passed in to go to database
 
     useEffect(() => {
         // Retrieve data from AsyncStorage
@@ -23,7 +25,7 @@ const ContactInfo = ({ navigation, book }) => {
               const { email, fullname } = JSON.parse(userData);
               setEmail(email);
               setFullname(fullname);
-              console.log("Autofilled fields with " + fullname + " & " + email);
+              console.log("Autofilled fields with " + fullname + " & " + email + ", ID: " + id);
             }
           };
           fetchUserData();
@@ -32,13 +34,31 @@ const ContactInfo = ({ navigation, book }) => {
         }
       }, []);
 
-    const handleAddBook = () => {
+    const handleAddBook = async () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = email.split('@');
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            navigation.navigate('Main', book)
+            console.log("Sending to database: " + JSON.stringify(receivedBook)); //Ensure valid data is going to data base
+            try {
+              const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
+                method: 'POST',
+                 headers: {
+                    'Content-Type': 'application/json',
+                 },
+                body: JSON.stringify(receivedBook)
+              });
+
+              if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+              } 
+            } catch (error) {
+              console.error(error);
+            } finally {
+              navigation.navigate('Main')
+            }
         }
     };
 

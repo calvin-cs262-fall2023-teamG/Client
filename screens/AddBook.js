@@ -1,26 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import InputBox from '../components/InputBox';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageViewer from '../components/ImageViewer';
+import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft} from 'react-native-reanimated';
 
 
 const PlaceholderImage_front = require('../assets/book_icon_gray.png'); //Allow for placeholders
 const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
 
-const AddBook = ({ navigation }) => {
+const AddBook = ({ navigation, route }) => {
     const [selectedImage_front, setSelectedImage_front] = useState(null); //allows to insert new images
     const [selectedImage_back, setSelectedImage_back] = useState(null);
+    const [passedBook, setPassedBook] = useState();
 
-    //Temporary variable list of books for proof of concept
-    const [book, setBook] = useState();
-    const [isbn, setISBN] = useState();
-    const [author, setAuthor] = useState();
-    const [course_name, setCourseName] = useState();
-    const [price, setPrice] = useState();
+    //book aspects
+    const [book, setBook] = useState("");
+    const [isbn, setISBN] = useState("");
+    const [author, setAuthor] = useState("");
+    const [course_name, setCourseName] = useState("");
+    const [price, setPrice] = useState("");
+    const [id, setID] = useState();
+    //const [books, setBooks] = useState([]);
+    useEffect(() => {
+        // Retrieve data from AsyncStorage, same function from ContactInfo
+        try {
+          const fetchUserData = async () => {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+              const { ID } = JSON.parse(userData);
+              setID(ID);
+              console.log("Collected ID: " + id);
+            }
+          };
+          fetchUserData(); //execute the above function
+        } catch (error) {
+          console.error(error);
+          setID(0); //get rid of unhandled promise rejection?
+        }
+      }, []);
 
-    const [books, setBooks] = useState([]);
+    //Set the book to pass whenever an aspect is changed
+    useEffect(() => {
+        const uniqueId = uuid.v4(); //Generate a unique ID
+        const data = {ID: uniqueId, title: book, author: author, isbn: isbn, coursename: course_name, userID: id}
+        setPassedBook(data); //price is excluded during testing due to type mismatch
+    }, [book, isbn, author, course_name]);
 
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -39,7 +66,14 @@ const AddBook = ({ navigation }) => {
         if (!result.canceled) {
             setSelectedImage_back(result.assets[0].uri);
         }
- }
+    }
+
+    const advancePage = () => {
+        
+        //setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
+        console.log("Passing: " + JSON.stringify(passedBook));
+        navigation.navigate('Contact Info', { receivedBook: passedBook });
+    }
 
 return (
         <View style={styles.container}>
@@ -86,7 +120,7 @@ return (
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Contact Info', book)}>
+                    <TouchableOpacity onPress={advancePage}>
                          <Animated.View style={styles.okButton} entering={FadeInDown.duration(500)}>
                         <Text style={{ color: '#000' }}>Next</Text>
                         </Animated.View>
