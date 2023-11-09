@@ -31,7 +31,7 @@ const Main = () => {
         try {
             const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books'); 
             const json = await response.json(); //collect a json from the response
-            setBooksData(json); //put the json to overwrite the hardcoded json and fix the search issue
+            setBooksData(json); //overwrite default values in booksData
             setBooks(json); //put the json into our book arrangement
         } catch (error) {
             console.error(error);

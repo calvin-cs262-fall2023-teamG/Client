@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import Background from '../components/Background';
 import bcrypt from 'react-native-bcrypt';
 import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+import MyListings from './MyListings';
+import { useNavigation } from '@react-navigation/native';
 
 const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
@@ -26,6 +28,8 @@ const MyProfile = () => {
     const [confirmpassword, setconfirmPassword] = useState(''); //helpers and corroborators
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const navigation = useNavigation();
 
     useEffect(() => {
         // Retrieve user data from AsyncStorage
@@ -107,8 +111,8 @@ const MyProfile = () => {
                         console.error('Error hashing password:', err);
                         return;
                     }
-                    const data = { id: userID, passwordhash: hash }
-                    const response = await fetch(`https://chaptercachecalvin.azurewebsites.net/users/${userID}`, {
+                    const data = { "ID": userID, "emailAddress" : email, "name": fullname, "username": username, "passwordHash": hash }
+                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -228,6 +232,11 @@ const MyProfile = () => {
 
                 </Animated.View>
             </Modal>
+            <TouchableOpacity 
+                        onPress={() => navigation.navigate("My Listings")}
+                        style={styles.roundButton}>
+                        <Text>My Listings</Text>
+                    </TouchableOpacity>
         </SafeAreaView>
 
     );
@@ -273,6 +282,16 @@ const styles = StyleSheet.create({
         color: '#ff0000',
         marginTop: 10,
     },
+    roundButton: {
+        width: 182,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+        backgroundColor: '#81F4D8',
+        marginTop: 334
+    },
+
 });
 
 
