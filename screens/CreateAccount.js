@@ -45,9 +45,9 @@ const CreateAccount = ({ navigation }) => {
                         console.error('Error hashing password:', err);
                         return;
                     }
-                    const data = {"id": uniqueId, "name": fullname, "emailaddress": email, "username": username, "passwordhash": hash}
+                    const data = {"ID": uniqueId, "name": fullname, "emailAddress": email, "username": username, "passwordHash": hash}
                     console.log(data)
-                    const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users/', {
+                    const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/users/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

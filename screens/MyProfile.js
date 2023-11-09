@@ -107,8 +107,8 @@ const MyProfile = () => {
                         console.error('Error hashing password:', err);
                         return;
                     }
-                    const data = { id: userID, passwordhash: hash }
-                    const response = await fetch(`https://chaptercachecalvin.azurewebsites.net/users/${userID}`, {
+                    const data = { "ID": userID, "emailAddress" : email, "name": fullname, "username": username, "passwordHash": hash }
+                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
