@@ -14,6 +14,8 @@ import ForgotPassword from '../screens/ForgotPassword';
 import AddBookHelp from '../screens/AddBookHelp';
 import Book from '../components/Book';
 import BookInfoHelp from '../screens/BookInfoHelp';
+import MyListings from '../screens/MyListings';
+import EditListing from '../screens/EditListing';
 
 const Stack = createNativeStackNavigator();    //This is the element to manage the screen displayed at a particular time
  
@@ -97,6 +99,8 @@ const Navigation = () => {
             ),
           })}
         />
+        <Stack.Screen name="My Listings" component={MyListings} options={{title: 'My Listings'}}/>
+        <Stack.Screen name ="Edit Listing" component={EditListing} options={{title: 'Edit Listing'}}/>
 
           
         </Stack.Group>
