@@ -12,10 +12,13 @@ import AppEntranceAnimation from '../components/AppEntranceAnimation';
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
-const booksData = books_data; //Collects a hardcoded json full of book objects
+
 
 const Main = () => {
     const navigation = useNavigation();
+
+    const [booksData, setBooksData] = useState(books_data); //Collects a hardcoded json full of book objects
+    const [bookInfo, setBookInfo] = useState(booksData); //formats this correctly
 
     //List of books generation
     const [book, setBook] = useState();
@@ -28,6 +31,7 @@ const Main = () => {
         try {
             const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books'); 
             const json = await response.json(); //collect a json from the response
+            setBooksData(json); //overwrite default values in booksData
             setBooks(json); //put the json into our book arrangement
         } catch (error) {
             console.error(error);
