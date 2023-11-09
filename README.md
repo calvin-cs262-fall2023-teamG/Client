@@ -61,3 +61,5 @@ How to use <InputBox>?
 - Added entrance animation to 'Login' page
 ### **Known issues**
 - Brief shift down after animation completes
+# **(11/9)**
+- Reconnected client with updated web service

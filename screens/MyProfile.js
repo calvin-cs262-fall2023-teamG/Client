@@ -228,6 +228,11 @@ const MyProfile = () => {
 
                 </Animated.View>
             </Modal>
+            <TouchableOpacity 
+                        onPress={() => navigation.navigate("Add Book")}
+                        style={styles.roundButton}>
+                        <Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Text>
+                    </TouchableOpacity>
         </SafeAreaView>
 
     );
@@ -273,6 +278,16 @@ const styles = StyleSheet.create({
         color: '#ff0000',
         marginTop: 10,
     },
+    roundButton: {
+        width: 182,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+        backgroundColor: '#81F4D8',
+        marginTop: 335
+    },
+
 });
 
 
