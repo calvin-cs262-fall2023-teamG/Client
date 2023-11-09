@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
         const retrieveUserData = async () => {
             setLoading(true);
             try {
-                const response = await fetch('https://chaptercachecalvin.azurewebsites.net/users');
+                const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/users');
                 const userData = await response.json();
                 
                 //Look for the user by username
