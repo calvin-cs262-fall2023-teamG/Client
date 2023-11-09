@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import Background from '../components/Background';
 import bcrypt from 'react-native-bcrypt';
 import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+import MyListings from './MyListings';
+import { useNavigation } from '@react-navigation/native';
 
 const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
@@ -26,6 +28,8 @@ const MyProfile = () => {
     const [confirmpassword, setconfirmPassword] = useState(''); //helpers and corroborators
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const navigation = useNavigation();
 
     useEffect(() => {
         // Retrieve user data from AsyncStorage
@@ -229,9 +233,9 @@ const MyProfile = () => {
                 </Animated.View>
             </Modal>
             <TouchableOpacity 
-                        onPress={() => navigation.navigate("Add Book")}
+                        onPress={() => navigation.navigate("My Listings")}
                         style={styles.roundButton}>
-                        <Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Text>
+                        <Text>My Listings</Text>
                     </TouchableOpacity>
         </SafeAreaView>
 
@@ -285,7 +289,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 15,
         backgroundColor: '#81F4D8',
-        marginTop: 335
+        marginTop: 334
     },
 
 });
