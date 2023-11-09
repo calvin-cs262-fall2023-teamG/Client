@@ -22,7 +22,7 @@ const AddBook = ({ navigation, route }) => {
     const [author, setAuthor] = useState("");
     const [course_name, setCourseName] = useState("");
     const [price, setPrice] = useState("");
-    const [id, setID] = useState(0);
+    const [id, setID] = useState();
     //const [books, setBooks] = useState([]);
     useEffect(() => {
         // Retrieve data from AsyncStorage, same function from ContactInfo
@@ -45,7 +45,7 @@ const AddBook = ({ navigation, route }) => {
     //Set the book to pass whenever an aspect is changed
     useEffect(() => {
         const uniqueId = uuid.v4(); //Generate a unique ID
-        const data = {title: book, author: author, isbn: isbn, coursename: course_name, userID: id}
+        const data = {ID: uniqueId, title: book, author: author, isbn: isbn, coursename: course_name, userID: id}
         setPassedBook(data); //price is excluded during testing due to type mismatch
     }, [book, isbn, author, course_name]);
 
