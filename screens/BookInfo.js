@@ -48,7 +48,7 @@ const BookInfo = ({ route }) => {
                     </View>
 
                     <View style = {styles.imageSection}>
-                        <Text style={styles.text}>Front Picture</Text>
+                        <Text style={styles.text}>Back Picture</Text>
                         <Image source = {PlaceholderImageBack} style = {styles.image} />   
                     </View>
                 </View>
