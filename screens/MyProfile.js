@@ -52,30 +52,74 @@ const MyProfile = () => {
         retrieveUserData();
     }, []);
 
-    const handleUpdateEmail = () => {
+    const handleUpdateEmail = async () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = newEmail.split('@');
 
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {
-            AsyncStorage.setItem('userData', JSON.stringify({ email: newEmail, username, password }));
-            setEmail(newEmail);
-            setEmailModalVisible(false);
-            setNewEmail(''); // Clear the input field.
-            setErrorMessage(''); // Clear the error message
+            try {
+                bcrypt.hash(password, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error('Error hashing password:', err);
+                        return;
+                    }
+                    const data = { "ID": userID, "newemailAddress": newEmail, "name": fullname, "username": newUsername, "passwordHash": hash }
+                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    }
+                    setEmail(newEmail);
+                    setEmailModalVisible(false);
+                    setNewEmail(''); // Clear the input field.
+                    setErrorMessage(''); // Clear the error message
+                });
+            } catch (error) {
+                console.error(error);
+                setErrorMessage("Error creating new email. Please try again.");
+            }
         }
     };
 
-    const handleUpdateUsername = () => {
+    const handleUpdateUsername = async () => {
         if (newUsername.length <= 3) {
             setErrorMessage("Your username must be at least 4 characters")
         } else {
-            AsyncStorage.setItem('userData', JSON.stringify({ email, username: newUsername, password }));
-            setUsername(newUsername);
-            setUsernameModalVisible(false);
-            setNewUsername(''); // Clear the input field.
-            setErrorMessage(''); // Clear the error message
+            try {
+                bcrypt.hash(password, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error('Error hashing password:', err);
+                        return;
+                    }
+                    const data = { "ID": userID, "emailAddress": email, "name": fullname, "username": newUsername, "passwordHash": hash }
+                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    }
+                    setUsername(newUsername);
+                    setUsernameModalVisible(false);
+                    setNewUsername(''); // Clear the input field.
+                    setErrorMessage(''); // Clear the error message
+                });
+            } catch (error) {
+                console.error(error);
+                setErrorMessage("Error creating new Username. Please try again.");
+            }
         }
     };
 
@@ -111,7 +155,7 @@ const MyProfile = () => {
                         console.error('Error hashing password:', err);
                         return;
                     }
-                    const data = { "ID": userID, "emailAddress" : email, "name": fullname, "username": username, "passwordHash": hash }
+                    const data = { "ID": userID, "emailAddress": email, "name": fullname, "username": username, "passwordHash": hash }
                     const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
                         method: 'PUT',
                         headers: {
@@ -131,7 +175,7 @@ const MyProfile = () => {
                 });
             } catch (error) {
                 console.error(error);
-                setErrorMessage("Error creating account. Please try again.");
+                setErrorMessage("Error creating new password. Please try again.");
             }
         }
     };
@@ -232,11 +276,11 @@ const MyProfile = () => {
 
                 </Animated.View>
             </Modal>
-            <TouchableOpacity 
-                        onPress={() => navigation.navigate("My Listings")}
-                        style={styles.roundButton}>
-                        <Text>My Listings</Text>
-                    </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate("My Listings")}
+                style={styles.roundButton}>
+                <Text>My Listings</Text>
+            </TouchableOpacity>
         </SafeAreaView>
 
     );
