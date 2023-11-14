@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } f
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import sendEmail from '../components/sendEmail';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -26,20 +27,34 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 const BookInfo = ({ route }) => {
     const { bookInfo } = route.params;
-
     const title = bookInfo.title;
+    const author = bookInfo.author;
+    const sellername = bookInfo.sellername;
+    const selleremail = bookInfo.selleremail;
+
+    const saveBookInfo = async (key, value) => {
+        try{
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem(key, jsonValue)
+        } catch (error) {
+            console.error('Error saving object:', error)
+        }
+    };
+
+    saveBookInfo('title', title)
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
-                <InfoView name="Book" icon="book" value={bookInfo.title} />
+                <InfoView name="Book" icon="book" value={title} />
                 <InfoView name="ISBN" icon="hashtag" value={bookInfo.isbn} />
-                <InfoView name="Author" icon="user" value={bookInfo.author} />
+                <InfoView name="Author" icon="user" value={author} />
                 <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
                 <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
-                <InfoView name="Seller Name" icon="user" value={bookInfo.sellername} />
-                <InfoView name="Seller Email" icon="envelope" value={bookInfo.selleremail} />
+                <InfoView name="Seller Name" icon="user" value={sellername} />
+                <InfoView name="Seller Email" icon="envelope" value={selleremail} />
                 
                 <View style = {styles.imageContainer}>
                     <View style = {styles.imageSection}>
