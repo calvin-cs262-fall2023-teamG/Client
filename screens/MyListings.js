@@ -7,23 +7,80 @@ import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
 import AppEntranceAnimation from '../components/AppEntranceAnimation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
+
+ 
 
 
 
 const listing_data = user_listings_data; //Collects a hardcoded json full of book objects
 
 const MyListings = () => {
+
+    const [fullname, setFullname] = useState(''); //strings
+    const [email, setEmail] = useState('');
+    const [userID, setUserID] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
     const [books, setBooks] = useState([]); //sets the book list to the hardcoded json. It will be turned instead into the library from the database.
 
     const navigation = useNavigation();
+
+    useEffect(() => {
+        console.log("UF 1 RAN");
+        // Retrieve user data from AsyncStorage
+        const retrieveUserData = async () => {
+            try {
+                const userData = await AsyncStorage.getItem('userData');
+                if (userData) {
+                    const { ID, fullname, email, username, password } = JSON.parse(userData);
+                    setUserID(ID)
+                    setFullname(fullname);
+                    setEmail(email);
+                    setUsername(username);
+                    setPassword(password);
+                    
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            
+        };
+
+        retrieveUserData();
+    }, []);
     
     useEffect(() => {
-        setBooks(listing_data);
-    }, []); // Empty dependency array to run the effect only once
+        console.log("UF 2 RAN");
+        console.log("Current userID:", userID); // Log the current userID
+    
+        const fetchBooks = async () => {
+            try {
+                const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+    
+                console.log("Books from server:", data); // Log the books from the server
+    
+                // Filter books based on userID
+                const userBooks = data.filter(book => book.userid === userID);
+                console.log("User books:", userBooks); // Log the filtered books
+    
+                setBooks(userBooks);
+            } catch (error) {
+                console.error('Error fetching books:', error);
+            }
+        };
+    
+        fetchBooks();
+    }, [userID]);
 
     return (
 
