@@ -59,6 +59,7 @@ How to use <InputBox>?
 - Removed herobrine
 # **(11/7)**
 - Added entrance animation to 'Login' page
+- 11/15 - bug fixes
 ### **Known issues**
 - Brief shift down after animation completes
 # **(11/9)**
