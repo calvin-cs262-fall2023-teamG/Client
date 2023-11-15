@@ -67,3 +67,5 @@ How to use <InputBox>?
 - Added 'Edit Listing' page which is an editable version of 'Book Info' Note: functionality does not yet work
 - Fixed 'ChapterCache' icon on 'Reset Password' page
 # **(11/15)**
+- Prices are now correctly pushed to DB and displayed in books list
+- Listings on 'My Listings' page now pulled correctly
