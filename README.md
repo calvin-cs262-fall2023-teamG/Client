@@ -59,7 +59,6 @@ How to use <InputBox>?
 - Removed herobrine
 # **(11/7)**
 - Added entrance animation to 'Login' page
-- 11/15 - bug fixes
 ### **Known issues**
 - Brief shift down after animation completes
 # **(11/9)**
@@ -67,3 +66,4 @@ How to use <InputBox>?
 - Added 'My Listings' page which loads from hardcoded values
 - Added 'Edit Listing' page which is an editable version of 'Book Info' Note: functionality does not yet work
 - Fixed 'ChapterCache' icon on 'Reset Password' page
+# **(11/15)**
