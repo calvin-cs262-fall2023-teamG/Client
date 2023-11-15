@@ -45,9 +45,9 @@ const AddBook = ({ navigation, route }) => {
     //Set the book to pass whenever an aspect is changed
     useEffect(() => {
         const uniqueId = uuid.v4(); //Generate a unique ID
-        const data = {ID: uniqueId, title: book, author: author, isbn: isbn, coursename: course_name, userID: id}
+        const data = {ID: uniqueId, title: book, author: author, isbn: isbn, coursename: course_name, userID: id, price: price}
         setPassedBook(data); //price is excluded during testing due to type mismatch
-    }, [book, isbn, author, course_name]);
+    }, [book, isbn, author, course_name, price]);
 
     const pickImageAsync_front = async () => { //For selection of the image to use for the front of the book, it accesses your image folder
         let result = await ImagePicker.launchImageLibraryAsync({
