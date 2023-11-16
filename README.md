@@ -69,3 +69,4 @@ How to use <InputBox>?
 # **(11/15)**
 - Prices are now correctly pushed to DB and displayed in books list
 - Listings on 'My Listings' page now pulled correctly
+- # **(11/16)**
