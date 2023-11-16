@@ -26,11 +26,6 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 
 const BookInfo = ({ route }) => {
-    const { bookInfo } = route.params;
-    const title = bookInfo.title;
-    const author = bookInfo.author;
-    const sellername = bookInfo.sellername;
-    const selleremail = bookInfo.selleremail;
 
     const saveBookInfo = async (key, value) => {
         try{
@@ -41,8 +36,15 @@ const BookInfo = ({ route }) => {
         }
     };
 
-    saveBookInfo('title', title)
+    const { bookInfo } = route.params;
+    const title = bookInfo.title;
+    const author = bookInfo.author;
+    const sellername = bookInfo.sellername;
+    const selleremail = bookInfo.selleremail;
 
+    saveBookInfo('bookInfo', {'title': title, 'sellername': sellername, 'selleremail': selleremail})
+
+    
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
