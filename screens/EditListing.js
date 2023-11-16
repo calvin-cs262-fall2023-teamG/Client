@@ -1,9 +1,10 @@
-import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
+import { useNavigation } from '@react-navigation/native';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -20,6 +21,7 @@ const InfoView = ({ name, value, icon }) => {
 }
 
 
+
 // The placeholder images need to be fetched from the database later. 
 const PlaceholderImageFront = require('./images/image3.jpg');
 const PlaceholderImageBack = require('./images/image2.jpg');
@@ -27,6 +29,53 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 const EditListing = ({ route }) => {
     const { bookInfo } = route.params;
+    const navigation = useNavigation();
+    console.log(bookInfo);
+
+    // Define updatedBookInfo state
+    const [updatedBookInfo, setUpdatedBookInfo] = useState({
+        // Initialize with existing bookInfo values
+        title: bookInfo.title,
+        isbn: bookInfo.isbn,
+        author: bookInfo.author,
+        coursename: bookInfo.coursename,
+        price: bookInfo.price,
+        name: bookInfo.name,
+        emailaddress: bookInfo.emailaddress,
+        userid: bookInfo.userid
+        // Add more fields as needed
+    });
+
+
+    const handleUpdate = async () => {
+        
+        console.log("Attempting to update book with ID: " + bookInfo.id);
+        console.log("Updated Book Info:", updatedBookInfo);
+
+        try {
+            const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/books/update/${bookInfo.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedBookInfo),
+            });
+    
+            if (!response.ok) {
+                const errorResponse = await response.text(); // Change to text() to get HTML response
+                console.error('Book update failed:', errorResponse);
+                throw new Error('Book update failed');
+            }
+            // Navigate to the home page
+            navigation.navigate('Main'); 
+            console.log('Book updated successfully');
+        } catch (error) {
+            console.error('Error updating book:', error);
+        }
+    };
+    
+    
+    
 
     const title = bookInfo.title;
     return (
@@ -34,20 +83,27 @@ const EditListing = ({ route }) => {
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Book name:</Text>
-                <InputBox name="Book" icon="book" value={bookInfo.title} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>ISBN:</Text>
-                <InputBox name="ISBN" icon="hashtag" value={bookInfo.isbn} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Author:</Text>
-                <InputBox name="Author" icon="user" value={bookInfo.author} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Course name:</Text>
-                <InputBox name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Price:</Text>
-                <InputBox name="Price" icon="tags" value={`$${bookInfo.price}`} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Seller name:</Text>
-                <InputBox name="Seller Name" icon="user" value={bookInfo.sellername} />
-                <Text style={{fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15}}>Seller email:</Text>
-                <InputBox name="Seller Email" icon="envelope" value={bookInfo.selleremail} />
+                
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Book name:</Text>
+            <InputBox name="Book" icon="book" value={updatedBookInfo.title} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, title: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>ISBN:</Text>
+            <InputBox name="ISBN" icon="hashtag" value={updatedBookInfo.isbn} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, isbn: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Author:</Text>
+            <InputBox name="Author" icon="user" value={updatedBookInfo.author} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, author: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Course name:</Text>
+            <InputBox name="Course Name" icon="graduation-cap" value={updatedBookInfo.coursename} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, coursename: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Price:</Text>
+            <InputBox name="Price" icon="tags" value={(updatedBookInfo.price !== null ? updatedBookInfo.price.toString() : '0')} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, price: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Seller name:</Text>
+            <InputBox name="Seller Name" icon="user" value={updatedBookInfo.name} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, name: text })} />
+
+            <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Seller email:</Text>
+            <InputBox name="Seller Email" icon="envelope" value={updatedBookInfo.emailaddress} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, emailaddress: text })} />
                 
                 <View style = {styles.imageContainer}>
                     <View style = {styles.imageSection}>
@@ -62,7 +118,7 @@ const EditListing = ({ route }) => {
                 </View>
 
                 <View style={styles.button}>
-                    <Button style="small button" label="Update" onPress={() => console.log("Update functionality soon to be added.")}/> 
+                <Button style="small button" label="Update" onPress={() => handleUpdate()} /> 
                 </View>
 
             </ScrollView>

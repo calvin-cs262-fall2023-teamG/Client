@@ -70,3 +70,8 @@ How to use <InputBox>?
 - Prices are now correctly pushed to DB and displayed in books list
 - Listings on 'My Listings' page now pulled correctly
 - # **(11/16)**
+- Books in 'My Listings' now editable
+- Added pull down to refresh functionality on main page
+### **Known issues**
+- Listings will occasionally not load (for now try try again)
+- Name and email attached to book currently not updatable
