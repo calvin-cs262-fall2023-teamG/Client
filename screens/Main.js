@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions, ActivityIndicator, RefreshControl } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
@@ -24,6 +24,14 @@ const Main = () => {
     const [book, setBook] = useState();
     const [books, setBooks] = useState([]); //sets the book list to the hardcoded json. It will be turned instead into the library from the database.
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
+    const [refreshing, setRefreshing] = useState(false);
+
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchLibrary();
+        setRefreshing(false);
+    };
   
     //Method to fetch the library of books from the database. Should be executed when page is navigated to.
     const fetchLibrary = async () => {
@@ -91,7 +99,13 @@ const Main = () => {
                 <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
                 
                 <ScrollView showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}>
+                            showsVerticalScrollIndicator={false}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }>
                     {
                         isLoading ? (<ActivityIndicator />) : (
                         books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
