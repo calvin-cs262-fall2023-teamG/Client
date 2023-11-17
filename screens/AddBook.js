@@ -1,29 +1,35 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable linebreak-style */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView,
+  StyleSheet, View, Text, TouchableOpacity, ScrollView,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
 import Animated, {
-  SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft,
+  FadeInLeft, FadeInRight, FadeInDown, FadeInUp,
 } from 'react-native-reanimated';
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
-const PlaceholderImage_front = require('../assets/book_icon_gray.png'); // Allow for placeholders
-const PlaceholderImage_back = require('../assets/book_icon_back_gray.png');
+const placeholderImageFront = require('../assets/book_icon_gray.png'); // Allow for placeholders
+const placeholderImageBack = require('../assets/book_icon_back_gray.png');
 
 function AddBook({ navigation, route }) {
-  const [selectedImage_front, setSelectedImage_front] = useState(null); // allows to insert new images
-  const [selectedImage_back, setSelectedImage_back] = useState(null);
+  const [selectedImageFront, setselectedImageFront] = useState(null);
+  const [selectedImageBack, setselectedImageBack] = useState(null);
   const [passedBook, setPassedBook] = useState();
 
   // book aspects
   const [book, setBook] = useState('');
   const [isbn, setISBN] = useState('');
   const [author, setAuthor] = useState('');
-  const [course_name, setCourseName] = useState('');
+  const [courseName, setCourseName] = useState('');
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
   // const [books, setBooks] = useState([]);
@@ -49,32 +55,32 @@ function AddBook({ navigation, route }) {
   useEffect(() => {
     const uniqueId = uuid.v4(); // Generate a unique ID
     const data = {
-      ID: uniqueId, title: book, author, isbn, coursename: course_name, userID: id, price,
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price,
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
-  }, [book, isbn, author, course_name, price]);
+  }, [book, isbn, author, courseName, price]);
 
-  const pickImageAsync_front = async () => { // For selection of the image to use for the front of the book, it accesses your image folder
+  // For selection of the image to use for the front of the book, it accesses your image folder
+  const pickImageAsyncFront = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
     if (!result.canceled) {
-      setSelectedImage_front(result.assets[0].uri);
+      setselectedImageFront(result.assets[0].uri);
     }
   };
-  const pickImageAsync_back = async () => { // Similar to above, but for the back of the book
+  const pickImageAsyncBack = async () => { // Similar to above, but for the back of the book
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
     if (!result.canceled) {
-      setSelectedImage_back(result.assets[0].uri);
+      setselectedImageBack(result.assets[0].uri);
     }
   };
 
   const advancePage = () => {
-    // setPassedBook(JSON.stringify({title: book, isbn: isbn, author: author, coursename: course_name, price: price, userID: id}));
     console.log(`Passing: ${JSON.stringify(passedBook)}`);
     navigation.navigate('Contact Info', { receivedBook: passedBook });
   };
@@ -89,36 +95,36 @@ function AddBook({ navigation, route }) {
           <InputBox pHolder="Book Name" icon="book" value={book} set_text={(text) => setBook(text)} />
           <InputBox pHolder="ISBN" icon="hashtag" value={isbn} set_text={(text) => setISBN(text)} />
           <InputBox pHolder="Author" icon="user" value={author} set_text={(text) => setAuthor(text)} />
-          <InputBox pHolder="Course Name" icon="graduation-cap" value={course_name} set_text={(text) => setCourseName(text)} />
+          <InputBox pHolder="Course Name" icon="graduation-cap" value={courseName} set_text={(text) => setCourseName(text)} />
           <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
         </Animated.View>
 
         <View style={styles.imageContainer}>
 
           {/* Upload front of the book */}
-          <TouchableOpacity onPress={pickImageAsync_front}>
+          <TouchableOpacity onPress={pickImageAsyncFront}>
             <Animated.View style={styles.imageSection} entering={FadeInLeft.duration(500)}>
               <View>
                 <Text style={styles.text}>Front Picture</Text>
                 <Text style={styles.addImage}> Add Image</Text>
               </View>
               <ImageViewer
-                placeholderImageSource={PlaceholderImage_front}
-                selectedImage={selectedImage_front}
+                placeholderImageSource={placeholderImageFront}
+                selectedImage={selectedImageFront}
               />
             </Animated.View>
           </TouchableOpacity>
 
           {/* Upload back of the book */}
-          <TouchableOpacity onPress={pickImageAsync_back}>
+          <TouchableOpacity onPress={pickImageAsyncBack}>
             <Animated.View style={styles.imageSection} entering={FadeInRight.duration(500)}>
               <View>
                 <Text style={styles.text}>Back Picture</Text>
                 <Text style={styles.addImage}>Add Image</Text>
               </View>
               <ImageViewer
-                placeholderImageSource={PlaceholderImage_back}
-                selectedImage={selectedImage_back}
+                placeholderImageSource={placeholderImageBack}
+                selectedImage={selectedImageBack}
               />
             </Animated.View>
           </TouchableOpacity>

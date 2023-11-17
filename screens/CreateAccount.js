@@ -1,6 +1,11 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/style-prop-object */
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
-  Text, View, ScrollView, TextInput, StyleSheet, TouchableOpacity,
+  Text, View, ScrollView, StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
@@ -17,7 +22,8 @@ function CreateAccount({ navigation }) {
   const [confirmpassword, setconfirmPassword] = useState(''); // The comparator to ensure password correctness
   const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Determines whether password is visible
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Separately determines whether confirmation of password is visible
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  //      ^ Separately determines whether confirmation of password is visible
   const [usererrorMessage, setUserErrorMessage] = useState(''); // Stores error messages
   const [emailerrorMessage, setEmailErrorMessage] = useState(''); // Stores error messages
   const [passworderrorMessage, setPasswordErrorMessage] = useState(''); // Stores error messages
@@ -33,11 +39,12 @@ function CreateAccount({ navigation }) {
     // Error messages...
     if (username.length <= 3) { // If the email is too short
       setUserErrorMessage('Your username must be at least 4 characters');
-    } else if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) { // If the email is too short or isn't identified as a Calvin email:
+    } else if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
+      //          ^ If the email is too short or isn't identified as a Calvin email:
       setEmailErrorMessage('Please enter your Calvin email');
     } else if (password.length <= 7) { // If the password is too short
       setPasswordErrorMessage('Your password must be at least 8 characters');
-    } else if (password !== confirmpassword) { // If the chosen password does not match the confirmation
+    } else if (password !== confirmpassword) { // If chosen password doesn't match the confirmation
       setPasswordErrorMessage('Passwords do not match!');
     } else {
       try {
@@ -214,7 +221,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
-    paddingTop: 20,
     alignItems: 'center',
     paddingTop: 40,
   },
