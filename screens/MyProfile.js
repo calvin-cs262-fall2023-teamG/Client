@@ -1,3 +1,6 @@
+/* eslint-disable react/style-prop-object */
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Dimensions,
@@ -9,8 +12,6 @@ import Animated, { ZoomIn } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
-import Background from '../components/Background';
-import MyListings from './MyListings';
 
 const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
@@ -42,13 +43,14 @@ function MyProfile() {
         const userData = await AsyncStorage.getItem('userData');
         if (userData) {
           const {
-            ID, fullname, email, username, password,
+            ID, fullname: retrievedFullname, email: retrievedEmail,
+            username: retrievedUsername, password: retrievedPassword,
           } = JSON.parse(userData);
           setUserID(ID);
-          setFullname(fullname);
-          setEmail(email);
-          setUsername(username);
-          setPassword(password);
+          setFullname(retrievedFullname);
+          setEmail(retrievedEmail);
+          setUsername(retrievedUsername);
+          setPassword(retrievedPassword);
         }
       } catch (error) {
         console.error(error);
@@ -69,7 +71,11 @@ function MyProfile() {
             return;
           }
           const data = {
-            ID: userID, emailAddress: email, name: fullname, username: newUsername, passwordHash: hash,
+            ID: userID,
+            emailAddress: email,
+            name: fullname,
+            username: newUsername,
+            passwordHash: hash,
           };
           const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
             method: 'PUT',
@@ -167,7 +173,8 @@ function MyProfile() {
           Email:
           {email}
         </Text>
-        {/* <Button style = "text" label="Change Email" onPress={() => setEmailModalVisible(true)}/> */}
+        {/* <Button style = "text" label="Change Email"
+        onPress={() => setEmailModalVisible(true)}/> */}
       </View>
 
       <View style={styles.InfoContainer}>
@@ -262,7 +269,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     alignItems: 'center',
-    justifyContent: 'center',
     justifyContent: 'top',
   },
   InfoContainer: {
