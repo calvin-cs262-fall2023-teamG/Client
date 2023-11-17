@@ -30,3 +30,4 @@ const user_listings_data = [
 ];
 
 export default user_listings_data;
+
