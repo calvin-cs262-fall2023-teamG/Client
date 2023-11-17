@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
+import Modal from 'react-native-modal';
 import sendEmail from '../components/sendEmail';
+import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+import InputBox from '../components/InputBox';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -25,9 +28,14 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 
 const BookInfo = ({ route }) => {
-    const { bookInfo } = route.params;
 
-    const title = bookInfo.title;
+    const { bookInfo } = route.params;
+    const handleContactSeller = () => {
+        // Pass the necessary data to the sendEmail function
+        sendEmail(bookInfo.title, bookInfo.emailaddress, bookInfo.name);
+      };
+
+    
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
@@ -38,8 +46,8 @@ const BookInfo = ({ route }) => {
                 <InfoView name="Author" icon="user" value={bookInfo.author} />
                 <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
                 <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
-                <InfoView name="Seller Name" icon="user" value={bookInfo.sellername} />
-                <InfoView name="Seller Email" icon="envelope" value={bookInfo.selleremail} />
+                <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
+                <InfoView name="Seller Email" icon="envelope" value={bookInfo.emailaddress} />
                 
                 <View style = {styles.imageContainer}>
                     <View style = {styles.imageSection}>
@@ -54,7 +62,15 @@ const BookInfo = ({ route }) => {
                 </View>
 
                 <View style={styles.button}>
-                    <Button style="small button" label="Contact Seller" onPress={sendEmail}/>
+                    <Button style="small button" label="Contact Seller" onPress={handleContactSeller}/>
+                    
+                    {/*This is a bug to fix a bug DON'T TOUCH */}
+                    <Modal>
+                        <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
+                            <Text paddingHorizontal={10}>Enter New Email:</Text>
+                            <InputBox pHolder="New Email" icon="envelope" /> 
+                        </Animated.View>
+                    </Modal>
                 </View>
 
             </ScrollView>
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 });
 
 export default BookInfo;
