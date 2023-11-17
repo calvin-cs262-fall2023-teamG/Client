@@ -25,7 +25,7 @@ const ContactInfo = ({ navigation, route }) => {
               const { email, fullname } = JSON.parse(userData);
               setEmail(email);
               setFullname(fullname);
-              console.log("Autofilled fields with " + fullname + " & " + email + ", ID: " + id);
+              console.log("Autofilled fields with " + fullname + " & " + email);
             }
           };
           fetchUserData();
