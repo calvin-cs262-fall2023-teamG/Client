@@ -1,67 +1,47 @@
-import React, { useState, useEffect } from "react";
 import { Linking } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
-
-const sendEmail = () => {
-  
-  const [title, setTitle] = useState("");
-  const [sellername, setSellername] = useState("");
-  const [selleremail, setSelleremail] = useState("");
-
-  useEffect(() => {
-    const fetchBookInfo = async () => {
-      try {
-        const storedBookInfo = await AsyncStorage.getItem("bookInfo");
-        if (storedBookInfo !== null) {
-          console.log("Data retrieved successfully:", storedBookInfo);
-        } else {
-          const { title, sellername, selleremail } = JSON.parse(storedBookInfo);
-          setTitle(title);
-          setSellername(sellername);
-          setSelleremail(selleremail);
-        }
-      } catch (error) {
-        console.error("Error fetching book info from AsyncStorage:", error);
+const sendEmail = async (title, selleremail, sellername) => {
+ 
+  // Fetch User's fullname from Async Storage
+  const fetchBookInfo = async () => {
+    try {
+      const storedBookInfo = await AsyncStorage.getItem("userData");
+      if (storedBookInfo !== null) {
+        const { fullname } = JSON.parse(storedBookInfo);
+        return fullname;
+      } else {
+        console.log("No user data found in AsyncStorage");
+        return null;
       }
-    };
-    fetchBookInfo();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching book info from AsyncStorage:", error);
+    }
+  };
 
-  const buyerName = "Si Chan Park";
+  const buyerName = await fetchBookInfo(); // Wait for the promise to resolve
   const subject = "ChapterCache: A Buyer is Interested in Your Book!";
 
-  const body =
-    "Hello " +
-    sellername +
-    "! %0A %0A My name is " +
-    buyerName +
-    ". I am interested in buying your textbook: " +
-    title +
-    "." +
-    " %0A %0A Please let me know if the book is still available." +
-    " %0A %0A Looking forward to your reply!" +
-    "%0A %0A Thanks!";
+  let body = `Hello ${sellername}! %0A %0A My name is ${buyerName}. I am interested in buying your textbook: ${title}. %0A %0A Please let me know if the book is still available. %0A %0A Looking forward to your reply! %0A %0A Thanks!`;
 
-  Linking.openURL(
-    "ms-outlook://emails/new?to=" +
-      selleremail +
-      "&subject=" +
-      subject +
-      "&body=" +
-      body
-  );
 
-  //iOS = ms-outlook://compose?to...
-
-  // const to = ['sp56@calvin.edu']
-  // email(to, {
-  //     subject: 'ChapterCache: A Buyer is Interested in Your Book!',
-  //     body: '',
-  //     checkCanOpen: false
-  // }).catch(console.error)
+  if (Platform.OS === 'ios') {
+    // For iOS, use a different email client
+    body = `Hello ${sellername}!%0A%0AMy name is ${buyerName}. I am interested in buying your textbook: ${title}.%0A%0APlease let me know if the book is still available.%0A%0ALooking forward to your reply!%0A%0AThanks!`;
+    Linking.openURL(`mailto:${selleremail}?subject=${subject}&body=${body}`);
+  } else {
+    // For Android, use the ms-outlook URL
+    Linking.openURL(`ms-outlook://emails/new?to=${selleremail}&subject=${subject}&body=${body}`)
+      .then(() => {
+        setTimeout(() => {
+          
+          // Go back to the Outlook to finish sending email. 
+          Linking.openURL(`ms-outlook://emails`)
+        }
+        , 10);
+      })
+  }
 };
+
 
 export default sendEmail;

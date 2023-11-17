@@ -2,8 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
+import Modal from 'react-native-modal';
 import sendEmail from '../components/sendEmail';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+import InputBox from '../components/InputBox';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -27,22 +29,11 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 const BookInfo = ({ route }) => {
 
-    const saveBookInfo = async (key, value) => {
-        try{
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem(key, jsonValue)
-        } catch (error) {
-            console.error('Error saving object:', error)
-        }
-    };
-
     const { bookInfo } = route.params;
-    const title = bookInfo.title;
-    const author = bookInfo.author;
-    const sellername = bookInfo.sellername;
-    const selleremail = bookInfo.selleremail;
-
-    saveBookInfo('bookInfo', {'title': title, 'sellername': sellername, 'selleremail': selleremail})
+    const handleContactSeller = () => {
+        // Pass the necessary data to the sendEmail function
+        sendEmail(bookInfo.title, bookInfo.emailaddress, bookInfo.name);
+      };
 
     
     return (
@@ -50,13 +41,13 @@ const BookInfo = ({ route }) => {
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
-                <InfoView name="Book" icon="book" value={title} />
+                <InfoView name="Book" icon="book" value={bookInfo.title} />
                 <InfoView name="ISBN" icon="hashtag" value={bookInfo.isbn} />
-                <InfoView name="Author" icon="user" value={author} />
+                <InfoView name="Author" icon="user" value={bookInfo.author} />
                 <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
                 <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
-                <InfoView name="Seller Name" icon="user" value={sellername} />
-                <InfoView name="Seller Email" icon="envelope" value={selleremail} />
+                <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
+                <InfoView name="Seller Email" icon="envelope" value={bookInfo.emailaddress} />
                 
                 <View style = {styles.imageContainer}>
                     <View style = {styles.imageSection}>
@@ -71,7 +62,15 @@ const BookInfo = ({ route }) => {
                 </View>
 
                 <View style={styles.button}>
-                    <Button style="small button" label="Contact Seller" onPress={sendEmail}/>
+                    <Button style="small button" label="Contact Seller" onPress={handleContactSeller}/>
+                    
+                    {/*This is a bug to fix a bug DON'T TOUCH */}
+                    <Modal>
+                        <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
+                            <Text paddingHorizontal={10}>Enter New Email:</Text>
+                            <InputBox pHolder="New Email" icon="envelope" /> 
+                        </Animated.View>
+                    </Modal>
                 </View>
 
             </ScrollView>
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 });
 
 export default BookInfo;
