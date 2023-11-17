@@ -1,6 +1,8 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions,
+  StyleSheet, View, Text, ScrollView, Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';

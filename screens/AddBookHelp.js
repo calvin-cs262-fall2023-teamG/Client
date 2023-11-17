@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions,
+  StyleSheet, Text,
 } from 'react-native';
 import Animated, {
-  SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, FlipInYLeft, FlipInYRight, RollInRight, RollInLeft, ZoomInEasyUp, LightSpeedInLeft,
+  FadeInUp,
 } from 'react-native-reanimated';
 import Background from '../components/Background';
 
 // get height dimensions of the screen
 
-function AddBookHelp({ }) {
+function AddBookHelp() {
   return (
     <Animated.View entering={FadeInUp.duration(500)}>
       <Background />

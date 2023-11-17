@@ -1,12 +1,7 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState } from 'react';
 import {
-  Text,
-  View,
-  ScrollView,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert, Dimensions,
+  Text, View, ScrollView, StyleSheet, Alert, Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import InputBox from '../components/InputBox';
@@ -23,7 +18,7 @@ function ForgotPassword({ navigation }) {
     const domainToCheck = 'calvin.edu';
     const emailParts = email.split('@');
 
-    if (emailParts.length === 2 && emailParts[1] === domainToCheck) { // make sure there are two parts of the email field and one is a calvin domain
+    if (emailParts.length === 2 && emailParts[1] === domainToCheck) {
       showAlert();
       navigation.navigate('Login');
     } else {

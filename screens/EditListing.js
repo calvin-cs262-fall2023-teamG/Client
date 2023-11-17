@@ -1,12 +1,12 @@
+/* eslint-disable react/style-prop-object */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image, TextInput,
+  StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
-import { CheckBox } from 'react-native-web';
 import Button from '../components/Button';
-import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 
 function InfoView({ name, value, icon }) {
@@ -90,7 +90,6 @@ function EditListing({ route }) {
     }
   };
 
-  const { title } = bookInfo;
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
