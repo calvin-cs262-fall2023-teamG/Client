@@ -1,9 +1,10 @@
 module.exports = {
+  root: true,
+  extends: ['universe/native', 'airbnb'],
   env: {
     browser: true,
     es2021: true,
   },
-  extends: 'airbnb',
   overrides: [
     {
       env: {

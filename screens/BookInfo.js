@@ -4,10 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Animated, {
-  SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut,
-} from 'react-native-reanimated';
-import Button from '../components/Button';
+import Animated, { ZoomIn} from 'react-native-reanimated';
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 
