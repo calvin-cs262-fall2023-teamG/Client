@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Animated, { ZoomIn} from 'react-native-reanimated';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 

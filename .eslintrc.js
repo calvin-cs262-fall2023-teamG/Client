@@ -22,7 +22,11 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
-    'no-console': ['error', { allow: ['error'] }],
     'prettier/prettier': 'off',
+    'react/jsx-filename-extension': 'off',
+    'no-use-before-define': 'off',
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'no-console': 'off',
   },
 };

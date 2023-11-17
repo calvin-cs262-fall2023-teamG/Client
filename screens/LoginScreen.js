@@ -5,8 +5,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import bcrypt from 'react-native-bcrypt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, {FadeIn, Keyframe,
-} from 'react-native-reanimated';
+import Animated, { FadeIn, Keyframe } from 'react-native-reanimated';
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 
