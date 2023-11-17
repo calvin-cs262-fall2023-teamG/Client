@@ -1,53 +1,54 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView, TextInput, Dimensions,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
-// get height dimensions of the screen 
+// get height dimensions of the screen
 const { height: screenHeight } = Dimensions.get('window');
 
-const ContactInfo = ({ navigation, route }) => {
+function ContactInfo({ navigation, route }) {
   const [fullname, setFullname] = useState(''); // State to store the user's name
   const [email, setEmail] = useState(''); // State to store the user's email
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { receivedBook } = route.params; //this one is passed in to go to database
+  const { receivedBook } = route.params; // this one is passed in to go to database
 
-    useEffect(() => {
-        // Retrieve data from AsyncStorage
-        try {
-          const fetchUserData = async () => {
-            const userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-              const { email, fullname } = JSON.parse(userData);
-              setEmail(email);
-              setFullname(fullname);
-              console.log("Autofilled fields with " + fullname + " & " + email);
-            }
-          };
-          fetchUserData();
-        } catch (error) {
-          console.error(error);
+  useEffect(() => {
+    // Retrieve data from AsyncStorage
+    try {
+      const fetchUserData = async () => {
+        const userData = await AsyncStorage.getItem('userData');
+        if (userData) {
+          const { email, fullname } = JSON.parse(userData);
+          setEmail(email);
+          setFullname(fullname);
+          console.log(`Autofilled fields with ${fullname} & ${email}`);
         }
-
+      };
+      fetchUserData();
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   const handleAddBook = async () => {
     const domainToCheck = 'calvin.edu';
     const emailParts = email.split('@');
     if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
-      setErrorMessage("Please enter your Calvin email")
+      setErrorMessage('Please enter your Calvin email');
     } else {
-      console.log("Sending to database: " + JSON.stringify(receivedBook)); //Ensure valid data is going to data base
+      console.log(`Sending to database: ${JSON.stringify(receivedBook)}`); // Ensure valid data is going to data base
       try {
         const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(receivedBook)
+          body: JSON.stringify(receivedBook),
         });
 
         if (!response.ok) {
@@ -57,7 +58,7 @@ const ContactInfo = ({ navigation, route }) => {
       } catch (error) {
         console.error(error);
       } finally {
-        navigation.navigate('Main')
+        navigation.navigate('Main');
       }
     }
   };
@@ -71,15 +72,18 @@ const ContactInfo = ({ navigation, route }) => {
         <View style={styles.shape4} />
         <View style={styles.shape5} />
       </View>
-      <ScrollView style={{ paddingHorizontal: 20, }} showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{ paddingHorizontal: 20 }}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <Animated.View entering={FadeInUp.duration(500)}>
           <Text style={styles.PageTitle}> Contact Information</Text>
           <Text style={styles.Info}>The information below will be provided to the buyer</Text>
         </Animated.View>
         <Animated.View style={styles.inputs} entering={FadeInDown.duration(500)}>
-          <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)} />
-          <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
+          <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={(text) => setFullname(text)} />
+          <InputBox pHolder="Email" icon="envelope" value={email} set_text={(text) => setEmail(text)} />
           {errorMessage !== '' && (
             <Text style={styles.errorText}>{errorMessage}</Text>
           )}
@@ -87,7 +91,7 @@ const ContactInfo = ({ navigation, route }) => {
         </Animated.View>
       </ScrollView>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -100,13 +104,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   shape1: {
-    position: "absolute",
+    position: 'absolute',
     top: -90,
     left: -80,
     width: 190,
     height: 190,
     borderRadius: 90,
-    backgroundColor: "#8CFFD6",
+    backgroundColor: '#8CFFD6',
     opacity: 0.5,
   },
   shape2: {
@@ -128,35 +132,35 @@ const styles = StyleSheet.create({
     transform: [{ translateY: screenHeight - 200 }],
   },
   shape4: {
-    position: "absolute",
+    position: 'absolute',
     width: 260,
     height: 120,
     left: 210,
     borderRadius: 70,
-    backgroundColor: "#8CFFD6",
-    transform: [{ rotate: "50deg" }],
+    backgroundColor: '#8CFFD6',
+    transform: [{ rotate: '50deg' }],
   },
   shape5: {
-    position: "absolute",
+    position: 'absolute',
     width: 280,
     height: 140,
     left: 280,
     borderRadius: 40,
-    backgroundColor: "#B4F7C3",
-    transform: [{ rotate: "70deg" }],
+    backgroundColor: '#B4F7C3',
+    transform: [{ rotate: '70deg' }],
   },
 
-  //Text = 'Contact Information'
+  // Text = 'Contact Information'
   PageTitle: {
     marginTop: 180,
     marginBottom: 12,
     fontSize: 37,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   Info: {
     marginBottom: 15,
     fontSize: 14,
-    color: "#888181",
+    color: '#888181',
     paddingLeft: 10,
     marginLeft: 5,
   },
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
 
   },
-  //Error Message
+  // Error Message
   errorText: {
     textAlign: 'center',
     fontSize: 15,
