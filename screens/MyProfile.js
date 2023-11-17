@@ -18,10 +18,8 @@ const MyProfile = () => {
     const [userID, setUserID] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [newEmail, setNewEmail] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [isEmailModalVisible, setEmailModalVisible] = useState(false); //booleans
     const [isUsernameModalVisible, setUsernameModalVisible] = useState(false);
     const [isPasswordModalVisible, setPasswordModalVisible] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -51,42 +49,6 @@ const MyProfile = () => {
 
         retrieveUserData();
     }, []);
-
-    const handleUpdateEmail = async () => {
-        const domainToCheck = 'calvin.edu';
-        const emailParts = newEmail.split('@');
-        if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
-            setErrorMessage("Please enter your Calvin email")
-        } else {
-            try {
-                bcrypt.hash(password, saltRounds, async (err, hash) => {
-                    if (err) {
-                        console.error('Error hashing password:', err);
-                        return;
-                    }
-                    const data = { "ID": userID, "newemailAddress": newEmail, "name": fullname, "username": newUsername, "passwordHash": hash }
-                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    if (!response.ok) {
-                        const text = await response.text();
-                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
-                    }
-                    setEmail(newEmail);
-                    setEmailModalVisible(false);
-                    setNewEmail(''); // Clear the input field.
-                    setErrorMessage(''); // Clear the error message
-                });
-            } catch (error) {
-                console.error(error);
-                setErrorMessage("Error creating new email. Please try again.");
-            }
-        }
-    };
 
     const handleUpdateUsername = async () => {
         if (newUsername.length <= 3) {
@@ -120,26 +82,6 @@ const MyProfile = () => {
                 setErrorMessage("Error creating new Username. Please try again.");
             }
         }
-    };
-
-    //These functions are for resetting the holder strings
-    const clearEmailInput = () => {
-        setNewEmail('');
-        setEmailModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const clearUsernameInput = () => {
-        setNewUsername('');
-        setUsernameModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const clearPasswordInput = () => {
-        setNewPassword('');
-        setconfirmPassword('');
-        setPasswordModalVisible(false);
-        setErrorMessage('');
     };
 
     const handleUpdatePassword = async () => {
@@ -179,6 +121,19 @@ const MyProfile = () => {
         }
     };
 
+    const clearUsernameInput = () => {
+        setNewUsername('');
+        setUsernameModalVisible(false);
+        setErrorMessage('');
+    };
+
+    const clearPasswordInput = () => {
+        setNewPassword('');
+        setconfirmPassword('');
+        setPasswordModalVisible(false);
+        setErrorMessage('');
+    };
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     }
@@ -195,13 +150,6 @@ const MyProfile = () => {
             <View style={styles.InfoContainer}>
                 <Text>Email: {email} </Text>
                 {/* <Button style = "text" label="Change Email" onPress={() => setEmailModalVisible(true)}/> */}
-
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        onPress={() => setEmailModalVisible(true)}>
-                        <Text style={styles.buttonText}>Change Email</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
 
             <View style={styles.InfoContainer}>
@@ -223,19 +171,6 @@ const MyProfile = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            {/* Email Update Modal */}
-            <Modal isVisible={isEmailModalVisible}>
-                <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
-                    <Text paddingHorizontal={10}>Enter New Email:</Text>
-                    <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)} autofocus={true} />
-                    {errorMessage !== '' && (
-                        <Text style={styles.errorText}>{errorMessage}</Text>
-                    )}
-                    <Button style="button" label="Update Email" onPress={handleUpdateEmail} />
-                    <Button style="button" label="Cancel" onPress={clearEmailInput} />
-                </Animated.View>
-            </Modal>
 
             {/* Username Update Modal */}
             <Modal isVisible={isUsernameModalVisible} style={styles.modal}>

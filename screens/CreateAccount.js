@@ -103,7 +103,7 @@ return (
                 {/* sets the state of fullname, email, username, and password*/}
                 <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)}  autofocus = {true}/>
                 <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {false} />
-                <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {false}/>
+                <InputBox pHolder="Calvin email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {false}/>
                 <InputBox pHolder="Password" icon="lock" value={password}
                         set_text={text => setPassword(text)} secureTextEntry={!showPassword}
                         togglePasswordVisibility={togglePasswordVisibility}
