@@ -55,7 +55,6 @@ const MyProfile = () => {
     const handleUpdateEmail = async () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = newEmail.split('@');
-
         if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
             setErrorMessage("Please enter your Calvin email")
         } else {

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Tex
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
 import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
@@ -16,6 +16,7 @@ const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 const Main = () => {
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
 
     const [booksData, setBooksData] = useState(books_data); //Collects a hardcoded json full of book objects
     const [bookInfo, setBookInfo] = useState(booksData); //formats this correctly
@@ -55,6 +56,13 @@ const Main = () => {
     useEffect(() => {
             fetchLibrary();
     }, []); //This should only happen on page init
+
+    // The useEffect to refresh the page when navigated back/focused again.
+    useEffect(() => {
+        if (isFocused) {
+            fetchLibrary();
+        }
+    }, [isFocused]);
 
     //Method to add a created book to a list
     function handleAddBook() {
