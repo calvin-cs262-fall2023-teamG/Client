@@ -52,6 +52,63 @@ const MyProfile = () => {
         retrieveUserData();
     }, []);
 
+    //These functions are for resetting the holder strings
+    const clearEmailInput = () => {
+        setNewEmail('');
+        setEmailModalVisible(false);
+        setErrorMessage('');
+    };
+
+    const clearUsernameInput = () => {
+        setNewUsername('');
+        setUsernameModalVisible(false);
+        setErrorMessage('');
+    };
+
+    const clearPasswordInput = () => {
+        setNewPassword('');
+        setconfirmPassword('');
+        setPasswordModalVisible(false);
+        setErrorMessage('');
+    };
+
+    const handleUpdatePassword = async () => {
+        if (newPassword.length <= 7) {
+            setErrorMessage("Your password must be at least 8 characters")
+        } else if (newPassword !== confirmpassword) {
+            setErrorMessage("Passwords do not match!");
+        } else {
+            try {
+                bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error('Error hashing password:', err);
+                        return;
+                    }
+                    const data = { "ID": userID, "emailAddress": email, "name": fullname, "username": username, "passwordHash": hash }
+                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!response.ok) {
+                        const text = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    }
+                    setPassword(newPassword);
+                    setPasswordModalVisible(false);
+                    setNewPassword(''); // Clear the input field.
+                    setconfirmPassword(''); // Clear the input field.
+                    setErrorMessage(''); // Clear the error message
+                });
+            } catch (error) {
+                console.error(error);
+                setErrorMessage("Error creating new password. Please try again.");
+            }
+        }
+    };
+
     const handleUpdateEmail = async () => {
         const domainToCheck = 'calvin.edu';
         const emailParts = newEmail.split('@');
@@ -118,63 +175,6 @@ const MyProfile = () => {
             } catch (error) {
                 console.error(error);
                 setErrorMessage("Error creating new Username. Please try again.");
-            }
-        }
-    };
-
-    //These functions are for resetting the holder strings
-    const clearEmailInput = () => {
-        setNewEmail('');
-        setEmailModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const clearUsernameInput = () => {
-        setNewUsername('');
-        setUsernameModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const clearPasswordInput = () => {
-        setNewPassword('');
-        setconfirmPassword('');
-        setPasswordModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const handleUpdatePassword = async () => {
-        if (newPassword.length <= 7) {
-            setErrorMessage("Your password must be at least 8 characters")
-        } else if (newPassword !== confirmpassword) {
-            setErrorMessage("Passwords do not match!");
-        } else {
-            try {
-                bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
-                    if (err) {
-                        console.error('Error hashing password:', err);
-                        return;
-                    }
-                    const data = { "ID": userID, "emailAddress": email, "name": fullname, "username": username, "passwordHash": hash }
-                    const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    if (!response.ok) {
-                        const text = await response.text();
-                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
-                    }
-                    setPassword(newPassword);
-                    setPasswordModalVisible(false);
-                    setNewPassword(''); // Clear the input field.
-                    setconfirmPassword(''); // Clear the input field.
-                    setErrorMessage(''); // Clear the error message
-                });
-            } catch (error) {
-                console.error(error);
-                setErrorMessage("Error creating new password. Please try again.");
             }
         }
     };
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 15,
         backgroundColor: '#81F4D8',
-        marginTop: 334
+        marginTop: 50
     },
 
 });
