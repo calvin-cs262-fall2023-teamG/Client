@@ -10,6 +10,7 @@ import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight,
 import MyListings from './MyListings';
 import { useNavigation } from '@react-navigation/native';
 
+
 const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
 // get width dimensions of the screen
