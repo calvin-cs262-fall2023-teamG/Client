@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import InputBox from '../components/InputBox';
@@ -11,6 +11,10 @@ import MyListings from './MyListings';
 import { useNavigation } from '@react-navigation/native';
 
 const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
+
+// get width dimensions of the screen
+const { width: screenWidth } = Dimensions.get('window');
+const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 const MyProfile = () => {
     const [fullname, setFullname] = useState(''); //strings
@@ -225,12 +229,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         alignItems: 'center',
+        justifyContent: 'center',
         justifyContent: 'top',
     },
     InfoContainer: {
         flexDirection: 'row',
         height: 50,
-        width: 400,
+        width: boxWidth,
         marginTop: 20,
         alignItems: 'center',
         backgroundColor: '#D9FFF6',
