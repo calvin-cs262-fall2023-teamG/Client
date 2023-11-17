@@ -1,25 +1,11 @@
 name: ESLint Check
-
-on: 
-  pull_request:
-    branches:
-      - main
-
+on: push
 jobs:
-  eslint:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: check out repo
-        uses: actions/checkout@v2
-
-      - name: set up node
-        uses: actions/setup-node@v3
-        with:
-            node-version: 16
-
-      - name: npm install
-        run: npm ci
-
-      - name: eslint
-        run: npm run lint
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Run ESLint
+      run: npx eslint . --ext .js,.jsx,.ts,.tsx
