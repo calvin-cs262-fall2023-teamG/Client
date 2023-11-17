@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions, ActivityIndicator, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions, ActivityIndicator, RefreshControl, FlatList } from 'react-native';
 import Button from '../components/Button';
 import Book from '../components/Book';
 import books_data from '../books_data';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import InputBox from '../components/InputBox';
-import Animated, {SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut} from 'react-native-reanimated';
+import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
 import AppEntranceAnimation from '../components/AppEntranceAnimation';
 
 // get width dimensions of the screen
@@ -30,12 +30,12 @@ const Main = () => {
         fetchLibrary();
         setRefreshing(false);
     };
-  
+
     //Method to fetch the library of books from the database. Should be executed when page is navigated to.
     const fetchLibrary = async () => {
         setLoading(true);
         try {
-            const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books'); 
+            const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books');
             const json = await response.json(); //collect a json from the response
             setBooksData(json); //overwrite default values in booksData
             setBooks(json); //put the json into our book arrangement
@@ -47,10 +47,11 @@ const Main = () => {
             setLoading(false);
         }
     }
-    
+
+
     //The following useEffect initializes the book list
     useEffect(() => {
-            fetchLibrary();
+        fetchLibrary();
     }, []); //This should only happen on page init
 
     // The useEffect to refresh the page when navigated back/focused again.
@@ -92,57 +93,59 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-                <Animated.View style={{marginTop:10, width:400}} entering={FadeInUp.duration(500)}>
-                    <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch}  autofocus = {false}/>
-                </Animated.View>
 
-                <Animated.View style = {{alignItems:'center', marginTop: 9, marginBottom:5}} entering={FadeIn.duration(500)}>
-                    <Text style = {{fontSize:22, fontWeight:'bold',}}>Books for Sale</Text>
-                </Animated.View>
+            <Animated.View style={{ marginTop: 10, width: 400 }} entering={FadeInUp.duration(500)}>
+                <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch} autofocus={false} />
+            </Animated.View>
 
-                <View style={{borderBottomColor: 'black', borderBottomWidth: 3, width: '100%',}}/>
-                
-                <ScrollView showsHorizontalScrollIndicator={false}
-                            showsVerticalScrollIndicator={false}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={refreshing}
-                                    onRefresh={onRefresh}
-                                />
-                            }>
-                    {
-                    isLoading ? (<ActivityIndicator />) : (
-                    books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
-                        return (
-                            <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
-                                <View style={styles.item}>
-                                    <View style={styles.square}></View>
-                                    <Book bookInfo={item} />
-                                    <View style={styles.details}>
-                                        <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                            )
-                        })
-                    )}
-                        
-                </ScrollView>
-                
+            <Animated.View style={{ alignItems: 'center', marginTop: 9, marginBottom: 5 }} entering={FadeIn.duration(500)}>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', }}>Books for Sale</Text>
+            </Animated.View>
 
-                <View style={styles.footerContainer}>
-                    <Animated.View entering={FadeInDown.duration(500)}>
-                    <TouchableOpacity 
+            <View style={{ borderBottomColor: 'black', borderBottomWidth: 3, width: '100%', }} />
+
+            <FlatList
+                data={books}
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity onPress={() => navigation.navigate("Book Info", { bookInfo: item })}>
+                        <View style={styles.item}>
+                            <View style={styles.square}></View>
+                            <Book bookInfo={item} />
+                            <View style={styles.details}>
+                                <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+                ListEmptyComponent={() => (
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <Text>No books found</Text>
+                    </View>
+                )}
+            />
+
+
+            <View style={styles.footerContainer}>
+                <Animated.View entering={FadeInDown.duration(500)}>
+                    <TouchableOpacity
                         onPress={() => navigation.navigate("Add Book")}
                         style={styles.roundButton}>
                         <Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Text>
                     </TouchableOpacity>
-                    </Animated.View>
- 
-                    {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
-                </View>
+                </Animated.View>
 
-            </SafeAreaView>
+                {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
+            </View>
+
+        </SafeAreaView>
     );
 }
 

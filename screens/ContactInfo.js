@@ -15,16 +15,21 @@ const ContactInfo = ({ navigation, route }) => {
 
   const { receivedBook } = route.params; //this one is passed in to go to database
 
-  useEffect(() => {
-    // Retrieve data from AsyncStorage
-    try {
-      const fetchUserData = async () => {
-        const userData = await AsyncStorage.getItem('userData');
-        if (userData) {
-          const { email, fullname } = JSON.parse(userData);
-          setEmail(email);
-          setFullname(fullname);
-          console.log("Autofilled fields with " + fullname + " & " + email + ", ID: " + id);
+    useEffect(() => {
+        // Retrieve data from AsyncStorage
+        try {
+          const fetchUserData = async () => {
+            const userData = await AsyncStorage.getItem('userData');
+            if (userData) {
+              const { email, fullname } = JSON.parse(userData);
+              setEmail(email);
+              setFullname(fullname);
+              console.log("Autofilled fields with " + fullname + " & " + email);
+            }
+          };
+          fetchUserData();
+        } catch (error) {
+          console.error(error);
         }
       };
       fetchUserData();

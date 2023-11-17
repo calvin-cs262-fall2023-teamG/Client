@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
+import Modal from 'react-native-modal';
 import sendEmail from '../components/sendEmail';
+import Animated, { SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut } from 'react-native-reanimated';
+import InputBox from '../components/InputBox';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -37,9 +40,14 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 
 
 const BookInfo = ({ route }) => {
-    const { bookInfo } = route.params;
 
-    const title = bookInfo.title;
+    const { bookInfo } = route.params;
+    const handleContactSeller = () => {
+        // Pass the necessary data to the sendEmail function
+        sendEmail(bookInfo.title, bookInfo.emailaddress, bookInfo.name);
+      };
+
+    
     return (
         <SafeAreaView style={styles.container}>
             {/* <View style={styles.button}>
@@ -68,8 +76,17 @@ const BookInfo = ({ route }) => {
                     </View>
                 </View>
 
-                
-
+                <View style={styles.button}>
+                    <Button style="small button" label="Contact Seller" onPress={handleContactSeller}/>
+                    
+                    {/*This is a bug to fix a bug DON'T TOUCH */}
+                    <Modal>
+                        <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
+                            <Text paddingHorizontal={10}>Enter New Email:</Text>
+                            <InputBox pHolder="New Email" icon="envelope" /> 
+                        </Animated.View>
+                    </Modal>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -138,6 +155,7 @@ const styles = StyleSheet.create({
         alignItems: "center", //center horizontally
         justifyContent: "center" //center vertically
       },
+
 });
 
 export default BookInfo;
