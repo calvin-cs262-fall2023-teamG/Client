@@ -1,6 +1,10 @@
+/* eslint-disable react/style-prop-object */
+/* eslint-disable object-property-newline */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
-  Text, View, TextInput, StyleSheet, TouchableOpacity, ScrollView, Dimensions,
+  Text, View, StyleSheet, ScrollView, Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import bcrypt from 'react-native-bcrypt';
@@ -20,7 +24,8 @@ function LoginScreen({ navigation }) {
   const [email, setEmail] = useState(''); // State to store the user's email
   const [name, setName] = useState(''); // State to store the user's email
   const [matchingUser, setMatchingUser] = useState(null);
-  const [isLoading, setLoading] = useState(true); // make a useState boolean which is falsified when library fetch is completed or failed
+  // make a useState boolean which is falsified when library fetch is completed or failed
+  const [isLoading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false); // Add a refresh state to force a re-render
   const saltRounds = 10; // Number of salt rounds, higher is more secure but slower
 
@@ -77,7 +82,8 @@ function LoginScreen({ navigation }) {
         if (isPasswordCorrect) {
           // Store user information in AsyncStorage
           await AsyncStorage.setItem('userData', JSON.stringify({
-            ID: matchingUser.id, fullname: matchingUser.name, email: matchingUser.emailaddress, username: matchingUser.username, password: enteredPassword,
+            ID: matchingUser.id, fullname: matchingUser.name, email: matchingUser.emailaddress,
+            username: matchingUser.username, password: enteredPassword,
           }));
           // Password is correct, navigate to the main screen
           navigation.navigate('Main');
@@ -116,7 +122,6 @@ function LoginScreen({ navigation }) {
       </Animated.View>
 
       <ScrollView
-
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
@@ -126,8 +131,12 @@ function LoginScreen({ navigation }) {
             <Text style={styles.loginheader}> ChapterCache</Text>
           </Animated.View>
 
-          <Animated.Text style={styles.PageTitle} entering={FadeIn.delay(1500)}> Sign in</Animated.Text>
-          <Animated.Text style={styles.Info} entering={FadeIn.delay(1500)}> Please fill these credentials</Animated.Text>
+          <Animated.Text style={styles.PageTitle} entering={FadeIn.delay(1500)}>
+            Sign in
+          </Animated.Text>
+          <Animated.Text style={styles.Info} entering={FadeIn.delay(1500)}>
+            Please fill these credentials
+          </Animated.Text>
 
           {/* sets the state of username and password */}
           <Animated.View entering={FadeIn.delay(1500)}>
