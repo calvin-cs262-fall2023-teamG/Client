@@ -84,19 +84,6 @@ const MyProfile = () => {
         }
     };
 
-    const clearUsernameInput = () => {
-        setNewUsername('');
-        setUsernameModalVisible(false);
-        setErrorMessage('');
-    };
-
-    const clearPasswordInput = () => {
-        setNewPassword('');
-        setconfirmPassword('');
-        setPasswordModalVisible(false);
-        setErrorMessage('');
-    };
-
     const handleUpdatePassword = async () => {
         if (newPassword.length <= 7) {
             setErrorMessage("Your password must be at least 8 characters")
@@ -132,6 +119,19 @@ const MyProfile = () => {
                 setErrorMessage("Error creating new password. Please try again.");
             }
         }
+    };
+
+    const clearUsernameInput = () => {
+        setNewUsername('');
+        setUsernameModalVisible(false);
+        setErrorMessage('');
+    };
+
+    const clearPasswordInput = () => {
+        setNewPassword('');
+        setconfirmPassword('');
+        setPasswordModalVisible(false);
+        setErrorMessage('');
     };
 
     const togglePasswordVisibility = () => {

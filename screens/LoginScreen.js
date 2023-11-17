@@ -7,6 +7,7 @@ import bcrypt from 'react-native-bcrypt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppEntranceAnimation from '../components/AppEntranceAnimation';
 import Animated, {Easing, SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut, Keyframe} from 'react-native-reanimated';
+import { reset } from 'isaac';
 
 
 // get height dimensions of the screen
@@ -21,6 +22,7 @@ const LoginScreen = ({ navigation }) => {
     const [name, setName] = useState(''); // State to store the user's email
     const [matchingUser, setMatchingUser] = useState(null);
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
+    const [refresh, setRefresh] = useState(false); // Add a refresh state to force a re-render
     const saltRounds = 10; // Number of salt rounds, higher is more secure but slower
 
     // Setup the animation for the header
@@ -63,6 +65,12 @@ const LoginScreen = ({ navigation }) => {
         
     }, [username, password]); //This useEffect is triggered as soon as the component appears
 
+    const resetInputs = () => {
+        setUsername('');
+        setPassword('');
+        setErrorMessage('');
+    };
+
     const handleLogin = async () => {
         try{
             if (matchingUser) {
@@ -71,10 +79,12 @@ const LoginScreen = ({ navigation }) => {
                 //Compare what the user inputted with the hashed password in the database
                 const isPasswordCorrect = bcrypt.compareSync(enteredPassword, matchingUser.passwordhash);
                 if (isPasswordCorrect) {
-                    // Password is correct, navigate to the main screen
-                    navigation.navigate('Main');
                     // Store user information in AsyncStorage
                     await AsyncStorage.setItem('userData', JSON.stringify({ ID: matchingUser.id, fullname: matchingUser.name, email: matchingUser.emailaddress, username: matchingUser.username, password: enteredPassword }));
+                    // Password is correct, navigate to the main screen
+                    navigation.navigate('Main');
+                    resetInputs(); // Reset input fields and error message
+                    setRefresh(prevState => !prevState); // Toggle refresh state to force
                 }else {
                     setErrorMessage("Username or Password Incorrect!");
                 }
