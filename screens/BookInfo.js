@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import Modal from 'react-native-modal';
@@ -14,8 +14,20 @@ const InfoView = ({ name, value, icon }) => {
         <View style={[styles.info, { width: infoWidth }]}>
             <Icon name={icon} size={20} color="#888181" style={styles.icon} />
             <View>
-                <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
-                <Text style={{ color: "#888181" }}>{value}</Text>
+                <View style={{flexDirection:"row", alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View >
+                        <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
+                        <Text style={{ color: "#888181" }}>{value}</Text>
+                    </View>
+                    {name == "Seller Email" && (
+                        <TouchableOpacity onPress={sendEmail}>
+                            <View style={styles.buttonContact}>
+                                <Text>Contact Seller</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                </View>
+
             </View>
         </View>
     );
@@ -38,6 +50,9 @@ const BookInfo = ({ route }) => {
     
     return (
         <SafeAreaView style={styles.container}>
+            {/* <View style={styles.button}>
+                   
+            </View> */}
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
@@ -72,7 +87,6 @@ const BookInfo = ({ route }) => {
                         </Animated.View>
                     </Modal>
                 </View>
-
             </ScrollView>
         </SafeAreaView>
     );
@@ -129,6 +143,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    buttonContact: {
+        marginTop: 10,
+        paddingVertical: 10,
+        marginHorizontal:80,
+        marginBottom:10,
+        height: 40,
+        width:130,
+        backgroundColor: '#81F4D8',
+        borderRadius: 15,
+        alignItems: "center", //center horizontally
+        justifyContent: "center" //center vertically
+      },
+
 });
 
 export default BookInfo;

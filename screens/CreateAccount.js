@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {Text, View, ScrollView, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
@@ -17,25 +16,30 @@ const CreateAccount = ({ navigation }) => {
     const [email, setEmail] = useState('');         
     const [showPassword, setShowPassword] = useState(false); //Determines whether password is visible
     const [showConfirmPassword, setShowConfirmPassword] = useState(false); //Separately determines whether confirmation of password is visible
-    const [errorMessage, setErrorMessage] = useState(''); //Stores error messages
-    
+    const [usererrorMessage, setUserErrorMessage] = useState(''); //Stores error messages
+    const [emailerrorMessage, setEmailErrorMessage] = useState(''); //Stores error messages
+    const [passworderrorMessage, setPasswordErrorMessage] = useState(''); //Stores error messages
+
     //Collects the information once it is compiled and builds an account
     const handleCreate = async ()=>{
+        setUserErrorMessage(''); // Reset user error message
+        setEmailErrorMessage(''); // Reset email error message
+        setPasswordErrorMessage(''); // Reset password error message
         const domainToCheck = 'calvin.edu'; //Ensure use of a Calvin email
         const emailParts = email.split('@');
 
         //Error messages...
         if (username.length <= 3) {                                  //If the email is too short
-            setErrorMessage("Your username must be at least 4 characters");
+            setUserErrorMessage("Your username must be at least 4 characters");
         
         }else if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)){ //If the email is too short or isn't identified as a Calvin email:
-            setErrorMessage("Please enter your Calvin email");
+            setEmailErrorMessage("Please enter your Calvin email");
 
         } else if (password.length <= 7) {                                  //If the password is too short
-            setErrorMessage("Your password must be at least 8 characters");
+            setPasswordErrorMessage("Your password must be at least 8 characters");
 
         } else if (password !== confirmpassword) {                          //If the chosen password does not match the confirmation
-            setErrorMessage("Passwords do not match!");  
+            setPasswordErrorMessage("Passwords do not match!");  
         } else {
             try {
                 const uniqueId = uuid.v4(); //Generate a unique ID
@@ -65,7 +69,7 @@ const CreateAccount = ({ navigation }) => {
                 });
             } catch (error) {
                 console.error(error);
-                setErrorMessage("Error creating account. Please try again.");
+                setPasswordErrorMessage("Error creating account. Please try again.");
             }
         }
     }
@@ -103,8 +107,16 @@ return (
                 {/* sets the state of fullname, email, username, and password*/}
                 <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={text => setFullname(text)}  autofocus = {true}/>
                 <InputBox pHolder="Username" icon="user" value={username} set_text={text => setUsername(text)}  autofocus = {false} />
+
+                {usererrorMessage !== '' && (
+                    <Text style = {styles.errorText}>{usererrorMessage}</Text> 
+                )}
+
                 <InputBox pHolder="Calvin email" icon="envelope" value={email} set_text={text => setEmail(text)}  autofocus = {false}/>
-                <InputBox pHolder="Password" icon="lock" value={password}
+                {emailerrorMessage !== '' && (
+                    <Text style = {styles.errorText}>{emailerrorMessage}</Text> 
+                )}
+                  <InputBox pHolder="Password" icon="lock" value={password}
                         set_text={text => setPassword(text)} secureTextEntry={!showPassword}
                         togglePasswordVisibility={togglePasswordVisibility}
                         showPassword={showPassword} 
@@ -114,8 +126,8 @@ return (
                         togglePasswordVisibility={toggleConfirmPasswordVisibility}
                         showPassword={showConfirmPassword} 
                         autofocus = {false}/>
-                {errorMessage !== '' && (
-                    <Text style = {styles.errorText}>{errorMessage}</Text> 
+                {passworderrorMessage !== '' && (
+                    <Text style = {styles.errorText}>{passworderrorMessage}</Text> 
                 )}
                 
                 <Button style = "button" label="Create an Account" onPress={handleCreate}/>

@@ -25,7 +25,6 @@ const Main = () => {
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
     const [refreshing, setRefreshing] = useState(false);
 
-
     const onRefresh = () => {
         setRefreshing(true);
         fetchLibrary();
@@ -94,6 +93,7 @@ const Main = () => {
     return (
 
         <SafeAreaView style={styles.container}>
+
             <Animated.View style={{ marginTop: 10, width: 400 }} entering={FadeInUp.duration(500)}>
                 <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch} autofocus={false} />
             </Animated.View>
