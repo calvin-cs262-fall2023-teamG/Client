@@ -3,7 +3,12 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
@@ -17,7 +22,7 @@ const saltRounds = 5; // Number of salt rounds, higher is more secure but slower
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
-const boxWidth = screenWidth * 0.90; // 90% of the screen width
+const boxWidth = screenWidth * 0.9; // 90% of the screen width
 
 function MyProfile() {
   const [fullname, setFullname] = useState(''); // strings
@@ -43,8 +48,11 @@ function MyProfile() {
         const userData = await AsyncStorage.getItem('userData');
         if (userData) {
           const {
-            ID, fullname: retrievedFullname, email: retrievedEmail,
-            username: retrievedUsername, password: retrievedPassword,
+            ID,
+            fullname: retrievedFullname,
+            email: retrievedEmail,
+            username: retrievedUsername,
+            password: retrievedPassword,
           } = JSON.parse(userData);
           setUserID(ID);
           setFullname(retrievedFullname);
@@ -77,16 +85,21 @@ function MyProfile() {
             username: newUsername,
             passwordHash: hash,
           };
-          const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await fetch(
+            `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
             },
-            body: JSON.stringify(data),
-          });
+          );
           if (!response.ok) {
             const text = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+            throw new Error(
+              `HTTP error! status: ${response.status}, response: ${text}`,
+            );
           }
           setUsername(newUsername);
           setUsernameModalVisible(false);
@@ -113,18 +126,27 @@ function MyProfile() {
             return;
           }
           const data = {
-            ID: userID, emailAddress: email, name: fullname, username, passwordHash: hash,
+            ID: userID,
+            emailAddress: email,
+            name: fullname,
+            username,
+            passwordHash: hash,
           };
-          const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await fetch(
+            `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
             },
-            body: JSON.stringify(data),
-          });
+          );
           if (!response.ok) {
             const text = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+            throw new Error(
+              `HTTP error! status: ${response.status}, response: ${text}`,
+            );
           }
           setPassword(newPassword);
           setPasswordModalVisible(false);
@@ -183,9 +205,7 @@ function MyProfile() {
           {username}
         </Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => setUsernameModalVisible(true)}
-          >
+          <TouchableOpacity onPress={() => setUsernameModalVisible(true)}>
             <Text style={styles.buttonText}>Change UserName</Text>
           </TouchableOpacity>
         </View>
@@ -197,9 +217,7 @@ function MyProfile() {
           {'*'.repeat(password.length)}
         </Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => setPasswordModalVisible(true)}
-          >
+          <TouchableOpacity onPress={() => setPasswordModalVisible(true)}>
             <Text style={styles.buttonText}>Change Password</Text>
           </TouchableOpacity>
         </View>
@@ -207,21 +225,36 @@ function MyProfile() {
 
       {/* Username Update Modal */}
       <Modal isVisible={isUsernameModalVisible} style={styles.modal}>
-        <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
           <Text paddingHorizontal={10}>Enter New Username:</Text>
-          <InputBox pHolder="New Username" icon="user" value={newUsername} set_text={(text) => setNewUsername(text)} autofocus />
+          <InputBox
+            pHolder="New Username"
+            icon="user"
+            value={newUsername}
+            set_text={(text) => setNewUsername(text)}
+            autofocus
+          />
           {errorMessage !== '' && (
             <Text style={styles.errorText}>{errorMessage}</Text>
           )}
-          <Button style="button" label="Update Username" onPress={handleUpdateUsername} />
+          <Button
+            style="button"
+            label="Update Username"
+            onPress={handleUpdateUsername}
+          />
           <Button style="button" label="Cancel" onPress={clearUsernameInput} />
-
         </Animated.View>
       </Modal>
 
       {/* Password Update Modal */}
       <Modal isVisible={isPasswordModalVisible} style={styles.modal}>
-        <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
           <Text paddingHorizontal={10}>Enter New Password:</Text>
           <InputBox
             pHolder="New Password"
@@ -248,9 +281,12 @@ function MyProfile() {
             <Text style={styles.errorText}>{errorMessage}</Text>
           )}
 
-          <Button style="button" label="Update Password" onPress={handleUpdatePassword} />
+          <Button
+            style="button"
+            label="Update Password"
+            onPress={handleUpdatePassword}
+          />
           <Button style="button" label="Cancel" onPress={clearPasswordInput} />
-
         </Animated.View>
       </Modal>
       <TouchableOpacity
@@ -260,7 +296,6 @@ function MyProfile() {
         <Text>My Listings</Text>
       </TouchableOpacity>
     </SafeAreaView>
-
   );
 }
 
@@ -313,7 +348,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#81F4D8',
     marginTop: 50,
   },
-
 });
 
 export default MyProfile;
