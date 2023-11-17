@@ -1,21 +1,22 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome } from "react-native-vector-icons";
+/* eslint-disable react/no-unstable-nested-components */
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome } from 'react-native-vector-icons';
 
 // screens to be used in the Main page's tabs
-import MyProfile from "../screens/MyProfile"; //The profile details
-import Main from "../screens/Main"; //The main page
+import MyProfile from '../screens/MyProfile'; // The profile details
+import Main from '../screens/Main'; // The main page
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+function BottomTabNavigator() {
   return (
     <Tab.Navigator>
       {/* Creates the tabs to be used on the page */}
-      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({color, size, focused}) => (<FontAwesome name="home" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />), }} />
-      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({ color, size, focused }) => (<FontAwesome name="user" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />), }} />
+      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({ size, focused }) => (<FontAwesome name="home" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />) }} />
+      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({ size, focused }) => (<FontAwesome name="user" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />) }} />
     </Tab.Navigator>
   );
-};
+}
 
 export default BottomTabNavigator;
