@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 import { useNavigation } from '@react-navigation/native';
+import { CheckBox } from 'react-native-web';
 
 
 const InfoView = ({ name, value, icon }) => {
@@ -31,6 +32,27 @@ const EditListing = ({ route }) => {
     const { bookInfo } = route.params;
     const navigation = useNavigation();
     console.log(bookInfo);
+
+    const [buttonPressed, setButtonPressed] = useState(false);
+
+  const handleStatusToggle = () => {
+    setButtonPressed(!buttonPressed);
+    // Add any other logic or state changes you need when the button is pressed.
+  };
+
+  const getButtonStyles = () => {
+    const styles = buttonPressed
+    ? { borderColor: '#de0d45', color: '#de0d45' }
+    : { borderColor: '#81F4D8', color: '#81F4D8' };
+  
+    console.log('Button Styles:', styles);
+  
+    return styles;
+  };
+  
+  const getButtonLabel = () => {
+    return buttonPressed ? 'Status: Sold' : 'Status: For Sale';
+  };
 
     // Define updatedBookInfo state
     const [updatedBookInfo, setUpdatedBookInfo] = useState({
@@ -83,6 +105,15 @@ const EditListing = ({ route }) => {
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
+            
+            <View style={{ ...styles.topButton, ...getButtonStyles() }}>
+            <Button
+        style={{ ...getButtonStyles() }}
+        label={getButtonLabel()}
+        onPress={handleStatusToggle}
+         // Pass the textColor prop
+      />
+            </View>
                 
             <Text style={{ fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15 }}>Book name:</Text>
             <InputBox name="Book" icon="book" value={updatedBookInfo.title} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, title: text })} />
@@ -176,6 +207,15 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    topButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 30,
+        borderWidth: 1,
+        padding: 5,
+        borderRadius: 15,
+        marginBottom: 8,
     }
 });
 
