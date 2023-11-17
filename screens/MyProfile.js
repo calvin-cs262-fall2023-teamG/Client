@@ -227,8 +227,8 @@ const MyProfile = () => {
             {/* Email Update Modal */}
             <Modal isVisible={isEmailModalVisible}>
                 <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
-                    <Text paddingHorizontal={10}>Enter New Email:</Text>
-                    <InputBox pHolder="New Email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)} autofocus={true} />
+                    <Text paddingHorizontal={10}>Enter New Calvin email:</Text>
+                    <InputBox pHolder="New Calvin email" icon="envelope" value={newEmail} set_text={text => setNewEmail(text)} autofocus={true} />
                     {errorMessage !== '' && (
                         <Text style={styles.errorText}>{errorMessage}</Text>
                     )}
