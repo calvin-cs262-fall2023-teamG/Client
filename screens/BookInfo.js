@@ -9,23 +9,24 @@ import InputBox from '../components/InputBox';
 
 
 const InfoView = ({ name, value, icon }) => {
-    const infoWidth = Dimensions.get('window').width * 0.92 ;
+    const infoWidth = Dimensions.get('window').width * 0.92;
+
     return (
         <View style={[styles.info, { width: infoWidth }]}>
             <Icon name={icon} size={20} color="#888181" style={styles.icon} />
             <View>
-                <View style={{flexDirection:"row", alignItems: 'center', justifyContent: 'space-between'}}>
+                <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
                     <View >
                         <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
                         <Text style={{ color: "#888181" }}>{value}</Text>
                     </View>
-                    {name == "Seller Email" && (
-                        <TouchableOpacity onPress={sendEmail}>
+                    {/* {name == "Seller Email" && (
+                        <TouchableOpacity onPress={handleContactSeller}>
                             <View style={styles.buttonContact}>
                                 <Text>Contact Seller</Text>
                             </View>
                         </TouchableOpacity>
-                    )}
+                    )} */}
                 </View>
 
             </View>
@@ -45,45 +46,63 @@ const BookInfo = ({ route }) => {
     const handleContactSeller = () => {
         // Pass the necessary data to the sendEmail function
         sendEmail(bookInfo.title, bookInfo.emailaddress, bookInfo.name);
-      };
-
     
+    };
+    const infoWidth = Dimensions.get('window').width * 0.92;
+
     return (
         <SafeAreaView style={styles.container}>
             {/* <View style={styles.button}>
                    
             </View> */}
             <ScrollView
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}>
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}>
                 <InfoView name="Book" icon="book" value={bookInfo.title} />
                 <InfoView name="ISBN" icon="hashtag" value={bookInfo.isbn} />
                 <InfoView name="Author" icon="user" value={bookInfo.author} />
                 <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
                 <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
                 <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
-                <InfoView name="Seller Email" icon="envelope" value={bookInfo.emailaddress} />
-                
-                <View style = {styles.imageContainer}>
-                    <View style = {styles.imageSection}>
+                <View style={[styles.info, { width: infoWidth }]}>
+                    <Icon name={"envelope"} size={20} color="#888181" style={styles.icon} />
+                    <View>
+                        <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
+                            <View >
+                                <Text style={{ fontWeight: 'bold', color: "#888181" }}>Seller Email</Text>
+                                <Text style={{ color: "#888181" }}>{bookInfo.emailaddress}</Text>
+                            </View>
+                           
+                                <TouchableOpacity onPress={handleContactSeller}>
+                                    <View style={styles.buttonContact}>
+                                        <Text>Contact Seller</Text>
+                                    </View>
+                                </TouchableOpacity>
+                        
+                        </View>
+
+                    </View>
+                </View>
+
+                <View style={styles.imageContainer}>
+                    <View style={styles.imageSection}>
                         <Text style={styles.text}>Front Picture</Text>
-                        <Image source = {PlaceholderImageFront} style = {styles.image} />   
+                        <Image source={PlaceholderImageFront} style={styles.image} />
                     </View>
 
-                    <View style = {styles.imageSection}>
+                    <View style={styles.imageSection}>
                         <Text style={styles.text}>Back Picture</Text>
-                        <Image source = {PlaceholderImageBack} style = {styles.image} />   
+                        <Image source={PlaceholderImageBack} style={styles.image} />
                     </View>
                 </View>
 
                 <View style={styles.button}>
-                    <Button style="small button" label="Contact Seller" onPress={handleContactSeller}/>
-                    
+
                     {/*This is a bug to fix a bug DON'T TOUCH */}
                     <Modal>
                         <Animated.View style={styles.modalContainer} entering={ZoomIn.duration(500)}>
                             <Text paddingHorizontal={10}>Enter New Email:</Text>
-                            <InputBox pHolder="New Email" icon="envelope" /> 
+                            <InputBox pHolder="New Email" icon="envelope" />
                         </Animated.View>
                     </Modal>
                 </View>
@@ -146,15 +165,15 @@ const styles = StyleSheet.create({
     buttonContact: {
         marginTop: 10,
         paddingVertical: 10,
-        marginHorizontal:80,
-        marginBottom:10,
+        marginHorizontal: 70,
+        marginBottom: 10,
         height: 40,
-        width:130,
+        width: 130,
         backgroundColor: '#81F4D8',
         borderRadius: 15,
         alignItems: "center", //center horizontally
         justifyContent: "center" //center vertically
-      },
+    },
 
 });
 

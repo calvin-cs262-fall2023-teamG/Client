@@ -31,11 +31,7 @@ const ContactInfo = ({ navigation, route }) => {
         } catch (error) {
           console.error(error);
         }
-      };
-      fetchUserData();
-    } catch (error) {
-      console.error(error);
-    }
+
   }, []);
 
   const handleAddBook = async () => {
