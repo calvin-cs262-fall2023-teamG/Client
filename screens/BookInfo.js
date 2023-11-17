@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 import sendEmail from '../components/sendEmail';
@@ -11,8 +11,20 @@ const InfoView = ({ name, value, icon }) => {
         <View style={[styles.info, { width: infoWidth }]}>
             <Icon name={icon} size={20} color="#888181" style={styles.icon} />
             <View>
-                <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
-                <Text style={{ color: "#888181" }}>{value}</Text>
+                <View style={{flexDirection:"row", alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View >
+                        <Text style={{ fontWeight: 'bold', color: "#888181" }}>{name}</Text>
+                        <Text style={{ color: "#888181" }}>{value}</Text>
+                    </View>
+                    {name == "Seller Email" && (
+                        <TouchableOpacity onPress={sendEmail}>
+                            <View style={styles.buttonContact}>
+                                <Text>Contact Seller</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                </View>
+
             </View>
         </View>
     );
@@ -30,6 +42,9 @@ const BookInfo = ({ route }) => {
     const title = bookInfo.title;
     return (
         <SafeAreaView style={styles.container}>
+            {/* <View style={styles.button}>
+                   
+            </View> */}
             <ScrollView
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}>
@@ -38,8 +53,8 @@ const BookInfo = ({ route }) => {
                 <InfoView name="Author" icon="user" value={bookInfo.author} />
                 <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
                 <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
-                <InfoView name="Seller Name" icon="user" value={bookInfo.sellername} />
-                <InfoView name="Seller Email" icon="envelope" value={bookInfo.selleremail} />
+                <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
+                <InfoView name="Seller Email" icon="envelope" value={bookInfo.emailaddress} />
                 
                 <View style = {styles.imageContainer}>
                     <View style = {styles.imageSection}>
@@ -53,9 +68,7 @@ const BookInfo = ({ route }) => {
                     </View>
                 </View>
 
-                <View style={styles.button}>
-                    <Button style="small button" label="Contact Seller" onPress={sendEmail}/>
-                </View>
+                
 
             </ScrollView>
         </SafeAreaView>
@@ -112,7 +125,19 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    buttonContact: {
+        marginTop: 10,
+        paddingVertical: 10,
+        marginHorizontal:80,
+        marginBottom:10,
+        height: 40,
+        width:130,
+        backgroundColor: '#81F4D8',
+        borderRadius: 15,
+        alignItems: "center", //center horizontally
+        justifyContent: "center" //center vertically
+      },
 });
 
 export default BookInfo;

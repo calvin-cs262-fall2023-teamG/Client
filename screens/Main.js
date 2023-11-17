@@ -12,8 +12,6 @@ import AppEntranceAnimation from '../components/AppEntranceAnimation';
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
-
-
 const Main = () => {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -26,7 +24,6 @@ const Main = () => {
     const [books, setBooks] = useState([]); //sets the book list to the hardcoded json. It will be turned instead into the library from the database.
     const [isLoading, setLoading] = useState(true); //make a useState boolean which is falsified when library fetch is completed or failed
     const [refreshing, setRefreshing] = useState(false);
-
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -50,7 +47,6 @@ const Main = () => {
             setLoading(false);
         }
     }
-    
     
     //The following useEffect initializes the book list
     useEffect(() => {
@@ -115,22 +111,21 @@ const Main = () => {
                                 />
                             }>
                     {
-                        isLoading ? (<ActivityIndicator />) : (
-                        books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
-                            return (
-                                <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
-                                    <View style={styles.item}>
-
-                                        <View style={styles.square}></View>
-                                        <Book bookInfo={item} />
-                                        <View style={styles.details}>
-                                            <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
-                                        </View>
+                    isLoading ? (<ActivityIndicator />) : (
+                    books.map((item, index) => { //Creates a viewable entity for storing books, which can be scrolled through
+                        return (
+                            <TouchableOpacity key={index} onPress={() => navigation.navigate("Book Info", { bookInfo: item })}/* Allows for books to navigate to their book info page when clicked */>
+                                <View style={styles.item}>
+                                    <View style={styles.square}></View>
+                                    <Book bookInfo={item} />
+                                    <View style={styles.details}>
+                                        <Text style={{ textDecorationLine: "underline", color: '#888181' }}>More details</Text>
                                     </View>
-                                </TouchableOpacity>
-                                )
-                            })
-                        )}
+                                </View>
+                            </TouchableOpacity>
+                            )
+                        })
+                    )}
                         
                 </ScrollView>
                 
