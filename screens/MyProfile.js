@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 15,
         backgroundColor: '#81F4D8',
-        marginTop: 334
+        marginTop: 50
     },
 
 });
