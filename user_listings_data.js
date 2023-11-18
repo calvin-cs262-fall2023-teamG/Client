@@ -30,4 +30,3 @@ const userListingsData = [
 ];
 
 export default userListingsData;
-

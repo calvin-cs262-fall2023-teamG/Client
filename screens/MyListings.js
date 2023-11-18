@@ -13,11 +13,7 @@ const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 function MyListings() {
-  const [fullname, setFullname] = useState(''); // strings
-  const [email, setEmail] = useState('');
   const [userID, setUserID] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
   // sets the book list to the hardcoded json.
   // It will be turned instead into the library from the database.
@@ -26,20 +22,13 @@ function MyListings() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log('UF 1 RAN');
     // Retrieve user data from AsyncStorage
     const retrieveUserData = async () => {
       try {
         const userData = await AsyncStorage.getItem('userData');
         if (userData) {
-          const {
-            ID, fullname, email, username, password,
-          } = JSON.parse(userData);
-          setUserID(ID);
-          setFullname(fullname);
-          setEmail(email);
-          setUsername(username);
-          setPassword(password);
+          const response = JSON.parse(userData);
+          setUserID(response.ID);
         }
       } catch (error) {
         console.error(error);
@@ -50,7 +39,6 @@ function MyListings() {
   }, []);
 
   useEffect(() => {
-    console.log('UF 2 RAN');
     console.log('Current userID:', userID); // Log the current userID
 
     const fetchBooks = async () => {
@@ -60,8 +48,6 @@ function MyListings() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-
-        console.log('Books from server:', data); // Log the books from the server
 
         // Filter books based on userID
         const userBooks = data.filter((book) => book.userid === userID);
@@ -83,9 +69,9 @@ function MyListings() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        {books.map((item, index) => (
+        {books.map((item) => (
           <TouchableOpacity
-            key={index}
+            key={item.id}
             onPress={() => navigation.navigate('Edit Listing', { bookInfo: item })}
           >
             <View style={styles.item}>

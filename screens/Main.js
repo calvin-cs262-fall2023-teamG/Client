@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable camelcase */
-import {StyleSheet, Text, View, SafeAreaView,
-  TouchableOpacity, Dimensions, RefreshControl, FlatList }
+import {
+  StyleSheet, Text, View, SafeAreaView,
+  TouchableOpacity, Dimensions, RefreshControl, FlatList,
+}
   from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
@@ -19,14 +21,16 @@ function Main() {
   const isFocused = useIsFocused();
   // Collects a hardcoded json full of book objects
   const [booksData, setBooksData] = useState(books_data);
-  const [bookInfo, setBookInfo] = useState(booksData); // formats this correctly
+  // const [bookInfo, setBookInfo] = useState(booksData); // formats this correctly
 
   // List of books generation
+  // eslint-disable-next-line no-unused-vars
   const [book, setBook] = useState();
   // sets the book list to the hardcoded json.
   // It will be turned instead into the library from the database.
   const [books, setBooks] = useState([]);
   // make a useState boolean which is falsified when library fetch is completed or failed
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -72,8 +76,8 @@ function Main() {
       // setBooks(booksData);
       fetchLibrary(); // this should only be uncommented when the database is functional
     } else {
-      const filteredBooks = booksData.filter((book) => {
-        const book_name = book.title.toLowerCase();
+      const filteredBooks = booksData.filter((filterbook) => {
+        const book_name = filterbook.title.toLowerCase();
         return book_name.includes(searchTerm.toLowerCase());
       });
 
@@ -97,7 +101,7 @@ function Main() {
 
       <FlatList
         data={books}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate('Book Info', { bookInfo: item })}>
             <View style={styles.item}>
               <View style={styles.square} />
