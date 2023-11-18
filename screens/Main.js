@@ -1,17 +1,14 @@
-import {
-  StyleSheet, Text, View, SafeAreaView, TouchableOpacity,
-  ScrollView, TextInput, Dimensions, ActivityIndicator, RefreshControl, FlatList,
-} from 'react-native';
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable camelcase */
+import {StyleSheet, Text, View, SafeAreaView,
+  TouchableOpacity, Dimensions, RefreshControl, FlatList }
+  from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import Animated, {
-  SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut,
-} from 'react-native-reanimated';
-import Button from '../components/Button';
+import Animated, { FadeInDown, FadeIn, FadeInUp } from 'react-native-reanimated';
 import Book from '../components/Book';
 import books_data from '../books_data';
 import InputBox from '../components/InputBox';
-import AppEntranceAnimation from '../components/AppEntranceAnimation';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
@@ -20,14 +17,17 @@ const boxWidth = screenWidth * 0.90; // 90% of the screen width
 function Main() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
-  const [booksData, setBooksData] = useState(books_data); // Collects a hardcoded json full of book objects
+  // Collects a hardcoded json full of book objects
+  const [booksData, setBooksData] = useState(books_data);
   const [bookInfo, setBookInfo] = useState(booksData); // formats this correctly
 
   // List of books generation
   const [book, setBook] = useState();
-  const [books, setBooks] = useState([]); // sets the book list to the hardcoded json. It will be turned instead into the library from the database.
-  const [isLoading, setLoading] = useState(true); // make a useState boolean which is falsified when library fetch is completed or failed
+  // sets the book list to the hardcoded json.
+  // It will be turned instead into the library from the database.
+  const [books, setBooks] = useState([]);
+  // make a useState boolean which is falsified when library fetch is completed or failed
+  const [isLoading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -36,7 +36,8 @@ function Main() {
     setRefreshing(false);
   };
 
-  // Method to fetch the library of books from the database. Should be executed when page is navigated to.
+  // Method to fetch the library of books from the database.
+  // Should be executed when page is navigated to.
   const fetchLibrary = async () => {
     setLoading(true);
     try {
@@ -65,12 +66,6 @@ function Main() {
     }
   }, [isFocused]);
 
-  // Method to add a created book to a list
-  function handleAddBook() {
-    setBooks([...books, book]);
-    setBook(null);
-  }
-
   // Alters the "books" list to only show books whose title matches with what is in the search bar
   const handleSearch = (searchTerm) => {
     if (searchTerm === '') {
@@ -84,14 +79,6 @@ function Main() {
 
       setBooks(filteredBooks);
     }
-  };
-
-  // A function to perform multiple functions upon pressing the "Add Book" button
-  // Currently not in use (dynamic book adding is not yet implemented)
-  const AddBookPage = () => {
-    navigation.navigate('Add Book');
-    // const currentBookObject = await book;
-    handleAddBook();
   };
 
   return (
@@ -148,8 +135,6 @@ function Main() {
             <Text style={styles.sellBook} entering={FadeIn.duration(500)}>Sell a Book</Text>
           </TouchableOpacity>
         </Animated.View>
-
-        {/* <Button label = "Sell a Book" onPress = {() => navigation.navigate("Add Book")} style = "button"/> */}
       </View>
 
     </SafeAreaView>

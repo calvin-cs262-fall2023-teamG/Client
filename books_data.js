@@ -1,4 +1,4 @@
-const books_data = [
+const booksData = [
   {
     title: 'The theory of Software engineering in 262 days 262 pages',
     isbn: '123456789',
@@ -91,4 +91,4 @@ const books_data = [
   },
 ];
 
-export default books_data;
+export default booksData;

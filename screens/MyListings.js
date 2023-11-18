@@ -1,23 +1,16 @@
+/* eslint-disable camelcase */
 import {
-  StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, Dimensions, ActivityIndicator,
+  StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import Animated, {
-  SlideInDown, SlideInUp, SlideInLeft, FadeInLeft, FadeInRight, SlideInRight, BounceInRight, BounceInLeft, FadeInDown, BounceInDown, StretchInX, StretchInY, FadeIn, BounceInUp, ZoomIn, FadeInUp, ZoomOut,
-} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Button from '../components/Button';
 import Book from '../components/Book';
-import user_listings_data from '../user_listings_data';
-import InputBox from '../components/InputBox';
-import AppEntranceAnimation from '../components/AppEntranceAnimation';
+// eslint-disable-next-line camelcase
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
-
-const listing_data = user_listings_data; // Collects a hardcoded json full of book objects
 
 function MyListings() {
   const [fullname, setFullname] = useState(''); // strings
@@ -26,7 +19,9 @@ function MyListings() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [books, setBooks] = useState([]); // sets the book list to the hardcoded json. It will be turned instead into the library from the database.
+  // sets the book list to the hardcoded json.
+  // It will be turned instead into the library from the database.
+  const [books, setBooks] = useState([]);
 
   const navigation = useNavigation();
 

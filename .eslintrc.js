@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['universe/native', 'airbnb'],
+  extends:'airbnb',
   env: {
     browser: true,
     es2021: true,
