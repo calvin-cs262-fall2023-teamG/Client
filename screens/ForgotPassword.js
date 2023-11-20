@@ -1,53 +1,46 @@
-import React, { useState } from "react";
+/* eslint-disable react/style-prop-object */
+import React, { useState } from 'react';
 import {
-  Text,
-  View,
-  ScrollView,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert, Dimensions
-} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome"; // You can choose any icon set you prefer
+  Text, View, ScrollView, StyleSheet, Alert, Dimensions,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
 // get height dimensions of the screen
 const { height: screenHeight } = Dimensions.get('window');
 
-const ForgotPassword = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState(''); //save strings for email and error message to be presented
-  
-  const checkEmailDomain = async () => {
-     const domainToCheck = 'calvin.edu';
-     const emailParts = email.split('@');
+function ForgotPassword({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // save strings for email and error message to be presented
 
-     if (emailParts.length === 2 && emailParts[1] === domainToCheck){ //make sure there are two parts of the email field and one is a calvin domain
-        showAlert() 
-        navigation.navigate('Login');
-     } else{
-        setErrorMessage("Please enter your Calvin email");
-     }
-  }
+  const checkEmailDomain = async () => {
+    const domainToCheck = 'calvin.edu';
+    const emailParts = email.split('@');
+
+    if (emailParts.length === 2 && emailParts[1] === domainToCheck) {
+      showAlert();
+      navigation.navigate('Login');
+    } else {
+      setErrorMessage('Please enter your Calvin email');
+    }
+  };
 
   const checkAndSend = () => {
     checkEmailDomain();
 
-    // Sending the email requires 
-    //sendEmail();
-    //Presently nonfunctional and to be implemented later
-    }
-  
+    // Sending the email requires
+    // sendEmail();
+    // Presently nonfunctional and to be implemented later
+  };
 
   const showAlert = () => {
     Alert.alert(
-      "Resetting Password",
-      "Please check your email for further instructions.",
-      [{text: "OK"}]
-    )
-  }
-
+      'Resetting Password',
+      'Please check your email for further instructions.',
+      [{ text: 'OK' }],
+    );
+  };
 
   return (
     <View style={styles.mainbg}>
@@ -73,45 +66,45 @@ const ForgotPassword = ({ navigation }) => {
           <Text style={styles.PageTitle}> Reset Password</Text>
           <Text style={styles.Info}> Please enter your email address </Text>
 
-          {/* sets the state of email address*/}
-     
-          <InputBox pHolder="Email" icon="envelope" value={email} set_text={text => setEmail(text)} />
+          {/* sets the state of email address */}
 
-          <Button style = "button" label="Reset Password" onPress={checkAndSend}/>
+          <InputBox pHolder="Email" icon="envelope" value={email} set_text={(text) => setEmail(text)} />
+
+          <Button style="button" label="Reset Password" onPress={checkAndSend} />
 
           {errorMessage !== '' && (
-                        <Text style={styles.errorText}>{errorMessage}</Text>
-                    )}
+          <Text style={styles.errorText}>{errorMessage}</Text>
+          )}
 
           <View style={styles.footer}>
             <Text>Know your Password?</Text>
             <View>
-              <Button style = "text" label="Sign In" onPress={() => navigation.navigate("Login")}/>
+              <Button style="text" label="Sign In" onPress={() => navigation.navigate('Login')} />
             </View>
           </View>
         </View>
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   mainbg: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
   },
   shapesContainer: {
-    position: "absolute",
-    flexWrap: "wrap",
+    position: 'absolute',
+    flexWrap: 'wrap',
   },
   shape1: {
-    position: "absolute",
+    position: 'absolute',
     top: -80,
     left: -80,
     width: 190,
     height: 190,
     borderRadius: 90,
-    backgroundColor: "#8CFFD6",
+    backgroundColor: '#8CFFD6',
     opacity: 0.5,
   },
   shape2: {
@@ -121,7 +114,7 @@ const styles = StyleSheet.create({
     left: 40,
     borderRadius: 100,
     backgroundColor: '#A1FFB6',
-    transform: [{ translateY: screenHeight - 30}],
+    transform: [{ translateY: screenHeight - 30 }],
   },
   shape3: {
     position: 'absolute',
@@ -130,65 +123,65 @@ const styles = StyleSheet.create({
     left: -90,
     borderRadius: 100,
     backgroundColor: '#8CFFD6',
-    transform: [{ translateY: screenHeight - 120}],
+    transform: [{ translateY: screenHeight - 120 }],
   },
   shape4: {
-    position: "absolute",
+    position: 'absolute',
     width: 260,
     height: 150,
     left: 210,
     borderRadius: 70,
-    backgroundColor: "#8CFFD6",
-    transform: [{ rotate: "50deg" }],
+    backgroundColor: '#8CFFD6',
+    transform: [{ rotate: '50deg' }],
   },
   shape5: {
-    position: "absolute",
+    position: 'absolute',
     width: 280,
     height: 150,
     left: 280,
     borderRadius: 40,
-    backgroundColor: "#B4F7C3",
-    transform: [{ rotate: "70deg" }],
+    backgroundColor: '#B4F7C3',
+    transform: [{ rotate: '70deg' }],
   },
 
   headerContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingTop: 40,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
-  //Text = "logo + ChapterCache"
+  // Text = "logo + ChapterCache"
   loginheader: {
     marginLeft: 5,
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 
-  //Text = 'Reset Password'
+  // Text = 'Reset Password'
   PageTitle: {
     marginTop: 190,
     marginBottom: 12,
     fontSize: 40,
-    fontWeight: "400",
+    fontWeight: '400',
   },
   Info: {
     marginBottom: 40,
     fontSize: 15,
-    color: "#888181",
+    color: '#888181',
     paddingLeft: 10,
   },
 
-  //Error Message
+  // Error Message
   errorText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 15,
-    color: "#ff0000",
+    color: '#ff0000',
     marginTop: 10,
   },
 
-  //View for the two styles below: Infofooter, CreateAccount
+  // View for the two styles below: Infofooter, CreateAccount
   footer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
   },
 
