@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any 
 
 export default function InputBox({
   pHolder, icon, value, set_text, secureTextEntry, togglePasswordVisibility,
-  showPassword, autofocus,
+  showPassword, autofocus, autoCapitalize = 'none',
 }) {
   const isPassword = secureTextEntry !== undefined && secureTextEntry;
   return (
@@ -19,7 +19,7 @@ export default function InputBox({
         style={styles.InputTextBox}
         placeholder={pHolder}
         value={value}
-        autoCapitalize="none"
+        autoCapitalize={autoCapitalize}
         onChangeText={set_text}
         autoFocus={autofocus}
         secureTextEntry={isPassword} // Conditionally apply secureTextEntry

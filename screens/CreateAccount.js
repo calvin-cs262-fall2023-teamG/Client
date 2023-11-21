@@ -37,7 +37,12 @@ function CreateAccount({ navigation }) {
     const emailParts = email.split('@');
 
     // Error messages...
-    if (username.length <= 3) { // If the email is too short
+    const usernameresponse = await fetch('https://chaptercachecalvincs262.azurewebsites.net/users');
+    const userData = await usernameresponse.json();
+    const curuser = userData.find((mycuruser) => mycuruser.username === username);
+    if (curuser) {
+      setUserErrorMessage('Username already taken. Please try again.');
+    } else if (username.length <= 3) { // If the email is too short
       setUserErrorMessage('Your username must be at least 4 characters');
     } else if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
       //          ^ If the email is too short or isn't identified as a Calvin email:
@@ -114,26 +119,25 @@ function CreateAccount({ navigation }) {
           <Text style={styles.PageTitle}> Create an Account</Text>
           <Text style={styles.Info}> Please fill these credentials</Text>
           {/* sets the state of fullname, email, username, and password */}
-          <InputBox pHolder="Full Name" icon="user" value={fullname} set_text={(text) => setFullname(text)} autofocus />
-          <InputBox pHolder="Username" icon="user" value={username} set_text={(text) => setUsername(text)} autofocus={false} />
+          <InputBox pHolder="Full Name" icon="user" value={fullname} autoCapitalize="words" set_text={(text) => setFullname(text)} />
+          <InputBox pHolder="Username (4 characters or longer)" icon="user" value={username} set_text={(text) => setUsername(text)} />
 
           {usererrorMessage !== '' && (
-          <Text style={styles.errorText}>{usererrorMessage}</Text>
+            <Text style={styles.errorText}>{usererrorMessage}</Text>
           )}
 
-          <InputBox pHolder="Calvin email" icon="envelope" value={email} set_text={(text) => setEmail(text)} autofocus={false} />
+          <InputBox pHolder="Calvin email" icon="envelope" value={email} set_text={(text) => setEmail(text)} />
           {emailerrorMessage !== '' && (
-          <Text style={styles.errorText}>{emailerrorMessage}</Text>
+            <Text style={styles.errorText}>{emailerrorMessage}</Text>
           )}
           <InputBox
-            pHolder="Password"
+            pHolder="Password (8 characters or longer)"
             icon="lock"
             value={password}
             set_text={(text) => setPassword(text)}
             secureTextEntry={!showPassword}
             togglePasswordVisibility={togglePasswordVisibility}
             showPassword={showPassword}
-            autofocus={false}
           />
           <InputBox
             pHolder="Confirm Password"
@@ -143,10 +147,9 @@ function CreateAccount({ navigation }) {
             secureTextEntry={!showConfirmPassword}
             togglePasswordVisibility={toggleConfirmPasswordVisibility}
             showPassword={showConfirmPassword}
-            autofocus={false}
           />
           {passworderrorMessage !== '' && (
-          <Text style={styles.errorText}>{passworderrorMessage}</Text>
+            <Text style={styles.errorText}>{passworderrorMessage}</Text>
           )}
 
           <Button style="button" label="Create an Account" onPress={handleCreate} />
@@ -276,7 +279,7 @@ const styles = StyleSheet.create({
 
   // Text = 'Already have an Account?'
   Infofooter: {
-    fontSize: 15,
+    fontSize: 17,
     color: '#000000',
   },
 });

@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // center vertically
   },
   text: {
-    fontSize: 15,
-    color: '#00FFC1',
+    fontSize: 17,
+    color: '#3beec2',
   },
   smallButton: {
     width: 190,

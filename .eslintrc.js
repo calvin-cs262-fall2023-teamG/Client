@@ -29,5 +29,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-console': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/jsx-one-expression-per-line': 'off',
   },
 };

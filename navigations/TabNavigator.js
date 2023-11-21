@@ -13,8 +13,8 @@ function BottomTabNavigator() {
   return (
     <Tab.Navigator>
       {/* Creates the tabs to be used on the page */}
-      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({ size, focused }) => (<FontAwesome name="home" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />) }} />
-      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarActiveTintColor: '#81F4D8', tabBarIcon: ({ size, focused }) => (<FontAwesome name="user" color={focused ? '#81F4D8' : '#D9FFF6'} size={size} />) }} />
+      <Tab.Screen name="Home" component={Main} options={{ headerShown: false, tabBarActiveTintColor: '#000000', tabBarIcon: ({ size, focused }) => (<FontAwesome name="home" color={focused ? '#3beec2' : '#b0f8e7'} size={size} />) }} />
+      <Tab.Screen name="My Profile" component={MyProfile} options={{ headerShown: false, tabBarActiveTintColor: '#000000', tabBarIcon: ({ size, focused }) => (<FontAwesome name="user" color={focused ? '#3beec2' : '#b0f8e7'} size={size} />) }} />
     </Tab.Navigator>
   );
 }

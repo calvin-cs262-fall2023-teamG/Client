@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
 
   // Text = 'Don't have an account'
   Infofooter: {
-    fontSize: 15,
+    fontSize: 17,
     color: '#000000',
   },
 
