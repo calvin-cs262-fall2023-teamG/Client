@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable camelcase */
 import {
@@ -88,16 +89,15 @@ function Main() {
   return (
 
     <SafeAreaView style={styles.container}>
-
-      <Animated.View style={{ marginTop: 10, width: 400 }} entering={FadeInUp.duration(500)}>
-        <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch} autofocus={false} />
-      </Animated.View>
-
-      <Animated.View style={{ alignItems: 'center', marginTop: 9, marginBottom: 5 }} entering={FadeIn.duration(500)}>
-        <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Books for Sale</Text>
+      <Animated.View style={{ alignItems: 'center', marginTop: 16 }} entering={FadeIn.duration(500)}>
+        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Books for Sale</Text>
       </Animated.View>
 
       <View style={{ borderBottomColor: 'black', borderBottomWidth: 3, width: '100%' }} />
+
+      <Animated.View style={{ width: 400, marginBottom: 2 }} entering={FadeInUp.duration(500)}>
+        <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch} autofocus={false} />
+      </Animated.View>
 
       <FlatList
         data={books}
