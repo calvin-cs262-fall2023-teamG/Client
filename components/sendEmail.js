@@ -24,10 +24,19 @@ const sendEmail = async (title, selleremail, sellername) => {
 
   let body = `Hello ${sellername}! %0A %0A My name is ${buyerName}. I am interested in buying your textbook: ${title}. %0A %0A Please let me know if the book is still available. %0A %0A Looking forward to your reply! %0A %0A Thanks!`;
 
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === 'iOS') {
     // For iOS, use a different email client
-    body = `Hello ${sellername}!%0A%0AMy name is ${buyerName}. I am interested in buying your textbook: ${title}.%0A%0APlease let me know if the book is still available.%0A%0ALooking forward to your reply!%0A%0AThanks!`;
-    Linking.openURL(`mailto:${selleremail}?subject=${subject}&body=${body}`);
+    body = `Hello ${sellername}!\nMy name is ${buyerName}. I am interested in buying your textbook: ${title}.\nPlease let me know if the book is still available.\nLooking forward to your reply!\nThanks!`;
+    Linking.openURL(`mailto:${selleremail}?subject=${subject}&body=${body}`)
+      .then(() => {
+        setTimeout(
+          () => {
+          // Go back to the Outlook to finish sending email.
+            Linking.openURL('ms-outlook://emails');
+          },
+          10,
+        );
+      });
   } else {
     // For Android, use the ms-outlook URL
     Linking.openURL(`ms-outlook://emails/new?to=${selleremail}&subject=${subject}&body=${body}`)
