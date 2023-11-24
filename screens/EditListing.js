@@ -9,10 +9,13 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 
+// get width dimensions of the screen
+const { width: screenWidth } = Dimensions.get('window');
+const boxWidth = screenWidth * 0.90; // 90% of the screen width
+
 function InfoView({ name, value, icon }) {
-  const infoWidth = Dimensions.get('window').width * 0.92;
   return (
-    <View style={[styles.info, { width: infoWidth }]}>
+    <View style={[styles.info]}>
       <Icon name={icon} size={20} color="#888181" style={styles.icon} />
       <View>
         <Text style={{ fontWeight: 'bold', color: '#888181' }}>{name}</Text>
@@ -106,7 +109,7 @@ function EditListing({ route }) {
         </View>
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold',
         }}
         >
           Book name:
@@ -114,7 +117,7 @@ function EditListing({ route }) {
         <InputBox name="Book" icon="book" value={updatedBookInfo.title} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, title: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           ISBN:
@@ -122,7 +125,7 @@ function EditListing({ route }) {
         <InputBox name="ISBN" icon="hashtag" value={updatedBookInfo.isbn} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, isbn: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           Author:
@@ -130,7 +133,7 @@ function EditListing({ route }) {
         <InputBox name="Author" icon="user" value={updatedBookInfo.author} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, author: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           Course name:
@@ -138,7 +141,7 @@ function EditListing({ route }) {
         <InputBox name="Course Name" icon="graduation-cap" value={updatedBookInfo.coursename} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, coursename: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           Price:
@@ -146,7 +149,7 @@ function EditListing({ route }) {
         <InputBox name="Price" icon="tags" value={(updatedBookInfo.price !== null ? updatedBookInfo.price.toString() : '0')} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, price: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           Seller name:
@@ -154,7 +157,7 @@ function EditListing({ route }) {
         <InputBox name="Seller Name" icon="user" value={updatedBookInfo.name} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, name: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 15,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
         }}
         >
           Seller email:
@@ -174,7 +177,7 @@ function EditListing({ route }) {
         </View>
 
         <View style={styles.button}>
-          <Button style="small button" label="Update" onPress={() => handleUpdate()} />
+          <Button style="small button" label="Save changes" onPress={() => handleUpdate()} />
         </View>
 
       </ScrollView>
@@ -194,6 +197,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     flexDirection: 'row',
+    width: boxWidth,
     alignItems: 'center',
     backgroundColor: '#D9FFF6',
     borderRadius: 15,

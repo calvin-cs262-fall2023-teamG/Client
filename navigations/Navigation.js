@@ -58,7 +58,7 @@ function Navigation() {
                 const navigation = useNavigation();
 
                 return (
-                  <TouchableOpacity onPress={() => navigation.navigate('Main')} style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ flexDirection: 'row' }}>
                     <Icon style={{ paddingHorizontal: 5, color: '#888181' }} name="book" size={20} /* Corner icon, clicking it should navigate to the main page */ />
                     <Text style={{ paddingHorizontal: 5, color: '#888181' }}>Chapter Cache</Text>
                   </TouchableOpacity>

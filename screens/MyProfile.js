@@ -185,15 +185,13 @@ function MyProfile() {
     <SafeAreaView style={styles.container}>
       <View style={styles.InfoContainer}>
         <Text>
-          Full Name:
-          {fullname}
+          Full Name: {fullname}
         </Text>
       </View>
 
       <View style={styles.InfoContainer}>
         <Text>
-          Email:
-          {email}
+          Email: {email}
         </Text>
         {/* <Button style = "text" label="Change Email"
         onPress={() => setEmailModalVisible(true)}/> */}
@@ -201,8 +199,7 @@ function MyProfile() {
 
       <View style={styles.InfoContainer}>
         <Text>
-          UserName:
-          {username}
+          UserName: {username}
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => setUsernameModalVisible(true)}>
@@ -213,8 +210,7 @@ function MyProfile() {
 
       <View style={styles.InfoContainer}>
         <Text>
-          Password:
-          {'*'.repeat(password.length)}
+          Password: {'*'.repeat(password.length)}
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => setPasswordModalVisible(true)}>
@@ -331,7 +327,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    marginBottom: 250,
+    marginBottom: 50,
   },
   errorText: {
     textAlign: 'center',

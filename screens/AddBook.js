@@ -92,10 +92,40 @@ function AddBook({ navigation, route }) {
         showsVerticalScrollIndicator={false}
       >
         <Animated.View entering={FadeInUp.duration(500)}>
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold',
+          }}
+          >
+            Book name:
+          </Text>
           <InputBox pHolder="Book Name" icon="book" value={book} set_text={(text) => setBook(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            ISBN:
+          </Text>
           <InputBox pHolder="ISBN" icon="hashtag" value={isbn} set_text={(text) => setISBN(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            Author:
+          </Text>
           <InputBox pHolder="Author" icon="user" value={author} set_text={(text) => setAuthor(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            Course name:
+          </Text>
           <InputBox pHolder="Course Name" icon="graduation-cap" value={courseName} set_text={(text) => setCourseName(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            Price:
+          </Text>
           <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
         </Animated.View>
 
