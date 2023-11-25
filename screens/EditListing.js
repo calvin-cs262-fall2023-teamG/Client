@@ -61,8 +61,6 @@ function EditListing({ route }) {
     author: bookInfo.author,
     coursename: bookInfo.coursename,
     price: bookInfo.price,
-    name: bookInfo.name,
-    emailaddress: bookInfo.emailaddress,
     userid: bookInfo.userid,
     id: bookInfo.id,
     // Add more fields as needed
