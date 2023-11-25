@@ -64,6 +64,7 @@ function EditListing({ route }) {
     name: bookInfo.name,
     emailaddress: bookInfo.emailaddress,
     userid: bookInfo.userid,
+    id: bookInfo.id,
     // Add more fields as needed
   });
 
@@ -86,7 +87,7 @@ function EditListing({ route }) {
         throw new Error('Book update failed');
       }
       // Navigate to the home page
-      navigation.navigate('Main');
+      navigation.navigate('My Listings');
       console.log('Book updated successfully');
     } catch (error) {
       console.error('Error updating book:', error);
