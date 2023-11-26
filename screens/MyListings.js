@@ -2,7 +2,7 @@
 import {
   StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Book from '../components/Book';
@@ -20,6 +20,7 @@ function MyListings() {
   const [books, setBooks] = useState([]);
 
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     // Retrieve user data from AsyncStorage
@@ -38,29 +39,35 @@ function MyListings() {
     retrieveUserData();
   }, []);
 
-  useEffect(() => {
-    console.log('Current userID:', userID); // Log the current userID
-
-    const fetchBooks = async () => {
-      try {
-        const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-
-        // Filter books based on userID
-        const userBooks = data.filter((book) => book.userid === userID);
-        console.log('User books:', userBooks); // Log the filtered books
-
-        setBooks(userBooks);
-      } catch (error) {
-        console.error('Error fetching books:', error);
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
 
+      // Filter books based on userID
+      const userBooks = data.filter((book) => book.userid === userID);
+      console.log('User books:', userBooks); // Log the filtered books
+
+      setBooks(userBooks);
+    } catch (error) {
+      console.error('Error fetching books:', error);
+    }
+  };
+
+  // The following useEffect initializes the book list
+  useEffect(() => {
     fetchBooks();
-  }, [userID]);
+  }, [userID]); // This should only happen on page init
+
+  // The useEffect to refresh the page when navigated back/focused again.
+  useEffect(() => {
+    if (isFocused) {
+      fetchBooks();
+    }
+  }, [isFocused]);
 
   return (
 

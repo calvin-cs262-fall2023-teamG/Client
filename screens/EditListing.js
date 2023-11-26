@@ -61,9 +61,8 @@ function EditListing({ route }) {
     author: bookInfo.author,
     coursename: bookInfo.coursename,
     price: bookInfo.price,
-    name: bookInfo.name,
-    emailaddress: bookInfo.emailaddress,
     userid: bookInfo.userid,
+    ID: bookInfo.id,
     // Add more fields as needed
   });
 
@@ -72,7 +71,7 @@ function EditListing({ route }) {
     console.log('Updated Book Info:', updatedBookInfo);
 
     try {
-      const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/books/update/${bookInfo.id}`, {
+      const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/books/${bookInfo.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +85,7 @@ function EditListing({ route }) {
         throw new Error('Book update failed');
       }
       // Navigate to the home page
-      navigation.navigate('Main');
+      navigation.navigate('My Listings');
       console.log('Book updated successfully');
     } catch (error) {
       console.error('Error updating book:', error);
@@ -154,7 +153,7 @@ function EditListing({ route }) {
         >
           Seller name:
         </Text>
-        <InputBox name="Seller Name" icon="user" value={updatedBookInfo.name} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, name: text })} />
+        <InputBox name="Seller Name" icon="user" value={bookInfo.name} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, name: text })} />
 
         <Text style={{
           fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
@@ -162,7 +161,7 @@ function EditListing({ route }) {
         >
           Seller email:
         </Text>
-        <InputBox name="Seller Email" icon="envelope" value={updatedBookInfo.emailaddress} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, emailaddress: text })} />
+        <InputBox name="Seller Email" icon="envelope" value={bookInfo.emailaddress} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, emailaddress: text })} />
 
         <View style={styles.imageContainer}>
           <View style={styles.imageSection}>
