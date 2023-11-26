@@ -1,13 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, ScrollView,
+  StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
@@ -33,6 +36,37 @@ function AddBook({ navigation, route }) {
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
   // const [books, setBooks] = useState([]);
+
+  const [selectedImageType, setSelectedImageType] = useState('');
+
+  const bottomSheetRef = useRef();
+
+  const showBottomSheet = (type) => {
+    setSelectedImageType(type);
+    bottomSheetRef.current.open();
+  };
+
+  const hideBottomSheet = () => {
+    bottomSheetRef.current.close();
+  };
+
+  const handleImageSelection = async (fromCamera) => {
+    hideBottomSheet();
+    if (selectedImageType === 'front') {
+      if (fromCamera) {
+        await takePhotoFront();
+      } else {
+        await chooseFromGalleryFront();
+      }
+    } else if (selectedImageType === 'back') {
+      if (fromCamera) {
+        await takePhotoBack();
+      } else {
+        await chooseFromGalleryBack();
+      }
+    }
+  };
+
   useEffect(() => {
     // Retrieve data from AsyncStorage, same function from ContactInfo
     try {
@@ -60,8 +94,19 @@ function AddBook({ navigation, route }) {
     setPassedBook(data); // price is excluded during testing due to type mismatch
   }, [book, isbn, author, courseName, price]);
 
-  // For selection of the image to use for the front of the book, it accesses your image folder
-  const pickImageAsyncFront = async () => {
+  // Function to launch the camera to take a photo
+  const takePhotoFront = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setselectedImageFront(result.assets[0].uri);
+    }
+  };
+
+  // Function to launch the image picker to select from the gallery
+  const chooseFromGalleryFront = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
@@ -70,11 +115,26 @@ function AddBook({ navigation, route }) {
       setselectedImageFront(result.assets[0].uri);
     }
   };
-  const pickImageAsyncBack = async () => { // Similar to above, but for the back of the book
+
+  // Function to launch the camera to take a photo for imageBack
+  const takePhotoBack = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setselectedImageBack(result.assets[0].uri);
+    }
+  };
+
+  // Function to launch the image picker to select from the gallery for imageBack
+  const chooseFromGalleryBack = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
+
     if (!result.canceled) {
       setselectedImageBack(result.assets[0].uri);
     }
@@ -129,10 +189,45 @@ function AddBook({ navigation, route }) {
           <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
         </Animated.View>
 
+        {/* React Native Raw Bottom Sheet */}
+        <RBSheet
+          ref={bottomSheetRef}
+          height={170}
+          duration={250}
+          closeOnDragDown
+          customStyles={{
+            container: {
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              backgroundColor: 'white',
+            },
+          }}
+        >
+          <TouchableOpacity
+            style={styles.bottomSheetOption}
+            onPress={() => handleImageSelection(true)}
+          >
+            <View style={styles.iconTextContainer}>
+              <Icon name="camera" size={24} color="black" style={styles.icon} />
+              <Text style={styles.bottomSheetOptionText}>Take a Photo</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.bottomSheetOption}
+            onPress={() => handleImageSelection(false)}
+          >
+            <View style={styles.iconTextContainer}>
+              <Icon name="image" size={24} color="black" style={styles.icon} />
+              <Text style={styles.bottomSheetOptionText}>Choose from Gallery</Text>
+            </View>
+          </TouchableOpacity>
+          {/* Add Cancel button if needed */}
+        </RBSheet>
+
         <View style={styles.imageContainer}>
 
           {/* Upload front of the book */}
-          <TouchableOpacity onPress={pickImageAsyncFront}>
+          <TouchableOpacity onPress={() => showBottomSheet('front')}>
             <Animated.View style={styles.imageSection} entering={FadeInLeft.duration(500)}>
               <View>
                 <Text style={styles.text}>Front Picture</Text>
@@ -146,7 +241,7 @@ function AddBook({ navigation, route }) {
           </TouchableOpacity>
 
           {/* Upload back of the book */}
-          <TouchableOpacity onPress={pickImageAsyncBack}>
+          <TouchableOpacity onPress={() => showBottomSheet('back')}>
             <Animated.View style={styles.imageSection} entering={FadeInRight.duration(500)}>
               <View>
                 <Text style={styles.text}>Back Picture</Text>
@@ -187,6 +282,15 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     alignItems: 'center',
+  },
+  iconTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 15,
+    marginTop: 25,
+  },
+  icon: {
+    marginRight: 10,
   },
   text: {
     fontSize: 20,
