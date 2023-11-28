@@ -57,17 +57,12 @@ function MyListings() {
     }
   };
 
-  // The following useEffect initializes the book list
-  useEffect(() => {
-    fetchBooks();
-  }, [userID]); // This should only happen on page init
-
   // The useEffect to refresh the page when navigated back/focused again.
   useEffect(() => {
     if (isFocused) {
       fetchBooks();
     }
-  }, [isFocused]);
+  }, [isFocused, userID]);
 
   return (
 

@@ -5,6 +5,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line import/no-unresolved
 import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert,
@@ -33,6 +34,7 @@ function AddBook({ navigation, route }) {
   const [isbn, setISBN] = useState('');
   const [author, setAuthor] = useState('');
   const [courseName, setCourseName] = useState('');
+  const [dollarPrice, setDollarPrice] = useState('');
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
   // const [books, setBooks] = useState([]);
@@ -65,6 +67,17 @@ function AddBook({ navigation, route }) {
         await chooseFromGalleryBack();
       }
     }
+  };
+
+  const handlePrice = (text) => {
+    if (!text.startsWith('$')) {
+      setDollarPrice(`$${text}`);
+    } else {
+      setDollarPrice(text);
+    }
+
+    const numericPart = text.replace(/\$/g, '');
+    setPrice(numericPart);
   };
 
   useEffect(() => {
@@ -186,7 +199,7 @@ function AddBook({ navigation, route }) {
           >
             Price:
           </Text>
-          <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
+          <InputBox pHolder="Price" icon="tags" value={dollarPrice} set_text={(text) => handlePrice(text)} />
         </Animated.View>
 
         {/* React Native Raw Bottom Sheet */}
