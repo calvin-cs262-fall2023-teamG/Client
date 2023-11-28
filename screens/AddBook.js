@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
@@ -13,15 +15,24 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid'; // Import uuid from react-native-uuid
 import Animated, {
   FadeInLeft, FadeInRight, FadeInDown, FadeInUp,
 } from 'react-native-reanimated';
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
+// const { BlobServiceClient } = require('@azure/storage-blob');
+// const fs = require('fs');
+
 const placeholderImageFront = require('../assets/book_icon_gray.png'); // Allow for placeholders
 const placeholderImageBack = require('../assets/book_icon_back_gray.png');
+
+// const containerName = 'image';
+// const blobService = new BlobServiceClient(
+//   'https://calvinchaptercache.blob.core.windows.net/?sp=racwdli&st=2023-11-28T01:41:02Z&se=2023-11-28T09:41:02Z&spr=https&sv=2022-11-02&sr=c&sig=KBcMcpdQia7lRa45wenJjGzoBtcMCt93Y7WaWULXjv8%3D',
+// );
 
 function AddBook({ navigation, route }) {
   const [selectedImageFront, setselectedImageFront] = useState(null);
@@ -39,6 +50,26 @@ function AddBook({ navigation, route }) {
 
   const [selectedImageType, setSelectedImageType] = useState('');
 
+  // async function handleImageUpload(imagePath) {
+  //   const imageName = 'image_m.jpg'; // Generate a unique image name
+  //   try {
+  //     const buffer = fs.readFileSync(imagePath);
+
+  //     const containerClient = blobService.getContainerClient(containerName);
+  //     const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+
+  //     const options = { blobHTTPHeaders: { blobContentType: 'image/jpg' } };
+
+  //     console.log('Uploading image blob...');
+  //     const uploadResponse = await blockBlobClient.uploadData(buffer, options);
+
+  //     console.log('Blob uploaded successfully:', uploadResponse);
+  //     return blockBlobClient.url;
+  //   } catch (error) {
+  //     console.error('Error uploading image:', error);
+  //     return null;
+  //   }
+  // }
   const bottomSheetRef = useRef();
 
   const showBottomSheet = (type) => {
@@ -87,12 +118,12 @@ function AddBook({ navigation, route }) {
 
   // Set the book to pass whenever an aspect is changed
   useEffect(() => {
-    const uniqueId = uuid.v4(); // Generate a unique ID
+    const uniqueId = uuidv4(); // Generate a unique ID
     const data = {
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price,
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, selectedImageFront,
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
-  }, [book, isbn, author, courseName, price]);
+  }, [book, isbn, author, courseName, price, selectedImageFront]);
 
   // Function to launch the camera to take a photo
   const takePhotoFront = async () => {
@@ -102,6 +133,7 @@ function AddBook({ navigation, route }) {
     });
     if (!result.canceled) {
       setselectedImageFront(result.assets[0].uri);
+      console.log(result.assets[0].uri);
     }
   };
 
@@ -110,9 +142,13 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
     if (!result.canceled) {
-      setselectedImageFront(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageFront(`data:image/jpeg;base64,${file}`);
+    } else {
+      alert('you did not select any image.');
     }
   };
 

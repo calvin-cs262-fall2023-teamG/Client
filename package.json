@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.17.0",
     "@expo/webpack-config": "^19.0.0",
     "@gorhom/bottom-sheet": "^4.5.1",
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -23,6 +24,7 @@
     "expo-camera": "^13.6.0",
     "expo-image-picker": "~14.3.2",
     "expo-status-bar": "~1.6.0",
+    "fs": "^0.0.1-security",
     "isaac": "^0.0.5",
     "prop-types": "^15.8.1",
     "qs": "^6.11.2",
@@ -35,6 +37,7 @@
     "react-native-email": "^2.1.0",
     "react-native-email-link": "^1.14.7",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-get-random-values": "^1.10.0",
     "react-native-mail": "^6.1.1",
     "react-native-modal": "^13.0.1",
     "react-native-raw-bottom-sheet": "^2.2.0",
