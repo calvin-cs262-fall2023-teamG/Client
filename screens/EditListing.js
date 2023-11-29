@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image,
 } from 'react-native';
@@ -37,8 +37,13 @@ function EditListing({ route }) {
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const handleStatusToggle = () => {
+    const currentDate = new Date().toISOString(); // Get the current date in ISO format
+    const newDateSold = buttonPressed ? null : currentDate;
+
+    setUpdatedBookInfo({ ...updatedBookInfo, date_sold: newDateSold });
     setButtonPressed(!buttonPressed);
-    // Add any other logic or state changes you need when the button is pressed.
+
+    console.log(updatedBookInfo.date_sold);
   };
 
   const getButtonStyles = () => {
@@ -46,12 +51,10 @@ function EditListing({ route }) {
       ? { borderColor: '#de0d45', color: '#de0d45' }
       : { borderColor: '#81F4D8', color: '#81F4D8' };
 
-    console.log('Button Styles:', styles);
-
     return styles;
   };
 
-  const getButtonLabel = () => (buttonPressed ? 'Status: Sold' : 'Status: For Sale');
+  const getButtonLabel = () => (buttonPressed ? 'Status: Sold (Click to change)' : 'Status: For Sale (Click to change)');
 
   // Define updatedBookInfo state
   const [updatedBookInfo, setUpdatedBookInfo] = useState({
@@ -63,8 +66,15 @@ function EditListing({ route }) {
     price: bookInfo.price,
     userid: bookInfo.userid,
     ID: bookInfo.id,
+    date_sold: bookInfo.date_sold,
+    condition: bookInfo.condition,
     // Add more fields as needed
   });
+  // Use useEffect to set buttonPressed when the component mounts
+  useEffect(() => {
+    // Set the buttonPressed state based on the date_sold field
+    setButtonPressed(updatedBookInfo.date_sold !== null);
+  }, [updatedBookInfo.date_sold]);
 
   const handleUpdate = async () => {
     console.log(`Attempting to update book with ID: ${bookInfo.id}`);
