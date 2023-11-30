@@ -133,7 +133,6 @@ function AddBook({ navigation, route }) {
     });
     if (!result.canceled) {
       setselectedImageFront(result.assets[0].uri);
-      console.log(result.assets[0].uri);
     }
   };
 
@@ -177,7 +176,7 @@ function AddBook({ navigation, route }) {
   };
 
   const advancePage = () => {
-    console.log(`Passing: ${JSON.stringify(passedBook)}`);
+    //console.log(`Passing: ${JSON.stringify(passedBook)}`);
     navigation.navigate('Contact Info', { receivedBook: passedBook });
   };
 
