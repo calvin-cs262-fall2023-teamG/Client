@@ -14,9 +14,12 @@ const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 function MyListings() {
   const [userID, setUserID] = useState('');
+  const [forSaleBooks, setForSaleBooks] = useState([]);
+  const [soldBooks, setSoldBooks] = useState([]);
 
   // sets the book list to the hardcoded json.
   // It will be turned instead into the library from the database.
+  // eslint-disable-next-line no-unused-vars
   const [books, setBooks] = useState([]);
 
   const navigation = useNavigation();
@@ -51,7 +54,13 @@ function MyListings() {
       const userBooks = data.filter((book) => book.userid === userID);
       console.log('User books:', userBooks); // Log the filtered books
 
+      // Separate books into for sale and sold
+      const forSale = userBooks.filter((book) => book.date_sold === null);
+      const sold = userBooks.filter((book) => book.date_sold !== null);
+
       setBooks(userBooks);
+      setForSaleBooks(forSale);
+      setSoldBooks(sold);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -59,7 +68,8 @@ function MyListings() {
 
   // The useEffect to refresh the page when navigated back/focused again.
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && userID !== '') {
+      console.log('Fetching books...');
       fetchBooks();
     }
   }, [isFocused, userID]);
@@ -71,20 +81,65 @@ function MyListings() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        {books.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            onPress={() => navigation.navigate('Edit Listing', { bookInfo: item })}
-          >
-            <View style={styles.item}>
-              <View style={styles.square} />
-              <Book bookInfo={item} />
-              <View style={styles.details}>
-                <Text style={{ textDecorationLine: 'underline', color: '#888181' }}>More details</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+        <View>
+          <Text style={{
+            fontSize: 18, fontWeight: 'bold', marginBottom: 0, marginTop: 20,
+          }}
+          >For Sale
+          </Text>
+          {forSaleBooks.length > 0 ? (
+            forSaleBooks.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate('Edit Listing', { bookInfo: item })}
+              >
+                <View style={styles.item}>
+                  <View style={styles.square} />
+                  <Book bookInfo={item} />
+                  <View style={styles.details}>
+                    <Text style={{ textDecorationLine: 'underline', color: '#888181' }}>More details</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={{
+              textAlign: 'center', marginTop: 10, color: '#888181', marginBottom: 35, textDecorationLine: 'underline',
+            }}
+            >No books for sale
+            </Text>
+          )}
+        </View>
+
+        <View>
+          <Text style={{
+            fontSize: 18, fontWeight: 'bold', marginBottom: 0, marginTop: 20,
+          }}
+          >Sold
+          </Text>
+          {soldBooks.length > 0 ? (
+            soldBooks.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate('Edit Listing', { bookInfo: item })}
+              >
+                <View style={styles.soldItem}>
+                  <View style={styles.square} />
+                  <Book bookInfo={item} />
+                  <View style={styles.details}>
+                    <Text style={{ textDecorationLine: 'underline', color: '#888181' }}>More details</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={{
+              textAlign: 'center', marginTop: 10, color: '#888181', marginBottom: 35, textDecorationLine: 'underline',
+            }}
+            >No books sold
+            </Text>
+          )}
+        </View>
       </ScrollView>
     </View>
   );
@@ -99,6 +154,16 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#D9FFF6',
+    padding: 10,
+    borderRadius: 15,
+    flexDirection: 'row',
+    marginTop: 10,
+    width: boxWidth,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  soldItem: {
+    backgroundColor: '#e8f3f0',
     padding: 10,
     borderRadius: 15,
     flexDirection: 'row',
