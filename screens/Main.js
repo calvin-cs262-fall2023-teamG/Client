@@ -48,8 +48,13 @@ function Main() {
     try {
       const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books');
       const json = await response.json(); // collect a json from the response
-      setBooksData(json); // overwrite default values in booksData
-      setBooks(json); // put the json into our book arrangement
+
+      // Filter books based on date_sold
+      // eslint-disable-next-line no-shadow
+      const filteredBooks = json.filter((book) => book.date_sold === null);
+
+      setBooksData(filteredBooks); // overwrite default values in booksData
+      setBooks(filteredBooks); // put the filtered books into our book arrangement
     } catch (error) {
       console.error(error);
       console.log('Using default list values'); // Log that you are using hardcoded values

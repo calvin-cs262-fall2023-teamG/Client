@@ -157,22 +157,6 @@ function EditListing({ route }) {
         </Text>
         <InputBox name="Price" icon="tags" value={(updatedBookInfo.price !== null ? updatedBookInfo.price.toString() : '0')} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, price: text })} />
 
-        <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
-        }}
-        >
-          Seller name:
-        </Text>
-        <InputBox name="Seller Name" icon="user" value={bookInfo.name} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, name: text })} />
-
-        <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
-        }}
-        >
-          Seller email:
-        </Text>
-        <InputBox name="Seller Email" icon="envelope" value={bookInfo.emailaddress} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, emailaddress: text })} />
-
         <View style={styles.imageContainer}>
           <View style={styles.imageSection}>
             <Text style={styles.text}>Front Picture</Text>
