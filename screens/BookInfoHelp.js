@@ -7,19 +7,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import Background from '../components/Background';
 
-// get height dimensions of the screen
-
 function BookInfoHelp() {
   return (
     <Animated.View entering={FadeInUp.duration(500)}>
       <Background />
-      <TextFunc textTitle="Book name: " textBody="The title of this book." />
-      <TextFunc textTitle="ISBN #: " textBody={'ISBN is a book\'s unique id number usually found on the back cover of a book above the bar code on the copyright page.'} />
-      <TextFunc textTitle="Author: " textBody="The writer of this book." />
-      <TextFunc textTitle="Course name: " textBody="The name of the course that this book was used for." />
-      <TextFunc textTitle="Price: " textBody="The price that this book is being sold for." />
-      <TextFunc textTitle="Seller name: " textBody="The name of the person selling this book." />
-      <TextFunc textTitle="Seller Email: " textBody="The email of the person selling this book. Use this to contact the person." />
+      <HeaderFunc textTitle="This page provides explanation about each field in the book info page." />
+      <TextFunc textTitle="Book name: " textBody="The title of the book." />
+      <TextFunc textTitle="ISBN #: " textBody="The book's 13-digit unique id number found above the bar code." />
+      <TextFunc textTitle="Author: " textBody="The writer of the book." />
+      <TextFunc textTitle="Course name: " textBody="The name of the course that utilizes the book." />
+      <TextFunc textTitle="Price: " textBody="The price of the book." />
+      <TextFunc textTitle="Condition: " textBody="The condition of the book." />
+      <TextFunc textTitle="Seller name: " textBody="The name of the person selling the book." />
+      <TextFunc textTitle="Seller Email: " textBody="The email of the person selling the book." />
     </Animated.View>
   );
 }
@@ -33,12 +33,27 @@ function TextFunc({ textTitle, textBody }) {
   );
 }
 
+function HeaderFunc({ textTitle }) {
+  return (
+    <Text style={styles.header}>
+      <Text style={{ fontWeight: 'bold' }}>{textTitle}</Text>
+    </Text>
+  );
+}
+
 const styles = StyleSheet.create({
   text: {
     marginLeft: 15,
     marginRight: 15,
     marginTop: 30,
-    fontSize: 17,
+    fontSize: 19,
+  },
+  header: {
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 40,
+    marginBottom: 30,
+    fontSize: 19,
   },
 });
 
