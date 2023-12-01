@@ -5,6 +5,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line import/no-unresolved
+import { Picker } from '@react-native-picker/picker';
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert,
@@ -33,8 +36,10 @@ function AddBook({ navigation, route }) {
   const [isbn, setISBN] = useState('');
   const [author, setAuthor] = useState('');
   const [courseName, setCourseName] = useState('');
+  const [dollarPrice, setDollarPrice] = useState('');
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
+  const [condition, setBookCondition] = useState('Brand New');
   // const [books, setBooks] = useState([]);
 
   const [selectedImageType, setSelectedImageType] = useState('');
@@ -67,6 +72,17 @@ function AddBook({ navigation, route }) {
     }
   };
 
+  const handlePrice = (text) => {
+    if (!text.startsWith('$')) {
+      setDollarPrice(`$${text}`);
+    } else {
+      setDollarPrice(text);
+    }
+
+    const numericPart = text.replace(/\$/g, '');
+    setPrice(numericPart);
+  };
+
   useEffect(() => {
     // Retrieve data from AsyncStorage, same function from ContactInfo
     try {
@@ -89,10 +105,11 @@ function AddBook({ navigation, route }) {
   useEffect(() => {
     const uniqueId = uuid.v4(); // Generate a unique ID
     const data = {
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price,
+      // eslint-disable-next-line max-len
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition,
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
-  }, [book, isbn, author, courseName, price]);
+  }, [book, isbn, author, courseName, price, condition]);
 
   // Function to launch the camera to take a photo
   const takePhotoFront = async () => {
@@ -186,7 +203,27 @@ function AddBook({ navigation, route }) {
           >
             Price:
           </Text>
-          <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
+          <InputBox pHolder="Price" icon="tags" value={dollarPrice} set_text={(text) => handlePrice(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            Book Condition:
+          </Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={condition}
+              onValueChange={(itemValue) => setBookCondition(itemValue)}
+              style={{
+                height: 20, width: '100%', marginBottom: 200,
+              }}
+            >
+              <Picker.Item label="Brand New" value="Brand New" />
+              <Picker.Item label="Like New" value="Like New" />
+              <Picker.Item label="Good" value="Good" />
+              <Picker.Item label="Acceptable" value="Acceptable" />
+            </Picker>
+          </View>
         </Animated.View>
 
         {/* React Native Raw Bottom Sheet */}
@@ -362,6 +399,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: '#B4F7C3',
     transform: [{ rotate: '70deg' }],
+  },
+  pickerContainer: {
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: 5,
   },
 });
 
