@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable object-property-newline */
 /* eslint-disable no-shadow */
@@ -153,9 +154,9 @@ function LoginScreen({ navigation }) {
             />
           </Animated.View>
 
-          <Animated.View style={{ alignItems: 'flex-end', marginTop: 5 }} entering={FadeIn.delay(1500)}>
+          {/* <Animated.View style={{ alignItems: 'flex-end', marginTop: 5 }} entering={FadeIn.delay(1500)}>
             <Button style="text" label="Forgot Password?" onPress={handleResetPassword} />
-          </Animated.View>
+          </Animated.View> */}
 
           {errorMessage !== '' && ( // Handling display of the error message properly
           <Text style={styles.errorText}>{errorMessage}</Text>
