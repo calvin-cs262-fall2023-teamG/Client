@@ -261,7 +261,10 @@ function MyProfile() {
 
       {/* Confirmation Modal for Username Update */}
       <Modal isVisible={isUsernameConfirmationVisible} style={styles.modal}>
-        <Animated.View style={styles.modalContainer}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
           <Text>Are you sure you want to update your username?</Text>
           <Button
             style="button"
@@ -327,7 +330,10 @@ function MyProfile() {
 
       {/* Confirmation Modal for Password Update */}
       <Modal isVisible={isPasswordConfirmationVisible} style={styles.modal}>
-        <Animated.View style={styles.modalContainer}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
           <Text>Are you sure you want to update your Password?</Text>
           <Button
             style="button"

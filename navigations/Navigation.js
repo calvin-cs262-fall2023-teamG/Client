@@ -3,7 +3,6 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import Icon from 'react-native-vector-icons/FontAwesome'; // You can choose any icon set you prefer
 import BottomTabNavigator from './TabNavigator';
 import LoginScreen from '../screens/LoginScreen'; // This line down imports screens the app will use

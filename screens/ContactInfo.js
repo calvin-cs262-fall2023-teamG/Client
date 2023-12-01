@@ -5,7 +5,8 @@ import {
   StyleSheet, View, Text, ScrollView, Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp, ZoomIn } from 'react-native-reanimated';
+import Modal from 'react-native-modal';
 import InputBox from '../components/InputBox';
 import Button from '../components/Button';
 
@@ -16,7 +17,7 @@ function ContactInfo({ navigation, route }) {
   const [fullname, setFullname] = useState(''); // State to store the user's name
   const [email, setEmail] = useState(''); // State to store the user's email
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const { receivedBook } = route.params; // this one is passed in to go to database
 
   useEffect(() => {
@@ -43,25 +44,30 @@ function ContactInfo({ navigation, route }) {
     if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
       setErrorMessage('Please enter your Calvin email');
     } else {
-      console.log(`Sending to database: ${JSON.stringify(receivedBook)}`); // Ensure valid data is going to data base
-      try {
-        const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(receivedBook),
-        });
+      setShowConfirmationModal(true);
+    }
+  };
 
-        if (!response.ok) {
-          const text = await response.text();
-          throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        navigation.navigate('Main');
+  const confirmAddBook = async () => {
+    console.log(`Sending to database: ${JSON.stringify(receivedBook)}`); // Ensure valid data is going to data base
+    try {
+      const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(receivedBook),
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
       }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setShowConfirmationModal(false);
+      navigation.navigate('Main');
     }
   };
 
@@ -92,6 +98,26 @@ function ContactInfo({ navigation, route }) {
           <Button style="button" label="Add Book" onPress={handleAddBook} />
         </Animated.View>
       </ScrollView>
+
+      {/* Confirmation Modal for adding book */}
+      <Modal isVisible={showConfirmationModal} style={styles.modal}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
+          <Text>Are you sure you want to add your book?</Text>
+          <Button
+            style="button"
+            label="Confirm"
+            onPress={confirmAddBook}
+          />
+          <Button
+            style="button"
+            label="Cancel"
+            onPress={() => setShowConfirmationModal(false)}
+          />
+        </Animated.View>
+      </Modal>
     </View>
   );
 }
@@ -171,6 +197,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     marginTop: 20,
 
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 50,
   },
   // Error Message
   errorText: {
