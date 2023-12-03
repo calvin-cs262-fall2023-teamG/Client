@@ -13,18 +13,6 @@ import InputBox from '../components/InputBox';
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
-function InfoView({ name, value, icon }) {
-  return (
-    <View style={[styles.info]}>
-      <Icon name={icon} size={20} color="#888181" style={styles.icon} />
-      <View>
-        <Text style={{ fontWeight: 'bold', color: '#888181' }}>{name}</Text>
-        <Text style={{ color: '#888181' }}>{value}</Text>
-      </View>
-    </View>
-  );
-}
-
 // The placeholder images need to be fetched from the database later.
 const PlaceholderImageFront = require('./images/image3.jpg');
 const PlaceholderImageBack = require('./images/image2.jpg');
@@ -32,7 +20,6 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 function EditListing({ route }) {
   const { bookInfo } = route.params;
   const navigation = useNavigation();
-  console.log(bookInfo);
 
   const [buttonPressed, setButtonPressed] = useState(false);
 
@@ -42,8 +29,6 @@ function EditListing({ route }) {
 
     setUpdatedBookInfo({ ...updatedBookInfo, date_sold: newDateSold });
     setButtonPressed(!buttonPressed);
-
-    console.log(updatedBookInfo.date_sold);
   };
 
   const getButtonStyles = () => {
@@ -68,6 +53,9 @@ function EditListing({ route }) {
     ID: bookInfo.id,
     date_sold: bookInfo.date_sold,
     condition: bookInfo.condition,
+    front_picture: bookInfo.front_picture,
+    back_picture: bookInfo.back_picture,
+
     // Add more fields as needed
   });
   // Use useEffect to set buttonPressed when the component mounts
@@ -78,7 +66,6 @@ function EditListing({ route }) {
 
   const handleUpdate = async () => {
     console.log(`Attempting to update book with ID: ${bookInfo.id}`);
-    console.log('Updated Book Info:', updatedBookInfo);
 
     try {
       const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/books/${bookInfo.id}`, {
@@ -101,6 +88,8 @@ function EditListing({ route }) {
       console.error('Error updating book:', error);
     }
   };
+  const frontImageSource = bookInfo.front_picture ? bookInfo.front_picture : PlaceholderImageFront;
+  const backImageSource = bookInfo.back_picture ? bookInfo.back_picture : PlaceholderImageBack;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -160,12 +149,12 @@ function EditListing({ route }) {
         <View style={styles.imageContainer}>
           <View style={styles.imageSection}>
             <Text style={styles.text}>Front Picture</Text>
-            <Image source={PlaceholderImageFront} style={styles.image} />
+            <Image source={{ uri: frontImageSource }} style={styles.image} />
           </View>
 
           <View style={styles.imageSection}>
             <Text style={styles.text}>Front Picture</Text>
-            <Image source={PlaceholderImageBack} style={styles.image} />
+            <Image source={{ uri: backImageSource }} style={styles.image} />
           </View>
         </View>
 

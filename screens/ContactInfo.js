@@ -61,7 +61,8 @@ function ContactInfo({ navigation, route }) {
         console.error(error);
       } finally {
         navigation.navigate('Main');
-      setShowConfirmationModal(true);
+        setShowConfirmationModal(true);
+      }
     }
   };
 
@@ -126,7 +127,7 @@ function ContactInfo({ navigation, route }) {
           <Button
             style="button"
             label="Confirm"
-            onPress={confirmAddBook}
+            onPress={handleAddBook}
           />
           <Button
             style="button"
