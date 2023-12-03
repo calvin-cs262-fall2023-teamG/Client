@@ -52,7 +52,6 @@ function ContactInfo({ navigation, route }) {
           },
           body: JSON.stringify(await receivedBook),
         });
-        console.log(await receivedBook);
         if (!response.ok) {
           const text = await response.text();
           throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);

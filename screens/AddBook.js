@@ -26,16 +26,8 @@ import Animated, {
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
-// const { BlobServiceClient } = require('@azure/storage-blob');
-// const fs = require('fs');
-
 const placeholderImageFront = require('../assets/book_icon_gray.png'); // Allow for placeholders
 const placeholderImageBack = require('../assets/book_icon_back_gray.png');
-
-// const containerName = 'image';
-// const blobService = new BlobServiceClient(
-//   'https://calvinchaptercache.blob.core.windows.net/?sp=racwdli&st=2023-11-28T01:41:02Z&se=2023-11-28T09:41:02Z&spr=https&sv=2022-11-02&sr=c&sig=KBcMcpdQia7lRa45wenJjGzoBtcMCt93Y7WaWULXjv8%3D',
-// );
 
 function AddBook({ navigation, route }) {
   const [selectedImageFront, setselectedImageFront] = useState(null);
@@ -177,7 +169,6 @@ function AddBook({ navigation, route }) {
   };
 
   const advancePage = async () => {
-    console.log(`Passing: ${JSON.stringify(passedBook)}`);
     navigation.navigate('Contact Info', { receivedBook: passedBook });
   };
 
@@ -234,7 +225,7 @@ function AddBook({ navigation, route }) {
               selectedValue={condition}
               onValueChange={(itemValue) => setBookCondition(itemValue)}
               style={{
-                height: 20, width: '100%', marginBottom: 200,
+                height: 35, width: '100%', marginBottom: 20,
               }}
             >
               <Picker.Item label="Brand New" value="Brand New" />
@@ -422,7 +413,7 @@ const styles = StyleSheet.create({
   pickerContainer: {
     borderColor: '#000',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 20,
     overflow: 'hidden',
     marginTop: 5,
   },
