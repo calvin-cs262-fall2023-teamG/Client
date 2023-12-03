@@ -274,7 +274,10 @@ function MyProfile() {
           <Button
             style="button"
             label="Cancel"
-            onPress={() => setUsernameConfirmationVisible(false)}
+            onPress={() => {
+              setUsernameConfirmationVisible(false);
+              clearUsernameInput();
+            }}
           />
         </Animated.View>
       </Modal>
@@ -343,7 +346,10 @@ function MyProfile() {
           <Button
             style="button"
             label="Cancel"
-            onPress={() => setPasswordConfirmationVisible(false)}
+            onPress={() => {
+              setPasswordConfirmationVisible(false);
+              clearPasswordInput();
+            }}
           />
         </Animated.View>
       </Modal>

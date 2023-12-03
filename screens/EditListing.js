@@ -153,7 +153,7 @@ function EditListing({ route }) {
           </View>
 
           <View style={styles.imageSection}>
-            <Text style={styles.text}>Front Picture</Text>
+            <Text style={styles.text}>Back Picture</Text>
             <Image source={{ uri: backImageSource }} style={styles.image} />
           </View>
         </View>
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
 
   imageSection: {
     alignItems: 'center',
+    marginRight: 20,
   },
 
   image: {
