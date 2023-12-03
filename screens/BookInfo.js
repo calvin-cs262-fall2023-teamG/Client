@@ -21,13 +21,6 @@ function InfoView({ name, value, icon }) {
             <Text style={{ fontWeight: 'bold', color: '#888181' }}>{name}</Text>
             <Text style={{ color: '#888181' }}>{value}</Text>
           </View>
-          {/* {name == "Seller Email" && (
-                        <TouchableOpacity onPress={handleContactSeller}>
-                            <View style={styles.buttonContact}>
-                                <Text>Contact Seller</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )} */}
         </View>
 
       </View>
@@ -46,12 +39,10 @@ function BookInfo({ route }) {
     sendEmail(bookInfo.title, bookInfo.emailaddress, bookInfo.name);
   };
   const infoWidth = Dimensions.get('window').width * 0.92;
-
+  const frontImageSource = bookInfo.front_picture ? bookInfo.front_picture : PlaceholderImageFront;
+  const backImageSource = bookInfo.back_picture ? bookInfo.back_picture : PlaceholderImageBack;
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.button}>
-
-            </View> */}
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -85,12 +76,12 @@ function BookInfo({ route }) {
         <View style={styles.imageContainer}>
           <View style={styles.imageSection}>
             <Text style={styles.text}>Front Picture</Text>
-            <Image source={PlaceholderImageFront} style={styles.image} />
+            <Image source={{ uri: frontImageSource }} style={styles.image} />
           </View>
 
           <View style={styles.imageSection}>
             <Text style={styles.text}>Back Picture</Text>
-            <Image source={PlaceholderImageBack} style={styles.image} />
+            <Image source={{ uri: backImageSource }} style={styles.image} />
           </View>
         </View>
 

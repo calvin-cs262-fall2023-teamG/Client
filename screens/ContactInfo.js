@@ -44,6 +44,23 @@ function ContactInfo({ navigation, route }) {
     if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
       setErrorMessage('Please enter your Calvin email');
     } else {
+      try {
+        const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(await receivedBook),
+        });
+        console.log(await receivedBook);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        navigation.navigate('Main');
       setShowConfirmationModal(true);
     }
   };

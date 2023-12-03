@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
@@ -16,15 +18,24 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid'; // Import uuid from react-native-uuid
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid'; // Import uuid from react-native-uuid
 import Animated, {
   FadeInLeft, FadeInRight, FadeInDown, FadeInUp,
 } from 'react-native-reanimated';
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
+// const { BlobServiceClient } = require('@azure/storage-blob');
+// const fs = require('fs');
+
 const placeholderImageFront = require('../assets/book_icon_gray.png'); // Allow for placeholders
 const placeholderImageBack = require('../assets/book_icon_back_gray.png');
+
+// const containerName = 'image';
+// const blobService = new BlobServiceClient(
+//   'https://calvinchaptercache.blob.core.windows.net/?sp=racwdli&st=2023-11-28T01:41:02Z&se=2023-11-28T09:41:02Z&spr=https&sv=2022-11-02&sr=c&sig=KBcMcpdQia7lRa45wenJjGzoBtcMCt93Y7WaWULXjv8%3D',
+// );
 
 function AddBook({ navigation, route }) {
   const [selectedImageFront, setselectedImageFront] = useState(null);
@@ -40,8 +51,6 @@ function AddBook({ navigation, route }) {
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
   const [condition, setBookCondition] = useState('Brand New');
-  // const [books, setBooks] = useState([]);
-
   const [selectedImageType, setSelectedImageType] = useState('');
 
   const bottomSheetRef = useRef();
@@ -103,22 +112,24 @@ function AddBook({ navigation, route }) {
 
   // Set the book to pass whenever an aspect is changed
   useEffect(() => {
-    const uniqueId = uuid.v4(); // Generate a unique ID
+    const uniqueId = uuidv4(); // Generate a unique ID
     const data = {
       // eslint-disable-next-line max-len
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition,
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition, front_picture: selectedImageFront, back_picture: selectedImageBack
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
-  }, [book, isbn, author, courseName, price, condition]);
+  }, [book, isbn, author, courseName, price, condition, selectedImageFront, selectedImageBack]);
 
   // Function to launch the camera to take a photo
   const takePhotoFront = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
     if (!result.canceled) {
-      setselectedImageFront(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageFront(`data:image/jpeg;base64,${file}`);
     }
   };
 
@@ -127,9 +138,13 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
     if (!result.canceled) {
-      setselectedImageFront(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageFront(`data:image/jpeg;base64,${file}`);
+    } else {
+      alert('you did not select any image.');
     }
   };
 
@@ -138,10 +153,12 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      setselectedImageBack(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageBack(`data:image/jpeg;base64,${file}`);
     }
   };
 
@@ -150,14 +167,16 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      setselectedImageBack(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageBack(`data:image/jpeg;base64,${file}`);
     }
   };
 
-  const advancePage = () => {
+  const advancePage = async () => {
     console.log(`Passing: ${JSON.stringify(passedBook)}`);
     navigation.navigate('Contact Info', { receivedBook: passedBook });
   };
