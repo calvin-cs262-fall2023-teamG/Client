@@ -38,6 +38,8 @@ function MyProfile() {
   const [confirmpassword, setconfirmPassword] = useState(''); // helpers and corroborators
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isUsernameConfirmationVisible, setUsernameConfirmationVisible] = useState(false);
+  const [isPasswordConfirmationVisible, setPasswordConfirmationVisible] = useState(false);
 
   const navigation = useNavigation();
 
@@ -69,96 +71,102 @@ function MyProfile() {
   }, []);
 
   const handleUpdateUsername = async () => {
-    if (newUsername.length <= 3) {
-      setErrorMessage('Your username must be at least 4 characters');
-    } else {
-      try {
-        bcrypt.hash(password, saltRounds, async (err, hash) => {
-          if (err) {
-            console.error('Error hashing password:', err);
-            return;
-          }
-          const data = {
-            ID: userID,
-            emailAddress: email,
-            name: fullname,
-            username: newUsername,
-            passwordHash: hash,
-          };
-          const response = await fetch(
-            `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
-            {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
+    try {
+      bcrypt.hash(password, saltRounds, async (err, hash) => {
+        if (err) {
+          console.error('Error hashing password:', err);
+          return;
+        }
+        const data = {
+          ID: userID,
+          emailAddress: email,
+          name: fullname,
+          username: newUsername,
+          passwordHash: hash,
+        };
+        const response = await fetch(
+          `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
             },
+            body: JSON.stringify(data),
+          },
+        );
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, response: ${text}`,
           );
-          if (!response.ok) {
-            const text = await response.text();
-            throw new Error(
-              `HTTP error! status: ${response.status}, response: ${text}`,
-            );
-          }
-          setUsername(newUsername);
-          setUsernameModalVisible(false);
-          setNewUsername(''); // Clear the input field.
-          setErrorMessage(''); // Clear the error message
-        });
-      } catch (error) {
-        console.error(error);
-        setErrorMessage('Error creating new Username. Please try again.');
-      }
+        }
+        setUsername(newUsername);
+        setUsernameModalVisible(false);
+        setNewUsername(''); // Clear the input field.
+        setErrorMessage(''); // Clear the error message
+      });
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error creating new Username. Please try again.');
     }
+    setUsernameConfirmationVisible(true);
+  };
+
+  const confirmUsernameUpdate = async () => {
+    // Proceed with updating the username
+    await handleUpdateUsername();
+    setUsernameModalVisible(false);
+    setUsernameConfirmationVisible(false);
   };
 
   const handleUpdatePassword = async () => {
-    if (newPassword.length <= 7) {
-      setErrorMessage('Your password must be at least 8 characters');
-    } else if (newPassword !== confirmpassword) {
-      setErrorMessage('Passwords do not match!');
-    } else {
-      try {
-        bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
-          if (err) {
-            console.error('Error hashing password:', err);
-            return;
-          }
-          const data = {
-            ID: userID,
-            emailAddress: email,
-            name: fullname,
-            username,
-            passwordHash: hash,
-          };
-          const response = await fetch(
-            `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
-            {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
+    try {
+      bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
+        if (err) {
+          console.error('Error hashing password:', err);
+          return;
+        }
+        const data = {
+          ID: userID,
+          emailAddress: email,
+          name: fullname,
+          username,
+          passwordHash: hash,
+        };
+        const response = await fetch(
+          `https://chaptercachecalvincs262.azurewebsites.net/users/${userID}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
             },
+            body: JSON.stringify(data),
+          },
+        );
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(
+            `HTTP error! status: ${response.status}, response: ${text}`,
           );
-          if (!response.ok) {
-            const text = await response.text();
-            throw new Error(
-              `HTTP error! status: ${response.status}, response: ${text}`,
-            );
-          }
-          setPassword(newPassword);
-          setPasswordModalVisible(false);
-          setNewPassword(''); // Clear the input field.
-          setconfirmPassword(''); // Clear the input field.
-          setErrorMessage(''); // Clear the error message
-        });
-      } catch (error) {
-        console.error(error);
-        setErrorMessage('Error creating new password. Please try again.');
-      }
+        }
+        setPassword(newPassword);
+        setPasswordModalVisible(false);
+        setNewPassword(''); // Clear the input field.
+        setconfirmPassword(''); // Clear the input field.
+        setErrorMessage(''); // Clear the error message
+      });
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Error creating new password. Please try again.');
     }
+    setPasswordConfirmationVisible(true);
+  };
+
+  const confirmPasswordUpdate = async () => {
+    // Proceed with updating the Password
+    await handleUpdatePassword();
+    setPasswordModalVisible(false);
+    setPasswordConfirmationVisible(false);
   };
 
   const clearUsernameInput = () => {
@@ -203,7 +211,7 @@ function MyProfile() {
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => setUsernameModalVisible(true)}>
-            <Text style={styles.buttonText}>Change UserName</Text>
+            <Text style={styles.buttonText}>Change Username</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -239,9 +247,35 @@ function MyProfile() {
           <Button
             style="button"
             label="Update Username"
-            onPress={handleUpdateUsername}
+            onPress={() => {
+              if (newUsername.length <= 3) {
+                setErrorMessage('Your username must be at least 4 characters');
+              } else {
+                setUsernameConfirmationVisible(true); // Open confirmation modal
+              }
+            }}
           />
           <Button style="button" label="Cancel" onPress={clearUsernameInput} />
+        </Animated.View>
+      </Modal>
+
+      {/* Confirmation Modal for Username Update */}
+      <Modal isVisible={isUsernameConfirmationVisible} style={styles.modal}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
+          <Text>Are you sure you want to update your username?</Text>
+          <Button
+            style="button"
+            label="Confirm"
+            onPress={confirmUsernameUpdate}
+          />
+          <Button
+            style="button"
+            label="Cancel"
+            onPress={() => setUsernameConfirmationVisible(false)}
+          />
         </Animated.View>
       </Modal>
 
@@ -280,11 +314,40 @@ function MyProfile() {
           <Button
             style="button"
             label="Update Password"
-            onPress={handleUpdatePassword}
+            onPress={() => {
+              if (newPassword.length <= 7) {
+                setErrorMessage('Your password must be at least 8 characters');
+              } else if (newPassword !== confirmpassword) {
+                setErrorMessage('Passwords do not match!');
+              } else {
+                setPasswordConfirmationVisible(true); // Open confirmation modal
+              }
+            }}
           />
           <Button style="button" label="Cancel" onPress={clearPasswordInput} />
         </Animated.View>
       </Modal>
+
+      {/* Confirmation Modal for Password Update */}
+      <Modal isVisible={isPasswordConfirmationVisible} style={styles.modal}>
+        <Animated.View
+          style={styles.modalContainer}
+          entering={ZoomIn.duration(500)}
+        >
+          <Text>Are you sure you want to update your Password?</Text>
+          <Button
+            style="button"
+            label="Confirm"
+            onPress={confirmPasswordUpdate}
+          />
+          <Button
+            style="button"
+            label="Cancel"
+            onPress={() => setPasswordConfirmationVisible(false)}
+          />
+        </Animated.View>
+      </Modal>
+
       <TouchableOpacity
         onPress={() => navigation.navigate('My Listings')}
         style={styles.roundButton}

@@ -7,6 +7,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line import/no-unresolved
+import { Picker } from '@react-native-picker/picker';
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert,
@@ -44,33 +47,12 @@ function AddBook({ navigation, route }) {
   const [isbn, setISBN] = useState('');
   const [author, setAuthor] = useState('');
   const [courseName, setCourseName] = useState('');
+  const [dollarPrice, setDollarPrice] = useState('');
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
-  const [condition, setCondition] = useState();
-  // const [books, setBooks] = useState([]);
-
+  const [condition, setBookCondition] = useState('Brand New');
   const [selectedImageType, setSelectedImageType] = useState('');
 
-  // async function handleImageUpload(imagePath) {
-  //   const imageName = 'image_m.jpg'; // Generate a unique image name
-  //   try {
-  //     const buffer = fs.readFileSync(imagePath);
-
-  //     const containerClient = blobService.getContainerClient(containerName);
-  //     const blockBlobClient = containerClient.getBlockBlobClient(imageName);
-
-  //     const options = { blobHTTPHeaders: { blobContentType: 'image/jpg' } };
-
-  //     console.log('Uploading image blob...');
-  //     const uploadResponse = await blockBlobClient.uploadData(buffer, options);
-
-  //     console.log('Blob uploaded successfully:', uploadResponse);
-  //     return blockBlobClient.url;
-  //   } catch (error) {
-  //     console.error('Error uploading image:', error);
-  //     return null;
-  //   }
-  // }
   const bottomSheetRef = useRef();
 
   const showBottomSheet = (type) => {
@@ -99,6 +81,17 @@ function AddBook({ navigation, route }) {
     }
   };
 
+  const handlePrice = (text) => {
+    if (!text.startsWith('$')) {
+      setDollarPrice(`$${text}`);
+    } else {
+      setDollarPrice(text);
+    }
+
+    const numericPart = text.replace(/\$/g, '');
+    setPrice(numericPart);
+  };
+
   useEffect(() => {
     // Retrieve data from AsyncStorage, same function from ContactInfo
     try {
@@ -121,7 +114,8 @@ function AddBook({ navigation, route }) {
   useEffect(() => {
     const uniqueId = uuidv4(); // Generate a unique ID
     const data = {
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition: 'new', front_picture: selectedImageFront, back_picture: selectedImageBack
+      // eslint-disable-next-line max-len
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition, front_picture: selectedImageFront, back_picture: selectedImageBack
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
   }, [book, isbn, author, courseName, price, condition, selectedImageFront, selectedImageBack]);
@@ -228,7 +222,27 @@ function AddBook({ navigation, route }) {
           >
             Price:
           </Text>
-          <InputBox pHolder="Price" icon="tags" value={price} set_text={(text) => setPrice(text)} />
+          <InputBox pHolder="Price" icon="tags" value={dollarPrice} set_text={(text) => handlePrice(text)} />
+          <Text style={{
+            fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          }}
+          >
+            Book Condition:
+          </Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={condition}
+              onValueChange={(itemValue) => setBookCondition(itemValue)}
+              style={{
+                height: 20, width: '100%', marginBottom: 200,
+              }}
+            >
+              <Picker.Item label="Brand New" value="Brand New" />
+              <Picker.Item label="Like New" value="Like New" />
+              <Picker.Item label="Good" value="Good" />
+              <Picker.Item label="Acceptable" value="Acceptable" />
+            </Picker>
+          </View>
         </Animated.View>
 
         {/* React Native Raw Bottom Sheet */}
@@ -404,6 +418,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: '#B4F7C3',
     transform: [{ rotate: '70deg' }],
+  },
+  pickerContainer: {
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: 5,
   },
 });
 
