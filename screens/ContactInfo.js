@@ -50,9 +50,9 @@ function ContactInfo({ navigation, route }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(receivedBook),
+          body: JSON.stringify(await receivedBook),
         });
-
+        console.log(await receivedBook);
         if (!response.ok) {
           const text = await response.text();
           throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);

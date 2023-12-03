@@ -46,6 +46,7 @@ function AddBook({ navigation, route }) {
   const [courseName, setCourseName] = useState('');
   const [price, setPrice] = useState('');
   const [id, setID] = useState();
+  const [condition, setCondition] = useState();
   // const [books, setBooks] = useState([]);
 
   const [selectedImageType, setSelectedImageType] = useState('');
@@ -120,19 +121,21 @@ function AddBook({ navigation, route }) {
   useEffect(() => {
     const uniqueId = uuidv4(); // Generate a unique ID
     const data = {
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, selectedImageFront,
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition: 'new', front_picture: selectedImageFront, back_picture: selectedImageBack
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
-  }, [book, isbn, author, courseName, price, selectedImageFront]);
+  }, [book, isbn, author, courseName, price, condition, selectedImageFront, selectedImageBack]);
 
   // Function to launch the camera to take a photo
   const takePhotoFront = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
     if (!result.canceled) {
-      setselectedImageFront(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageFront(`data:image/jpeg;base64,${file}`);
     }
   };
 
@@ -156,10 +159,12 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      setselectedImageBack(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageBack(`data:image/jpeg;base64,${file}`);
     }
   };
 
@@ -168,15 +173,17 @@ function AddBook({ navigation, route }) {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      setselectedImageBack(result.assets[0].uri);
+      const file = result.assets[0].base64;
+      setselectedImageBack(`data:image/jpeg;base64,${file}`);
     }
   };
 
-  const advancePage = () => {
-    //console.log(`Passing: ${JSON.stringify(passedBook)}`);
+  const advancePage = async () => {
+    console.log(`Passing: ${JSON.stringify(passedBook)}`);
     navigation.navigate('Contact Info', { receivedBook: passedBook });
   };
 
