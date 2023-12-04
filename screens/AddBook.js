@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid'; // Import uuid from react-native-uuid
 import Animated, {
   FadeInLeft, FadeInRight, FadeInDown, FadeInUp,
 } from 'react-native-reanimated';
+import ModalDropdown from 'react-native-modal-dropdown';
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
@@ -107,7 +108,7 @@ function AddBook({ navigation, route }) {
     const uniqueId = uuidv4(); // Generate a unique ID
     const data = {
       // eslint-disable-next-line max-len
-      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition, front_picture: selectedImageFront, back_picture: selectedImageBack
+      ID: uniqueId, title: book, author, isbn, coursename: courseName, userID: id, price, condition, front_picture: selectedImageFront, back_picture: selectedImageBack,
     };
     setPassedBook(data); // price is excluded during testing due to type mismatch
   }, [book, isbn, author, courseName, price, condition, selectedImageFront, selectedImageBack]);
@@ -220,19 +221,19 @@ function AddBook({ navigation, route }) {
           >
             Book Condition:
           </Text>
+
           <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={condition}
-              onValueChange={(itemValue) => setBookCondition(itemValue)}
-              style={{
-                height: 35, width: '100%', marginBottom: 20,
+            <ModalDropdown
+              options={['Brand New', 'Like New', 'Good', 'Acceptable']}
+              style={{ marginTop: 11 }}
+              defaultValue="Brand New"
+              onSelect={(index, value) => setBookCondition(value)}
+              textStyle={{ fontSize: 16, marginLeft: 10 }}
+              dropdownStyle={{
+                width: '84%', borderRadius: 15, marginTop: 0,
               }}
-            >
-              <Picker.Item label="Brand New" value="Brand New" />
-              <Picker.Item label="Like New" value="Like New" />
-              <Picker.Item label="Good" value="Good" />
-              <Picker.Item label="Acceptable" value="Acceptable" />
-            </Picker>
+              dropdownTextStyle={{ fontSize: 16 }}
+            />
           </View>
         </Animated.View>
 
@@ -411,11 +412,12 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '70deg' }],
   },
   pickerContainer: {
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 20,
+    borderColor: '#D9FFF6',
+    borderWidth: 3,
+    borderRadius: 15,
     overflow: 'hidden',
     marginTop: 5,
+    height: 50,
   },
 });
 

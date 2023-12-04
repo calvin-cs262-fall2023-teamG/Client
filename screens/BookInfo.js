@@ -53,6 +53,7 @@ function BookInfo({ route }) {
         <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
         <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
         <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
+        <InfoView name="Condition" icon="user" value={bookInfo.condition} />
         <View style={[styles.info, { width: infoWidth }]}>
           <Icon name="envelope" size={20} color="#888181" style={styles.icon} />
           <View>

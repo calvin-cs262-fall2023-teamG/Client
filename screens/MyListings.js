@@ -52,7 +52,6 @@ function MyListings() {
 
       // Filter books based on userID
       const userBooks = data.filter((book) => book.userid === userID);
-      //console.log('User books:', userBooks); // Log the filtered books
 
       // Separate books into for sale and sold
       const forSale = userBooks.filter((book) => book.date_sold === null);
