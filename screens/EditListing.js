@@ -2,10 +2,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image,
+  StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import ModalDropdown from 'react-native-modal-dropdown';
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 
@@ -20,6 +21,7 @@ const PlaceholderImageBack = require('./images/image2.jpg');
 function EditListing({ route }) {
   const { bookInfo } = route.params;
   const navigation = useNavigation();
+  const [condition, setBookCondition] = useState('Brand New');
 
   const [buttonPressed, setButtonPressed] = useState(false);
 
@@ -146,6 +148,27 @@ function EditListing({ route }) {
         </Text>
         <InputBox name="Price" icon="tags" value={(updatedBookInfo.price !== null ? updatedBookInfo.price.toString() : '0')} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, price: text })} />
 
+        <Text style={{
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+        }}
+        >
+          Book Condition:
+        </Text>
+        <View style={styles.pickerContainer}>
+          <ModalDropdown
+            options={['Brand New', 'Like New', 'Good', 'Acceptable']}
+            style={{ marginTop: 11 }}
+            defaultValue={updatedBookInfo.condition}
+            // eslint-disable-next-line max-len
+            onSelect={(index, value) => setUpdatedBookInfo({ ...updatedBookInfo, condition: value })}
+            textStyle={{ fontSize: 16, marginLeft: 10 }}
+            dropdownStyle={{
+              width: '84%', borderRadius: 15, marginTop: 0,
+            }}
+            dropdownTextStyle={{ fontSize: 16 }}
+          />
+        </View>
+
         <View style={styles.imageContainer}>
           <View style={styles.imageSection}>
             <Text style={styles.text}>Front Picture</Text>
@@ -228,6 +251,14 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 15,
     marginBottom: 8,
+  },
+  pickerContainer: {
+    borderColor: '#D9FFF6',
+    borderWidth: 3,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: 5,
+    height: 50,
   },
 });
 
