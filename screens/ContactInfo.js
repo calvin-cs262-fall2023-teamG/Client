@@ -44,36 +44,36 @@ function ContactInfo({ navigation, route }) {
     if (!(emailParts.length === 2 && emailParts[1] === domainToCheck)) {
       setErrorMessage('Please enter your Calvin email');
     } else {
-      try {
-        const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(await receivedBook),
-        });
-        if (!response.ok) {
-          const text = await response.text();
-          throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        navigation.navigate('Main');
-        setShowConfirmationModal(true);
-      }
+      setShowConfirmationModal(true);
+      // try {
+      //   const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify(await receivedBook),
+      //   });
+      //   if (!response.ok) {
+      //     const text = await response.text();
+      //     throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      // } finally {
+      //   navigation.navigate('Main');
+      //   setShowConfirmationModal(true);
+      // }
     }
   };
 
   const confirmAddBook = async () => {
-    console.log(`Sending to database: ${JSON.stringify(receivedBook)}`); // Ensure valid data is going to data base
     try {
       const response = await fetch('https://chaptercachecalvincs262.azurewebsites.net/books/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(receivedBook),
+        body: JSON.stringify(await receivedBook),
       });
 
       if (!response.ok) {
@@ -83,8 +83,8 @@ function ContactInfo({ navigation, route }) {
     } catch (error) {
       console.error(error);
     } finally {
-      setShowConfirmationModal(false);
       navigation.navigate('Main');
+      setShowConfirmationModal(false);
     }
   };
 
@@ -126,7 +126,7 @@ function ContactInfo({ navigation, route }) {
           <Button
             style="button"
             label="Confirm"
-            onPress={handleAddBook}
+            onPress={confirmAddBook}
           />
           <Button
             style="button"

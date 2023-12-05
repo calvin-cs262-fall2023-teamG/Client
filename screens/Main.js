@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 import {
   StyleSheet, Text, View, SafeAreaView,
-  TouchableOpacity, Dimensions, RefreshControl, FlatList,
+  TouchableOpacity, Dimensions, RefreshControl, FlatList, Image,
 }
   from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
@@ -109,7 +109,7 @@ function Main() {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate('Book Info', { bookInfo: item })}>
             <View style={styles.item}>
-              <View style={styles.square} />
+              <Image source={{ uri: item.front_picture }} style={styles.image} />
               <Book bookInfo={item} />
               <View style={styles.details}>
                 <Text style={{ textDecorationLine: 'underline', color: '#888181' }}>More details</Text>
@@ -168,14 +168,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
   },
-  square: {
-    width: 28,
-    height: 40,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    opacity: 0.4,
-    borderRadius: 5,
+  image: {
+    width: 35,
+    height: 45,
     marginRight: 10,
+    borderWidth: 2,
+    borderColor: 'black',
   },
   details: {
     position: 'absolute',
