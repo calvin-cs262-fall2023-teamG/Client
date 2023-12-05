@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable no-unused-vars */
@@ -8,6 +9,8 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Animated, { FadeIn, Keyframe } from 'react-native-reanimated';
+import { BlurView } from 'expo-blur';
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 
@@ -19,32 +22,14 @@ const boxWidth = screenWidth * 0.90; // 90% of the screen width
 const PlaceholderImageFront = require('./images/image3.jpg');
 const PlaceholderImageBack = require('./images/image2.jpg');
 
+// eslint-disable-next-line max-len
+
 function EditListing({ route }) {
   const { bookInfo } = route.params;
   const navigation = useNavigation();
   const [condition, setBookCondition] = useState('Brand New');
-
-  const [buttonPressed, setButtonPressed] = useState(false);
-
-  const handleStatusToggle = () => {
-    const currentDate = new Date().toISOString(); // Get the current date in ISO format
-    const newDateSold = buttonPressed ? null : currentDate;
-
-    setUpdatedBookInfo({ ...updatedBookInfo, date_sold: newDateSold });
-    setButtonPressed(!buttonPressed);
-  };
-
-  const getButtonStyles = () => {
-    const styles = buttonPressed
-      ? { borderColor: '#de0d45', color: '#de0d45' }
-      : { borderColor: '#81F4D8', color: '#81F4D8' };
-
-    return styles;
-  };
-
-  const getButtonLabel = () => (buttonPressed ? 'Status: Sold (Click to change)' : 'Status: For Sale (Click to change)');
-
-  // Define updatedBookInfo state
+  const [editButtonText, setEditButtonText] = useState('Edit'); // Initial button text
+  const [isEditMode, setIsEditMode] = useState(false);
   const [updatedBookInfo, setUpdatedBookInfo] = useState({
     // Initialize with existing bookInfo values
     title: bookInfo.title,
@@ -61,6 +46,52 @@ function EditListing({ route }) {
 
     // Add more fields as needed
   });
+
+  const [buttonPressed, setButtonPressed] = useState(false);
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        // eslint-disable-next-line max-len
+        <TouchableOpacity onPress={async () => {
+          // Call handleUpdate first before logging
+          if (isEditMode) {
+            await handleUpdate();
+          }
+          console.log(updatedBookInfo);
+          handleEditButtonPress(setEditButtonText, isEditMode, setIsEditMode);
+        }}
+        >
+          <Text style={{
+            paddingHorizontal: 10, color: '#000', fontSize: 17, fontWeight: 'bold',
+          }}
+          >{editButtonText}
+          </Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [editButtonText, isEditMode, updatedBookInfo]);
+
+  const handleStatusToggle = () => {
+    const currentDate = new Date().toISOString(); // Get the current date in ISO format
+    const newDateSold = buttonPressed ? null : currentDate;
+
+    setUpdatedBookInfo({ ...updatedBookInfo, date_sold: newDateSold });
+    setButtonPressed(!buttonPressed);
+    console.log(updatedBookInfo);
+  };
+
+  const getButtonStyles = () => {
+    const styles = buttonPressed
+      ? { backgroundColor: '#de0d45', color: '#de0d45' }
+      : { backgroundColor: '#81F4D8', color: '#81F4D8' };
+
+    return styles;
+  };
+
+  const getButtonLabel = () => (buttonPressed ? 'Status: Sold (Click to change)' : 'Status: For Sale (Click to change)');
+
+  // Define updatedBookInfo state
+
   // Use useEffect to set buttonPressed when the component mounts
   useEffect(() => {
     // Set the buttonPressed state based on the date_sold field
@@ -69,6 +100,7 @@ function EditListing({ route }) {
 
   const handleUpdate = async () => {
     console.log(`Attempting to update book with ID: ${bookInfo.id}`);
+    console.log('Originial: ', updatedBookInfo);
 
     try {
       const response = await fetch(`https://chaptercachecalvincs262.azurewebsites.net/books/${bookInfo.id}`, {
@@ -86,16 +118,33 @@ function EditListing({ route }) {
       }
       // Navigate to the home page
       navigation.navigate('My Listings');
-      console.log('Book updated successfully');
+      console.log('Book updated successfully:', updatedBookInfo);
     } catch (error) {
       console.error('Error updating book:', error);
+    }
+  };
+  const handleEditButtonPress = async () => {
+    // If in edit mode, perform any necessary logic (e.g., save changes)
+    if (isEditMode) {
+      // Example: Trigger the handleUpdate function to save changes
+      console.log(updatedBookInfo);
+      console.log('Save button pressed!');
+      handleUpdate();
+    } else {
+      // If not in edit mode, toggle the edit mode and update the button text
+      console.log('Edit button pressed!');
+      setIsEditMode(!isEditMode);
+      setEditButtonText(isEditMode ? 'Edit' : 'Save');
     }
   };
   const frontImageSource = bookInfo.front_picture ? bookInfo.front_picture : PlaceholderImageFront;
   const backImageSource = bookInfo.back_picture ? bookInfo.back_picture : PlaceholderImageBack;
 
   return (
+
     <SafeAreaView style={styles.container}>
+      {isEditMode ? null : <BlurView intensity={4} tint="dark" style={styles.overlayTouchable} />}
+      {isEditMode ? null : <View style={styles.underlayTouchable} />}
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -150,7 +199,7 @@ function EditListing({ route }) {
         <InputBox name="Price" icon="tags" value={(updatedBookInfo.price !== null ? updatedBookInfo.price.toString() : '0')} set_text={(text) => setUpdatedBookInfo({ ...updatedBookInfo, price: text })} />
 
         <Text style={{
-          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
+          fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10, marginBottom: 7,
         }}
         >
           Book Condition:
@@ -158,7 +207,7 @@ function EditListing({ route }) {
         <View style={styles.pickerContainer}>
           <ModalDropdown
             options={['Brand New', 'Like New', 'Good', 'Acceptable']}
-            style={{ marginTop: 11 }}
+            style={{ marginTop: 13 }}
             defaultValue={updatedBookInfo.condition}
             // eslint-disable-next-line max-len
             onSelect={(index, value) => setUpdatedBookInfo({ ...updatedBookInfo, condition: value })}
@@ -182,12 +231,10 @@ function EditListing({ route }) {
           </View>
         </View>
 
-        <View style={styles.button}>
-          <Button style="small button" label="Save changes" onPress={() => handleUpdate()} />
-        </View>
-
       </ScrollView>
+
     </SafeAreaView>
+
   );
 }
 
@@ -248,18 +295,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
-    borderWidth: 1,
+    borderWidth: 0,
     padding: 5,
     borderRadius: 15,
-    marginBottom: 8,
+    marginBottom: 25,
+    paddingVertical: 15,
   },
   pickerContainer: {
-    borderColor: '#D9FFF6',
-    borderWidth: 3,
     borderRadius: 15,
     overflow: 'hidden',
     marginTop: 5,
     height: 50,
+    backgroundColor: '#D9FFF6',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+  },
+
+  overlayTouchable: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
+  underlayTouchable: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+    backgroundColor: '#888181',
+    opacity: 0.3,
   },
 });
 

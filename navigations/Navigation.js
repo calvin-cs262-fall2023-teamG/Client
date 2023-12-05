@@ -14,7 +14,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import AddBookHelp from '../screens/AddBookHelp';
 import BookInfoHelp from '../screens/BookInfoHelp';
 import MyListings from '../screens/MyListings';
-import EditListing from '../screens/EditListing';
+import EditListing, { handleEditButtonPress } from '../screens/EditListing';
 
 // This is the element to manage the screen displayed at a particular time
 const Stack = createNativeStackNavigator();

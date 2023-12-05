@@ -225,7 +225,7 @@ function AddBook({ navigation, route }) {
           <View style={styles.pickerContainer}>
             <ModalDropdown
               options={['Brand New', 'Like New', 'Good', 'Acceptable']}
-              style={{ marginTop: 11 }}
+              style={{ marginTop: 14 }}
               defaultValue="Brand New"
               onSelect={(index, value) => setBookCondition(value)}
               textStyle={{ fontSize: 16, marginLeft: 10 }}
@@ -412,8 +412,8 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '70deg' }],
   },
   pickerContainer: {
-    borderColor: '#D9FFF6',
-    borderWidth: 3,
+    backgroundColor: '#D9FFF6',
+    borderWidth: 0,
     borderRadius: 15,
     overflow: 'hidden',
     marginTop: 5,
