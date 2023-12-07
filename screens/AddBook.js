@@ -117,7 +117,7 @@ function AddBook({ navigation, route }) {
   const takePhotoFront = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      quality: 1,
+      quality: 0.2,
       base64: true,
     });
     if (!result.canceled) {
@@ -130,7 +130,7 @@ function AddBook({ navigation, route }) {
   const chooseFromGalleryFront = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      quality: 1,
+      quality: 0.2,
       base64: true,
     });
     if (!result.canceled) {
@@ -145,7 +145,7 @@ function AddBook({ navigation, route }) {
   const takePhotoBack = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      quality: 1,
+      quality: 0.2,
       base64: true,
     });
 
@@ -159,7 +159,7 @@ function AddBook({ navigation, route }) {
   const chooseFromGalleryBack = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      quality: 1,
+      quality: 0.2,
       base64: true,
     });
 
