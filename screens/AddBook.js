@@ -117,7 +117,7 @@ function AddBook({ navigation, route }) {
   const takePhotoFront = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      quality: 0.2,
+      quality: 0.5,
       base64: true,
     });
     if (!result.canceled) {
@@ -145,7 +145,7 @@ function AddBook({ navigation, route }) {
   const takePhotoBack = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      quality: 0.2,
+      quality: 0.5,
       base64: true,
     });
 
@@ -186,7 +186,7 @@ function AddBook({ navigation, route }) {
           >
             Book name:
           </Text>
-          <InputBox pHolder="Book Name" icon="book" value={book} set_text={(text) => setBook(text)} />
+          <InputBox pHolder="Book Name" icon="book" autoCapitalize="words" value={book} set_text={(text) => setBook(text)} />
           <Text style={{
             fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
           }}
@@ -200,14 +200,14 @@ function AddBook({ navigation, route }) {
           >
             Author:
           </Text>
-          <InputBox pHolder="Author" icon="user" value={author} set_text={(text) => setAuthor(text)} />
+          <InputBox pHolder="Author" icon="user" value={author} autoCapitalize="words" set_text={(text) => setAuthor(text)} />
           <Text style={{
             fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
           }}
           >
             Course name:
           </Text>
-          <InputBox pHolder="Course Name" icon="graduation-cap" value={courseName} set_text={(text) => setCourseName(text)} />
+          <InputBox pHolder="Course Name" icon="graduation-cap" autoCapitalize="characters" value={courseName} set_text={(text) => setCourseName(text)} />
           <Text style={{
             fontSize: 16, marginLeft: 2, fontWeight: 'bold', marginTop: 10,
           }}
@@ -226,7 +226,8 @@ function AddBook({ navigation, route }) {
             <ModalDropdown
               options={['Brand New', 'Like New', 'Good', 'Acceptable']}
               style={{ marginTop: 14 }}
-              defaultValue="Brand New"
+              defaultValue={condition}
+              defaultIndex={0}
               onSelect={(index, value) => setBookCondition(value)}
               textStyle={{ fontSize: 16, marginLeft: 10 }}
               dropdownStyle={{
