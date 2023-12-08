@@ -3,15 +3,16 @@
 /* eslint-disable camelcase */
 import {
   StyleSheet, Text, View, SafeAreaView,
-  TouchableOpacity, Dimensions, RefreshControl, FlatList, Image,
+  TouchableOpacity, Dimensions, RefreshControl, FlatList, Image, TextInput, LogBox,
 }
   from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import Animated, { FadeInDown, FadeIn, FadeInUp } from 'react-native-reanimated';
+import ModalDropdown from 'react-native-modal-dropdown';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Book from '../components/Book';
 import books_data from '../books_data';
-import InputBox from '../components/InputBox';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
@@ -34,6 +35,7 @@ function Main() {
   // eslint-disable-next-line no-unused-vars
   const [isLoading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchCategory, setSearchCategory] = useState('Title');
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -83,13 +85,22 @@ function Main() {
       fetchLibrary(); // this should only be uncommented when the database is functional
     } else {
       const filteredBooks = booksData.filter((filterbook) => {
-        const book_name = filterbook.title.toLowerCase();
+        let book_name = '';
+        if (searchCategory === 'Title') {
+          book_name = filterbook.title.toLowerCase();
+        } else if (searchCategory === 'Course Name') {
+          book_name = filterbook.coursename.toLowerCase();
+        } else if (searchCategory === 'Author') {
+          book_name = filterbook.author.toLowerCase();
+        }
         return book_name.includes(searchTerm.toLowerCase());
       });
 
       setBooks(filteredBooks);
     }
   };
+  LogBox.ignoreLogs(['Warning: ...']);
+  LogBox.ignoreAllLogs();
 
   return (
 
@@ -99,11 +110,44 @@ function Main() {
       </Animated.View>
 
       <View style={{ borderBottomColor: 'black', borderBottomWidth: 3, width: '100%' }} />
-
-      <Animated.View style={{ width: 400, marginBottom: 2 }} entering={FadeInUp.duration(500)}>
-        <InputBox pHolder="Search for a book" icon="search" value={book} set_text={handleSearch} autofocus={false} />
-      </Animated.View>
-
+      <View style={{ flexDirection: 'row', paddingHorizontal: 12 }}>
+        <View style={{flex: 3 }}>
+          <Animated.View style={{ width: '100%', marginBottom: 2 }} entering={FadeInUp.duration(500)}>
+            <View style={styles.InputContainer}>
+              <View style={styles.icon}>
+                <Icon name="search" size={20} color="#888181" />
+              </View>
+              <TextInput
+                style={styles.InputTextBox}
+                placeholder="Search for a book"
+                value={book}
+                onChangeText={handleSearch}
+              />
+            </View>
+          </Animated.View>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <View style={[styles.pickerContainer, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
+            <ModalDropdown
+              options={['Title', 'Course Name', 'Author']}
+              defaultValue="Title"
+              defaultIndex={0}
+              saveScrollPosition={false}
+              onSelect={(index, value) => setSearchCategory(value)}
+              textStyle={{
+                fontSize: 15, color: '#888181', marginLeft: 10, flexWrap: 'wrap', textAlign: 'left',
+              }}
+              dropdownStyle={{
+                width: '35%', borderRadius: 25,
+              }}
+              dropdownTextStyle={{ fontSize: 16, width: '87%', flexWrap: 'wrap', textAlign: 'left' }}
+            />
+            <View style={{ marginRight: 10 }}>
+              <Icon name="caret-down" size={20} color="#888181" />
+            </View>
+          </View>
+        </View>
+      </View>
       <FlatList
         data={books}
         renderItem={({ item }) => (
@@ -175,6 +219,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'black',
   },
+  pickerContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#81F4D8',
+    borderWidth: 0,
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginTop: 10,
+    height: 50,
+    width: 95,
+  },
   details: {
     position: 'absolute',
     bottom: 0,
@@ -201,6 +255,26 @@ const styles = StyleSheet.create({
   },
   sellBook: {
     color: '#000',
+  },
+  InputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    width: 270,
+    paddingHorizontal: 15,
+    backgroundColor: '#D9FFF6',
+    marginTop: 10,
+    borderRadius: 15,
+    justifyContent: 'left', // center vertically
+  },
+  icon: {
+    marginLeft: 5,
+    width: '9%',
+  },
+  InputTextBox: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });
 
