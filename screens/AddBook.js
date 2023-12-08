@@ -8,7 +8,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line import/no-unresolved
-import { Picker } from '@react-native-picker/picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -228,10 +228,11 @@ function AddBook({ navigation, route }) {
               style={{ marginTop: 14 }}
               defaultValue={condition}
               defaultIndex={0}
+              saveScrollPosition={false}
               onSelect={(index, value) => setBookCondition(value)}
               textStyle={{ fontSize: 16, marginLeft: 10 }}
               dropdownStyle={{
-                width: '84%', borderRadius: 15, marginTop: 0,
+                width: '84%', borderRadius: 15, marginTop: 20,
               }}
               dropdownTextStyle={{ fontSize: 16 }}
             />

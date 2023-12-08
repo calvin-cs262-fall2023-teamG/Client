@@ -251,11 +251,15 @@ function EditListing({ route }) {
             options={['Brand New', 'Like New', 'Good', 'Acceptable']}
             style={{ marginTop: 13 }}
             defaultValue={updatedBookInfo.condition}
+            saveScrollPosition={false}
             // eslint-disable-next-line max-len
-            onSelect={(index, value) => setUpdatedBookInfo({ ...updatedBookInfo, condition: value })}
+            onSelect={(index, value) => {
+              console.log('Selected index:', index);
+              setUpdatedBookInfo({ ...updatedBookInfo, condition: value });
+            }}
             textStyle={{ fontSize: 16, marginLeft: 10 }}
             dropdownStyle={{
-              width: '84%', borderRadius: 15, marginTop: 0,
+              width: '84%', borderRadius: 15, marginTop: 20,
             }}
             dropdownTextStyle={{ fontSize: 16 }}
           />
@@ -344,11 +348,12 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   pickerContainer: {
+    backgroundColor: '#D9FFF6',
+    borderWidth: 0,
     borderRadius: 15,
     overflow: 'hidden',
     marginTop: 5,
     height: 50,
-    backgroundColor: '#D9FFF6',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
