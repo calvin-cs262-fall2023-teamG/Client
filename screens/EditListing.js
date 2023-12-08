@@ -9,13 +9,16 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import ModalDropdown from 'react-native-modal-dropdown';
-import Animated, { FadeIn, Keyframe } from 'react-native-reanimated';
+import Animated, {
+  BounceIn, FadeIn, Keyframe, useSharedValue, useDerivedValue, withSpring, multiply, FadeOut,
+} from 'react-native-reanimated';
 import { BlurView } from 'expo-blur';
 import Button from '../components/Button';
 import InputBox from '../components/InputBox';
 
 // get width dimensions of the screen
 const { width: screenWidth } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
 // The placeholder images need to be fetched from the database later.
@@ -46,27 +49,51 @@ function EditListing({ route }) {
 
     // Add more fields as needed
   });
+  // Add a new animated value for shake animation
+  const shakeAnimationValue = useSharedValue(0);
+  const [isUnderlayTextVisible, setUnderlayTextVisible] = useState(false);
+
+  const tipAnimation = () => {
+    shakeAnimationValue.value = 1; // Trigger the animation
+    setUnderlayTextVisible(true);
+    console.log('animation triggered...');
+  };
+  setTimeout(() => {
+    setUnderlayTextVisible(false);
+  }, 4000);
+
+  // Set up the shake animation
+  // eslint-disable-next-line max-len
+  const shakeAnimation = useDerivedValue(() => withSpring(shakeAnimationValue.value, { damping: 2, stiffness: 150 }));
+
+  // Attach the animated styles to the Animated.View
+  const animatedStyles = {
+    // eslint-disable-next-line max-len
+    transform: [{ translateX: shakeAnimation * 5 }], // Adjust the multiplier for the desired shake range
+  };
 
   const [buttonPressed, setButtonPressed] = useState(false);
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         // eslint-disable-next-line max-len
-        <TouchableOpacity onPress={async () => {
+        <Animated.View entering={BounceIn.duration(500)} styles={animatedStyles}>
+          <TouchableOpacity onPress={async () => {
           // Call handleUpdate first before logging
-          if (isEditMode) {
-            await handleUpdate();
-          }
-          console.log(updatedBookInfo);
-          handleEditButtonPress(setEditButtonText, isEditMode, setIsEditMode);
-        }}
-        >
-          <Text style={{
-            paddingHorizontal: 10, color: '#000', fontSize: 17, fontWeight: 'bold',
+            if (isEditMode) {
+              await handleUpdate();
+            }
+            console.log(updatedBookInfo);
+            handleEditButtonPress(setEditButtonText, isEditMode, setIsEditMode);
           }}
-          >{editButtonText}
-          </Text>
-        </TouchableOpacity>
+          >
+            <Text style={{
+              paddingHorizontal: 10, color: '#000', fontSize: 17, fontWeight: 'bold',
+            }}
+            >{editButtonText}
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
       ),
     });
   }, [editButtonText, isEditMode, updatedBookInfo]);
@@ -125,6 +152,7 @@ function EditListing({ route }) {
   };
   const handleEditButtonPress = async () => {
     // If in edit mode, perform any necessary logic (e.g., save changes)
+
     if (isEditMode) {
       // Example: Trigger the handleUpdate function to save changes
       console.log(updatedBookInfo);
@@ -143,8 +171,22 @@ function EditListing({ route }) {
   return (
 
     <SafeAreaView style={styles.container}>
-      {isEditMode ? null : <BlurView intensity={4} tint="dark" style={styles.overlayTouchable} />}
-      {isEditMode ? null : <View style={styles.underlayTouchable} />}
+      {isUnderlayTextVisible && (
+        <Animated.View
+          style={styles.underlayTextContainer}
+          entering={BounceIn.duration(500)}
+          exiting={FadeOut}
+        >
+          <Text style={styles.underlayText}>Click 'Edit' to make changes</Text>
+        </Animated.View>
+      )}
+
+      {isEditMode ? null : (
+        <View
+          style={styles.underlayTouchable}
+          onTouchStart={tipAnimation}
+        />
+      )}
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -324,7 +366,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
     backgroundColor: '#888181',
-    opacity: 0.3,
+    opacity: 0.1,
+  },
+  underlayTextContainer: {
+    position: 'absolute',
+    top: screenHeight / 2 - 100, // Adjust the position as needed
+    left: screenWidth / 2 - boxWidth / 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 10,
+    borderRadius: 10,
+    zIndex: 2,
+  },
+
+  underlayText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 
