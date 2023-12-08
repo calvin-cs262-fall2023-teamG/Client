@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import Animated, { BounceIn, ZoomIn } from 'react-native-reanimated';
 import sendEmail from '../components/sendEmail';
 import InputBox from '../components/InputBox';
 
@@ -14,6 +14,24 @@ function InfoView({ name, value, icon }) {
 
   return (
     <View style={[styles.info, { width: infoWidth }]}>
+      <Icon name={icon} size={20} color="#888181" style={styles.icon} />
+      <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View>
+            <Text style={{ fontWeight: 'bold', color: '#888181' }}>{name}</Text>
+            <Text style={{ color: '#888181' }}>{value}</Text>
+          </View>
+        </View>
+
+      </View>
+    </View>
+  );
+}
+function SellerInfoView({ name, value, icon }) {
+  const infoWidth = Dimensions.get('window').width * 0.92;
+
+  return (
+    <View style={[styles.sellerInfo, { width: infoWidth }]}>
       <Icon name={icon} size={20} color="#888181" style={styles.icon} />
       <View>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -52,9 +70,9 @@ function BookInfo({ route }) {
         <InfoView name="Author" icon="user" value={bookInfo.author} />
         <InfoView name="Course Name" icon="graduation-cap" value={bookInfo.coursename} />
         <InfoView name="Price" icon="tags" value={`$${bookInfo.price}`} />
-        <InfoView name="Seller Name" icon="user" value={bookInfo.name} />
         <InfoView name="Condition" icon="book" value={bookInfo.condition} />
-        <View style={[styles.info, { width: infoWidth }]}>
+        <SellerInfoView name="Seller Name" icon="user" value={bookInfo.name} />
+        <View style={[styles.sellerInfo, { width: infoWidth }]}>
           <Icon name="envelope" size={20} color="#888181" style={styles.icon} />
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -64,9 +82,9 @@ function BookInfo({ route }) {
               </View>
 
               <TouchableOpacity onPress={handleContactSeller}>
-                <View style={styles.buttonContact}>
+                <Animated.View style={styles.buttonContact} entering={BounceIn.duration(700)}>
                   <Text>Contact Seller</Text>
-                </View>
+                </Animated.View>
               </TouchableOpacity>
 
             </View>
@@ -119,6 +137,17 @@ const styles = StyleSheet.create({
     justifyContent: 'left',
     paddingHorizontal: 15,
   },
+  sellerInfo: {
+    height: 60,
+    marginTop: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f3f0',
+    borderRadius: 15,
+    justifyContent: 'left',
+    paddingHorizontal: 15,
+  },
 
   icon: {
     marginRight: 10,
@@ -155,7 +184,7 @@ const styles = StyleSheet.create({
   buttonContact: {
     marginTop: 10,
     paddingVertical: 10,
-    marginHorizontal: 70,
+    marginHorizontal: 60,
     marginBottom: 10,
     height: 40,
     width: 130,
