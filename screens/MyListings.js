@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {
-  StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, Image,
+  StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions, Image, RefreshControl,
 } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
@@ -21,6 +21,7 @@ function MyListings() {
   // It will be turned instead into the library from the database.
   // eslint-disable-next-line no-unused-vars
   const [books, setBooks] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -72,6 +73,18 @@ function MyListings() {
       fetchBooks();
     }
   }, [isFocused, userID]);
+  const refresh = async () => {
+    try {
+      await fetchBooks();
+    } catch (error) {
+      console.error('Error fetching books during refresh:', error);
+    }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    refresh().finally(() => setRefreshing(false));
+  };
 
   return (
 
@@ -79,6 +92,9 @@ function MyListings() {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <View>
           <Text style={{
