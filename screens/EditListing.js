@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/style-prop-object */
@@ -7,6 +8,8 @@ import {
   StyleSheet, View, Text, SafeAreaView, Dimensions, ScrollView, Image, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 import { useNavigation } from '@react-navigation/native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Animated, {
@@ -247,9 +250,18 @@ function EditListing({ route }) {
           Book Condition:
         </Text>
         <View style={styles.pickerContainer}>
+          <FontAwesomeIcon
+            name="book"
+            style={{
+              marginLeft: 15,
+              marginTop: 15,
+              fontSize: 20,
+              color: '#888181',
+            }}
+          />
           <ModalDropdown
             options={['Brand New', 'Like New', 'Good', 'Acceptable']}
-            style={{ marginTop: 13 }}
+            style={{ marginTop: -30, marginLeft: 40, paddingVertical: 10 }}
             defaultValue={updatedBookInfo.condition}
             saveScrollPosition={false}
             // eslint-disable-next-line max-len

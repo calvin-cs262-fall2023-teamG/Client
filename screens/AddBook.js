@@ -14,6 +14,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert,
 } from 'react-native';
+// eslint-disable-next-line import/no-duplicates
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,6 +25,8 @@ import Animated, {
   FadeInLeft, FadeInRight, FadeInDown, FadeInUp,
 } from 'react-native-reanimated';
 import ModalDropdown from 'react-native-modal-dropdown';
+// eslint-disable-next-line import/no-duplicates
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ImageViewer from '../components/ImageViewer';
 import InputBox from '../components/InputBox';
 
@@ -223,9 +226,18 @@ function AddBook({ navigation, route }) {
           </Text>
 
           <View style={styles.pickerContainer}>
+            <FontAwesomeIcon
+              name="book"
+              style={{
+                marginLeft: 15,
+                marginTop: 15,
+                fontSize: 20,
+                color: '#888181',
+              }}
+            />
             <ModalDropdown
               options={['Brand New', 'Like New', 'Good', 'Acceptable']}
-              style={{ marginTop: 14 }}
+              style={{ marginTop: -30, marginLeft: 40, paddingVertical: 10 }}
               defaultValue={condition}
               defaultIndex={0}
               saveScrollPosition={false}
