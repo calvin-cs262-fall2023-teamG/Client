@@ -18,6 +18,11 @@ import books_data from '../books_data';
 const { width: screenWidth } = Dimensions.get('window');
 const boxWidth = screenWidth * 0.90; // 90% of the screen width
 
+/**
+ * Provides the main page of the ChapterCache app, which includes components such as
+ * search bar, book list, and tab nagivation.
+ * @returns UI for the main page, including the search bar, book list, and tab navigation using the styles StyleSheet.
+ */
 function Main() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -111,7 +116,7 @@ function Main() {
 
       <View style={{ borderBottomColor: 'black', borderBottomWidth: 3, width: '100%' }} />
       <View style={{ flexDirection: 'row', paddingHorizontal: 12 }}>
-        <View style={{flex: 3 }}>
+        <View style={{ flex: 3 }}>
           <Animated.View style={{ width: '100%', marginBottom: 2 }} entering={FadeInUp.duration(500)}>
             <View style={styles.InputContainer}>
               <View style={styles.icon}>
@@ -126,7 +131,10 @@ function Main() {
             </View>
           </Animated.View>
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <View style={{
+          flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end',
+        }}
+        >
           <View style={[styles.pickerContainer, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
             <ModalDropdown
               options={['Title', 'Course Name', 'Author']}
@@ -140,7 +148,9 @@ function Main() {
               dropdownStyle={{
                 width: '35%', borderRadius: 25,
               }}
-              dropdownTextStyle={{ fontSize: 16, width: '87%', flexWrap: 'wrap', textAlign: 'left' }}
+              dropdownTextStyle={{
+                fontSize: 16, width: '87%', flexWrap: 'wrap', textAlign: 'left',
+              }}
             />
             <View style={{ marginRight: 10 }}>
               <Icon name="caret-down" size={20} color="#888181" />
