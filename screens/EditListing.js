@@ -384,6 +384,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     backgroundColor: '#888181',
     opacity: 0.1,
+    pointerEvents: 'auto',
   },
   underlayTextContainer: {
     position: 'absolute',
