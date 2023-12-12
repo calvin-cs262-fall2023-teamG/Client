@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e8f3f0',
+    backgroundColor: '#D9FFF6',
     borderRadius: 15,
     justifyContent: 'left',
     paddingHorizontal: 15,
